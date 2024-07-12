@@ -26,9 +26,9 @@ function App() {
   }, []);
   return (
     <>
-      <Container maxWidth={"8xl"} h={bodyHeight}>
+      {/* <Container maxWidth={"8xl"} h={bodyHeight}>
         <Header />
-      </Container>
+      </Container> */}
       <Routers />
       <ToastContainer/>
     </>

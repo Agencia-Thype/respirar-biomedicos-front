@@ -16,13 +16,13 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
-      body: {
-        backgroundImage: BG,
-        backgroundAttachment: "fixed",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-      },
+      // body: {
+      //   backgroundImage: BG,
+      //   backgroundAttachment: "fixed",
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundSize: "100% 100%",
+      //   backgroundPosition: "center",
+      // },
     },
   },
   components: {

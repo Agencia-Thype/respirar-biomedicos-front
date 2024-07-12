@@ -18,10 +18,8 @@ export const HomePage = () => {
   const navigate = useNavigate();
   return (
     <Box>
-      <Container>
-
-        <Slider/>
-      </Container>
+      
+      <Slider/>
 
 
       <Flex bg="#E1D4C0" mt="2rem" p="2rem 0">
