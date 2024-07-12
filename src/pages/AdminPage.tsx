@@ -36,7 +36,7 @@ export const AdminPage = () => {
           fontSize={"22px"}
           borderBottom={showSubMenu ? "solid 1px white" : "none"}
         >
-          Atualizar Cardápio
+          Atualizar Catálogo
         </Heading>
         <Heading
           onClick={() => navigate("/orders")}

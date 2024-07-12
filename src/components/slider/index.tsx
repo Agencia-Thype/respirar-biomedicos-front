@@ -13,14 +13,19 @@ import { MdDeliveryDining } from "react-icons/md";
 import burger from "../assets/burger.png";
 import { useNavigate } from "react-router-dom";
 
-import img1 from '../../assets/image/img1.jpg';
-import img2 from '../../assets/image/img2.jpg';
-import img3 from '../../assets/image/img3.jpg';
-import img4 from '../../assets/image/img4.jpg';
+import img1 from '../../assets/image/img1.png';
+import img2 from '../../assets/image/img2.png';
+import img3 from '../../assets/image/img3.png';
+import img4 from '../../assets/image/img4.png';
+import img5 from '../../assets/image/img5.png';
+import img6 from '../../assets/image/img6.png';
+import img7 from '../../assets/image/img7.png';
+import img8 from '../../assets/image/img8.png';
+import img9 from '../../assets/image/img9.jpeg';
 import { useEffect, useRef, useState } from "react";
 import Thumbnail from "../../Thumbnail";
 
-const images = [img1, img2, img3, img4];
+const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 export const Slider = () => {
   const navigate = useNavigate();
