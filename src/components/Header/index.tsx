@@ -30,6 +30,7 @@ export const Header = () => {
       justify={{ md: "space-between" }}
       flexDir={{ base: "column", md: "row" }}
       bg="transparent"
+      height={"10vh"}
     >
       <Flex
         justify={{ base: "space-between" }}

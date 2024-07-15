@@ -2,9 +2,9 @@ import { Container, Flex, Heading, Text } from "@chakra-ui/react";
 
 export const Footer = () => {
   return (
-    <Flex bg="#141011" p="2.5rem 0">
+    <Flex bg="#116CA0" p="2.5rem 0">
       <Container
-        maxW={"5xl"}
+        maxW={"7xl"}
         display={"flex"}
         flexDir={{ base: "column", md: "row" }}
         alignItems={{ base: "center", md: "flex-start" }}
@@ -12,20 +12,20 @@ export const Footer = () => {
       >
         <Flex
           flexDir={"column"}
-          alignItems={{ base: "center" }}
+          alignItems={{ base: "flex-start" }}
           gap="1rem"
           w="100%"
         >
           <Heading as="h3" fontSize={"22px"} fontFamily={"Montserrat"}>
             Endereço
           </Heading>
-          <Text textAlign={"center"} fontFamily={"Montserrat"} color="#BFB6AC">
-            Rua das Palmeiras, 123 Centro Balneário Camboriú, SC
+          <Text textAlign={"left"} fontFamily={"Montserrat"} color="#BFB6AC">
+            Rua 244, 375 Sala 02 Meia Praia - Itapema -SC 
           </Text>
         </Flex>
         <Flex
           flexDir={"column"}
-          alignItems={{ base: "center" }}
+          alignItems={{ base: "flex-start" }}
           gap="1rem"
           w="100%"
         >
@@ -33,23 +33,23 @@ export const Footer = () => {
             as="h3"
             fontSize={"22px"}
             fontFamily={"Montserrat"}
-            textAlign="center"
+            textAlign="left"
           >
             Horario de Funcionamento
           </Heading>
           <Text fontFamily={"Montserrat"} color="#BFB6AC">
-            Segunda a sexta: 8h às 20h
+            Segunda a sexta: 9h às 18h
           </Text>
           <Text fontFamily={"Montserrat"} color="#BFB6AC">
             Sábado: 9h às 13h
           </Text>
           <Text fontFamily={"Montserrat"} color="#BFB6AC">
-            Domingo: fechado
+            Domingo: Fechado
           </Text>
         </Flex>
         <Flex
           flexDir={"column"}
-          alignItems={{ base: "center" }}
+          alignItems={{ base: "flex-start" }}
           gap="1rem"
           w="100%"
         >
@@ -57,10 +57,10 @@ export const Footer = () => {
             Contatos
           </Heading>
           <Text fontFamily={"Montserrat"} color="#BFB6AC">
-            Telefone: (11) 1111-1111
+            Telefone: (47) 98833 1224
           </Text>
           <Text fontFamily={"Montserrat"} color="#BFB6AC">
-            Instagram: @DowntownBuguer
+            E-mail: respirarbiomedicos@gmail.com
           </Text>
         </Flex>
       </Container>

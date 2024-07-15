@@ -62,7 +62,7 @@ export const Slider = () => {
   };
 
   return (
-    <Box>
+    <Box height={"100vh"} overflow={"hidden"}>
       <Flex
         h={"100vh"}
         className="carousel"
@@ -83,13 +83,13 @@ export const Slider = () => {
             position="relative"
             paddingLeft={"150px"}
           >
-            <Flex flexDirection={"column"} alignItems={"flex-start"} className="content" color="#fff" textShadow="0 5px 10px #0004" width={"40%"} height={"150px"}>
+            <Flex flexDirection={"column"} alignItems={"flex-start"} className="content" color="#fff" textShadow="0 5px 10px #0004" width={"40%"} height={"100%"} paddingTop={"10%"}>
               <Heading fontSize="5em" fontWeight="bold">DESIGN SLIDER</Heading>
               <Heading fontSize="5em" fontWeight="bold" color="#f1683a">ANIMAL</Heading>
               <Text mt="4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae odio impedit saepe magni nam nobis, ab quaerat perspiciatis. Quis at ipsum modi ratione impedit sed ad porro, quae delectus sint!</Text>
-              <Flex mt="4" gap="4">
+              <Flex mt="12" gap="4">
                 <Button>SEE MORE</Button>
-                <Button variant="outline">SUBSCRIBE</Button>
+                {/* <Button variant="outline">SUBSCRIBE</Button> */}
               </Flex>
             </Flex>
           </Flex>
@@ -101,8 +101,8 @@ export const Slider = () => {
         ))}
       </Flex>
       <Flex className="arrows" position="relative" bottom="440px" left="15%" transform="translateX(-50%)" zIndex="100" width="300px" maxWidth="30%" gap="10px" >
-        <Button onClick={handlePrev} background={"#eee4"} borderRadius={"50%"}>{"<"}</Button>
-        <Button onClick={handleNext} background={"#eee4"} borderRadius={"50%"}>{">"}</Button>
+        <Button onClick={handlePrev} background={"#E9F1F5"} borderRadius={"50%"}>{"<"}</Button>
+        <Button onClick={handleNext} background={"#E9F1F5"} borderRadius={"50%"}>{">"}</Button>
       </Flex>
 
     </Box>
