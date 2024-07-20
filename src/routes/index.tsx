@@ -9,6 +9,7 @@ import { OrdersPage } from "../pages/OrdersPage";
 import { DeliveryPage } from "../pages/DeliveryPage";
 import { UserPage } from "../pages/UserPage";
 import { ContactPage } from "../pages/ContactPage";
+import { RentPage } from "../pages/RentPage";
 
 export const Routers = () => {
   return (
@@ -23,6 +24,7 @@ export const Routers = () => {
       <Route path="/delivery" element={<DeliveryPage />} />
       <Route path="/user" element={<UserPage />} />
       <Route path="/contacts" element={<ContactPage />} />
+      <Route path="/rent" element={<RentPage/>} />
     </Routes>
   );
 };
