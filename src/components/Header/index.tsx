@@ -1,7 +1,7 @@
 import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import { MenuToggle } from "./MenuToggle";
 import { NavLinks } from "./Navlinks";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/Logo blanco.png";
 import { BsCartFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
@@ -26,22 +26,25 @@ export const Header = () => {
     <Flex
       as="nav"
       align={{ base: isOpen ? "flex-start" : "center", sm: "center" }}
-      p={["1rem"]}
+      p={["0 10%"]}
       justify={{ md: "space-between" }}
       flexDir={{ base: "column", md: "row" }}
-      bg="transparent"
+      bg="#116CA0"
       height={"10vh"}
+      width={"100%"}
     >
       <Flex
         justify={{ base: "space-between" }}
         w={{ base: "100%", md: "auto" }}
       >
-        <Image
-          src={Logo}
-          cursor="pointer"
-          width={["120px"]}
-          onClick={() => navigate("/")}
-        />
+        <Flex height={["60px"]}>
+          <Image
+            src={Logo}
+            cursor="pointer"
+            height={["100%"]}
+            onClick={() => navigate("/")}
+          />
+        </Flex>
         <Flex
           justify={"center"}
           align={"center"}

@@ -24,15 +24,15 @@ export const MenuItem = ({
     <Link
       onClick={onToggle}
       href={to}
-      _hover={{ textDecor: "none", color: "logo-color" }}
+      _hover={{ textDecor: "none", color: "#FFFFFF" }}
       textAlign={["left", "left", "center", "center"]}
       display={"flex"}
       alignItems="center"
       fontSize="20px"
       fontWeight={activeLink === to ? "bold" : "400"}
       gap="2"
-      fontFamily={"Montserrat, sans-serif"}
-      color={activeLink === to ? "logo-color" : "primary-color"}
+      fontFamily={"Inter, sans-serif"}
+      color={activeLink === to ? "#FFFFF" : "primary-color"}
     >
       {children}
     </Link>

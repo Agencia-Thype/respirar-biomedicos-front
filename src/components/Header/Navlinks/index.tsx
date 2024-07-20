@@ -94,7 +94,16 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
           activeLink={activeLink}
           handleClick={handleClick}
         >
-          Cardápio
+          Produtos
+        </MenuItem>
+        <MenuItem
+          onToggle={onToggle}
+          isOpen={isOpen}
+          to="/cardapio"
+          activeLink={activeLink}
+          handleClick={handleClick}
+        >
+          Locação
         </MenuItem>
         <MenuItem
           onToggle={onToggle}
@@ -103,7 +112,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
           activeLink={activeLink}
           handleClick={handleClick}
         >
-          Contatos
+          Empresa
         </MenuItem>
 
         <Menu>
