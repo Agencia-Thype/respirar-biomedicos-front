@@ -21,6 +21,7 @@ import { MenuItemContext } from "../contexts/MenuItemContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
 import { MenuItensCard } from "../components/MenuItemCard";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Header } from "../components/Header";
 
 export const CardapioPage = () => {
   const { data: cardapio, isFetching: isFetchingCardapio } =
@@ -44,8 +45,9 @@ export const CardapioPage = () => {
   }
 
   return (
-    <Flex flexDir="column" w="100%" gap="1rem" mt="1rem">
-      <Heading textAlign={"center"} size={{ base: "2xl", md: "3xl", lg: "4xl" }}>Cardápio</Heading>
+    <Flex flexDir="column" w="100%" gap="1rem">
+      <Header/>
+      <Heading textAlign={"center"} size={{ base: "2xl", md: "3xl", lg: "4xl" }}>Produtos</Heading>
       <Flex align="center" flexDir="column" justify="center" w="100%">
         {isMobile && (
           <Button mt="1rem" onClick={onOpen}>

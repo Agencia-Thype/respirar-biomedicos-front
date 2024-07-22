@@ -1,4 +1,5 @@
 import {
+    AspectRatio,
     Button,
     Container,
     Flex,
@@ -43,7 +44,9 @@ import {
                 <Button w={"240px"} bg={"#116CA0"} color={"#FFFFFF"}>Saiba Mais</Button>
             </Flex>
             <Flex maxW={"50%"} >
-                <Image width={"100%"} border={"2px solid #116CA0"} src={image} />
+                <AspectRatio width="100%" ratio={16 / 9} border="2px solid #116CA0">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/u8LWkxHSQf4?si=r4M2nmM4Zy0uCbMb" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen></iframe>
+            </AspectRatio>
             </Flex>
           </Flex>
         </Flex>

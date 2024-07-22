@@ -23,7 +23,7 @@ export const HomePage = () => {
   // const navigate = useNavigate();
   return (
     <Box>
-      {/* <Header/> */}
+      <Header/>
       <Slider/>
 
       <Flex bg="#E9F1F5" padding={"5%"}>
@@ -61,7 +61,30 @@ export const HomePage = () => {
             // h={"100%"}
           >
             <Heading color={"#116CA0"} fontSize={"48px"} fontWeight={"800"}>Produtos em Destaque</Heading>
-            <SimpleGrid  columns={[1, 2, 3]} spacing="1rem" w={{ base: "70%", md: "100%" }} maxH={"670px"} overflow={"scroll"}>
+            <SimpleGrid
+              columns={[1, 2, 3]}
+              spacing="1rem"
+              w={{ base: "70%", md: "100%" }}
+              maxH={"670px"}
+              overflowY={"scroll"}
+              p={"12px"}
+              sx={{
+                '::-webkit-scrollbar': {
+                  width: '8px',
+                  
+                },
+                '::-webkit-scrollbar-track': {
+                  
+                  background: 'none',
+                },
+                '::-webkit-scrollbar-thumb': {
+                  
+                  backgroundColor: '#116CA0',
+                  borderRadius: '20px',
+                  border: '3px solid transparent',
+                },
+              }}
+            >
               <ProductCard description="Travesseiro Multi Máscaras Para CPAP - Perfetto" img= {CPAP}/>
               <ProductCard description="Travesseiro Multi Máscaras Para CPAP - Perfetto" img= {CPAP}/>
               <ProductCard description="Travesseiro Multi Máscaras Para CPAP - Perfetto" img= {CPAP}/>
