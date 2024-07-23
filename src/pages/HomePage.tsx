@@ -26,7 +26,7 @@ export const HomePage = () => {
       <Header/>
       <Slider/>
 
-      <Flex bg="#E9F1F5" padding={"5%"}>
+      <Flex bg="#E9F1F5" padding={"8%"}>
         <Container maxW={"7xl"}>
           <Flex
             flexDir={{ base: "column", md: "row" }}
@@ -50,14 +50,14 @@ export const HomePage = () => {
         </Container>
       </Flex>
 
-      <Flex padding={"5%"}>
+      <Flex padding={"8%"}>
         <Container  maxW={"7xl"}>
           <Flex
             flexDir={"column"}
             // mt="2rem"
             justify={"space-around"}
             alignItems={"center"}
-            gap="1rem"
+            gap="5rem"
             // h={"100%"}
           >
             <Heading color={"#116CA0"} fontSize={"48px"} fontWeight={"800"}>Produtos em Destaque</Heading>

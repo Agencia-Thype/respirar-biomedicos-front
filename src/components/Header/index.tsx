@@ -1,7 +1,7 @@
 import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import { MenuToggle } from "./MenuToggle";
 import { NavLinks } from "./Navlinks";
-import Logo from "../../assets/Logo blanco.png";
+import Logo from "../../assets/logo.png";
 import { BsCartFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
