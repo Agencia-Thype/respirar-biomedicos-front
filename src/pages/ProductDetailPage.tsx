@@ -2,6 +2,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 
 import { ICategoryData } from '../interfaces/categories.intefaces';
+import { Header } from '../components/Header';
+import { Flex, Heading, Image, Text } from '@chakra-ui/react';
 export interface Produto {
     id: string;
     name: string;
@@ -33,10 +35,23 @@ export interface Produto {
   
     return (
       <div>
-        <h1>{product.name}</h1>
+        <Header/>
+        <Flex width={"100%"} flexDirection={"column"}>
+          <Flex width={"100%"}>
+            <Flex width={"50%"}>
+              <Image src={product.imageURL} alt={product.name}/>
+            </Flex>
+            <Flex flexDirection={"column"} width={"50%"}>
+              <Heading>{product.name}</Heading>              
+              <Text>R$ {product.price}</Text>
+            </Flex>
+          </Flex>
+
+        </Flex>
+        <h1></h1>
         <p>{product.description}</p>
-        <img src={product.imageURL} alt={product.name} />
-        <p>Price: ${product.price}</p>
+        
+        <p></p>
         <p>Category: {product.category.name}</p>
       </div>
     );

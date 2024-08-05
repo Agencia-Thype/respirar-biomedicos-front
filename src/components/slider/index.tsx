@@ -86,7 +86,7 @@ export const Slider = () => {
             <Flex flexDirection={"column"} alignItems={"flex-start"} className="content" color="#fff" textShadow="0 5px 10px #0004" width={"40%"} height={"100%"} paddingTop={"10%"}>
               <Heading fontSize="5em" fontWeight="bold">DESIGN SLIDER</Heading>
               <Heading fontSize="5em" fontWeight="bold" color="#f1683a">ANIMAL</Heading>
-              <Text mt="4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae odio impedit saepe magni nam nobis, ab quaerat perspiciatis. Quis at ipsum modi ratione impedit sed ad porro, quae delectus sint!</Text>
+              <Text color="#000000" mt="4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae odio impedit saepe magni nam nobis, ab quaerat perspiciatis. Quis at ipsum modi ratione impedit sed ad porro, quae delectus sint!</Text>
               <Flex mt="12" gap="4">
                 <Button>SEE MORE</Button>
                 {/* <Button variant="outline">SUBSCRIBE</Button> */}

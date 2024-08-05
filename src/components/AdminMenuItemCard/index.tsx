@@ -13,14 +13,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { BsCartPlusFill } from "react-icons/bs";
-import { ModalConfirm } from "./ModalConfirm";
+import { ModalConfirm } from "../MenuItemCard/ModalConfirm";
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
 interface IMenuItemCardProps {
   item: IMenuItemInterfaceData;
 }
 
-export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
+export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [show, setShow] = useState(false);
 
@@ -30,8 +30,8 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
 
   return (
     <>
-      <Flex width={{ base: '189px', md: '245px', lg: '290.5px' }}
-          height={{ base: '270px', md: '350px', lg: '415px' }}  align={"center"} justify={"center"} bg={"#E9F1F5"} borderRadius={"32px"} border={"1px solid #116CA0"} overflow={"hidden"}>
+      <Flex width={'290.5px' }
+          height={'415px' }  align={"center"} justify={"center"} bg={"#E9F1F5"} borderRadius={"32px"} border={"1px solid #116CA0"} overflow={"hidden"}>
             
         <Flex
           borderRadius={"10px"}
@@ -48,16 +48,23 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
               borderTopRadius="32px"
               borderBottomRadius="0px"              
               w="100%"
-              h={{ base: '98px', md: '127px', lg: '151px' }}
+              h={'151px' }
               objectFit="contain"
             />
           </Flex>
+          
           <Flex flexDir={"column"} w="100%" textAlign="center" gap={"1.5rem"} mt={"10px"} padding={"2% 6%"}>
             <Heading
               fontWeight={"bold"}
-              fontSize={{ base: '10px', md: '12px', lg: '16px' }}
+              fontSize={'16px' }
               // size={"md"}
               color="#131212"
+              overflow="hidden"
+              display="-webkit-box"
+              sx={{
+                WebkitLineClamp: 1, // Ajuste o número de linhas conforme necessário
+                WebkitBoxOrient: "vertical",
+              }}
             >
               {item.name}
             </Heading>

@@ -93,7 +93,7 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
                 gap="1rem"
               >
                 <Flex gap="1rem" align={"center"}>
-                  <FormLabel>Observações</FormLabel>
+                  {/* <FormLabel>Observações</FormLabel> */}
                   <Flex align={"center"}>
                     <FormLabel>Quantidade</FormLabel>
                     <Select
@@ -108,11 +108,11 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
                     </Select>
                   </Flex>
                 </Flex>
-                <Textarea
+                {/* <Textarea
                   w="100%"
                   placeholder={"Ex: Sem cebola"}
                   onChange={(e) => setObs(e.target.value)}
-                />
+                /> */}
               </Flex>
             </Flex>
           </Flex>

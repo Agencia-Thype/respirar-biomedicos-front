@@ -10,12 +10,13 @@ export const theme = extendTheme({
     "black-color": "#251919",
   },
   fonts: {
-    heading: `'Lobster', cursive`,
-    body: `"roboto", sans-serif`,
-    button: `"Lobster", sans-serif`,
+    heading: `'Inter', cursive`,
+    body: `'Inter', sans-serif`,
+    button: `'Inter', sans-serif`,
   },
   styles: {
     global: {
+      color: "title-color"
       // body: {
       //   backgroundImage: BG,
       //   backgroundAttachment: "fixed",
@@ -28,7 +29,7 @@ export const theme = extendTheme({
   components: {
     Heading: {
       baseStyle: {
-        color: "title-color",
+        color: "#116CA0",
       },
       sizes: {
         xs: { fontSize: "0.875rem" }, // 14px
