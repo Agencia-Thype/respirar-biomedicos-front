@@ -66,14 +66,13 @@ export const UserPage = () => {
           justify={"center"}
           flexDir={"column"}
           align={{ base: "center", lg: "flex-start" }}
-          justifyContent={{ base: "center", lg: "flex-start" }}
           gap="1rem"
           mt="2rem"
         >
           <Heading textAlign={"center"} fontFamily={"Montserrat"}>
             Acompanhar Pedidos
           </Heading>
-          <Flex flexDir={{ base: "column", lg: "row" }} gap="1rem">
+          <Flex flexDir={"column"} gap="1rem" w="100%">
             {userProfile?.orders
               ?.filter((order) => !order.confirmDelivery)
               .map((order) => {
