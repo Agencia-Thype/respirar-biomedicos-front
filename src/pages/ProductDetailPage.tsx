@@ -1,60 +1,73 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { ICategoryData } from '../interfaces/categories.intefaces';
 import { Header } from '../components/Header';
-import { Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { Footer } from '../components/Footer'; // Importa o Footer
+import { Flex, Heading, Image, Text, Button, useDisclosure } from '@chakra-ui/react';
+
 export interface Produto {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    categoryId: string;
-    imageURL: string;
-    category: ICategoryData
-  }
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  categoryId: string;
+  imageURL: string;
+  category: ICategoryData;
+}
 
-  export interface ProductDetailPageProps {
-    produtos: Produto[];
-  }
-  
-  const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos }) => {
-    const { productId } = useParams<{ productId: string }>();
-    console.log("Params:", useParams());
-    console.log("Product ID from params:", productId);
-  
-    if (!productId) {
-      return <div>Product not found</div>;
-    }
-  
-    const product = produtos.find((p) => p.id === productId);
-  
-    if (!product) {
-      return <div>Product not found</div>;
-    }
-  
-    return (
-      <div>
-        <Header/>
-        <Flex width={"100%"} flexDirection={"column"}>
-          <Flex width={"100%"}>
-            <Flex width={"50%"}>
-              <Image src={product.imageURL} alt={product.name}/>
-            </Flex>
-            <Flex flexDirection={"column"} width={"50%"}>
-              <Heading>{product.name}</Heading>              
-              <Text>R$ {product.price}</Text>
-            </Flex>
-          </Flex>
+export interface ProductDetailPageProps {
+  produtos: Produto[];
+}
 
-        </Flex>
-        <h1></h1>
-        <p>{product.description}</p>
-        
-        <p></p>
-        <p>Category: {product.category.name}</p>
-      </div>
-    );
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos }) => {
+  const { productId } = useParams<{ productId: string }>();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => {
+    setShow(!show);
   };
-  
-  export default ProductDetailPage;
+
+  if (!productId) {
+    return <div>Product not found</div>;
+  }
+
+  const product = produtos.find((p) => p.id === productId);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  return (
+    <div>
+      <Header />
+      <Flex width={"100%"} flexDirection={"column"} paddingBottom="100px">
+        <Flex width={"100%"} padding="20px">
+          <Flex width={"50%"} padding="20px">
+            <Image src={product.imageURL} alt={product.name} boxSize="100%" objectFit="cover" />
+          </Flex>
+          <Flex flexDirection={"column"} width={"50%"} padding="20px">
+            <Heading mb="4">{product.name}</Heading>
+            <Text mb="4">{product.description}</Text>
+            <Text mb="4" fontSize="2xl" fontWeight="bold">R$ {product.price}</Text>
+            <Button
+              mt="4"
+              width="40%"
+              colorScheme="blue"
+              onClick={onOpen}
+              size="lg"
+            >
+              Adicionar ao Carrinho
+            </Button>
+          </Flex>
+        </Flex>
+        <Flex width="100%" justifyContent="center">
+          
+        </Flex>
+      </Flex>
+      <Footer />
+    </div>
+  );
+};
+
+export default ProductDetailPage;
