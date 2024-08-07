@@ -67,3 +67,11 @@ export type IStatusOrder = {
 export type IOrdersData = z.infer<typeof Order>[];
 
 export type IResponseStatusOrder = z.infer<typeof BaseOrderSchema>;
+
+export type IOrderData = z.infer<typeof Order>;
+
+
+
+export interface IUserDetailsOrderProps {
+  order: IUserDetailOrders;
+}

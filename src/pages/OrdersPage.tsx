@@ -1,4 +1,4 @@
-import { Container, Image, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Image, Spinner } from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -10,14 +10,16 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { OrderContext } from "../contexts/OrdersContext";
 import { IOrdersData } from "../interfaces/orders.interfaces";
 import { useNavigate } from "react-router-dom";
 import useAdminAuth from "../components/useAdminAuth";
+import { Header } from "../components/Header";
 
 export const OrdersPage = () => {
-  useAdminAuth()
+  useAdminAuth();
   const { data, statusOrder, isFetching } = useContext(OrderContext);
 
   const [orders, setOrders] = useState<IOrdersData>();
@@ -53,95 +55,105 @@ export const OrdersPage = () => {
   };
 
   return (
-    <Container maxW={"8xl"}>
-      <VStack spacing={4} alignItems="stretch">
-        <Box overflow={"auto"}>
-          <Button onClick={() => navigate("/admin")} m="1rem 0">
-            Voltar
-          </Button>
-          {orders?.length === 0 ? (
-            <Image
-              src="https://cdn.discordapp.com/attachments/682800725855961174/1103086877013188629/Igor_Garcia_Create_a_funny_image_of_a_burger_with_sad_face_wait_19d577bb-3f46-4126-ac35-a190237db01d.png"
-              w="30%"
-              m="0 auto"
-            />
-          ) : (
-            <Table variant="simple" bg="white" borderRadius={"10px"}>
-              <Thead>
-                <Tr>
-                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
-                    Nº do Pedido
-                  </Th>
-                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
-                    Horário do Pedido
-                  </Th>
-                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
-                    Última Atualização
-                  </Th>
-                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
-                    Pedido
-                  </Th>
-                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
-                    Ações
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {isFetching ? (
-                  <Spinner />
-                ) : (
-                  orders?.map((order) => (
-                    <Fragment key={order.id}>
-                      {!order.finishedOrder && (
-                        <Tr>
-                          <Td textAlign={"center"}>{order.orderNumber}</Td>
-                          <Td textAlign={"center"}>
-                            {formatDate(order.createdAt)}
-                          </Td>
-                          <Td textAlign={"center"}>
-                            {formatDate(order.updatedAt)}
-                          </Td>
-                          <Td textAlign={"center"}>
-                            {order.orderItems.map(
-                              (item) =>
-                                `${item.quantity}x ${item.menuItem.name}. ${item.instructions}`
-                            )}
-                          </Td>
-                          <Td textAlign={"center"}>
-                            {order.orderConfirm ? (
-                              <Button
-                                onClick={() =>
-                                  handleButtons("finish", order.id)
-                                }
-                                colorScheme="teal"
-                                variant="outline"
-                                size="sm"
+    <Box>
+      <Header />
+      <Container padding={"0 10%"} maxW={"100%"}>
+        <VStack spacing={4} alignItems="stretch">
+          <Box overflow={"auto"}>
+            <Button onClick={() => navigate("/admin")} m="1rem 0">
+              Voltar
+            </Button>
+            {orders?.length === 0 ? (
+              <Image src="" w="30%" m="0 auto" />
+            ) : (
+              <Table variant="simple" bg="white" borderRadius={"10px"}>
+                <Thead>
+                  <Tr>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Nº do Pedido
+                    </Th>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Horário do Pedido
+                    </Th>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Última Atualização
+                    </Th>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Pedido
+                    </Th>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Telefone do Usuário
+                    </Th>
+                    <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                      Ações
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {isFetching ? (
+                    <Spinner />
+                  ) : (
+                    orders?.map((order) => (
+                      <Fragment key={order.id}>
+                        {!order.finishedOrder && (
+                          <Tr>
+                            <Td textAlign={"center"}>{order.orderNumber}</Td>
+                            <Td textAlign={"center"}>
+                              {formatDate(order.createdAt)}
+                            </Td>
+                            <Td textAlign={"center"}>
+                              {formatDate(order.updatedAt)}
+                            </Td>
+                            <Td textAlign={"center"}>
+                              {order.orderItems.map(
+                                (item) =>
+                                  `${item.quantity}x ${item.menuItem.name}. ${item.instructions}`
+                              )}
+                            </Td>
+                            <Td textAlign={"center"}>
+                              <Link
+                                to={`https://api.whatsapp.com/send?phone=${order.user.phoneNumber}`}
+                               
                               >
-                                Finalizar Pedido
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() =>
-                                  handleButtons("confirm", order.id)
-                                }
-                                colorScheme="teal"
-                                variant="outline"
-                                size="sm"
-                              >
-                                Confirmar Pedido
-                              </Button>
-                            )}
-                          </Td>
-                        </Tr>
-                      )}
-                    </Fragment>
-                  ))
-                )}
-              </Tbody>
-            </Table>
-          )}
-        </Box>
-      </VStack>
-    </Container>
+                                {order.user.phoneNumber}
+                              </Link>
+                            </Td>
+                            <Td textAlign={"center"}>
+                              {order.orderConfirm ? (
+                                <Button
+                                  onClick={() =>
+                                    handleButtons("finish", order.id)
+                                  }
+                                  colorScheme="teal"
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  Finalizar Pedido
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={() =>
+                                    handleButtons("confirm", order.id)
+                                  }
+                                  colorScheme="teal"
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  Confirmar Pedido
+                                </Button>
+                              )}
+                            </Td>
+                          </Tr>
+                        )}
+                      </Fragment>
+                    ))
+                  )}
+                </Tbody>
+              </Table>
+            )}
+          </Box>
+        </VStack>
+      </Container>
+    </Box>
   );
 };
