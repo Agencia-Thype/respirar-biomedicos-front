@@ -175,7 +175,7 @@ export const CardapioPage = () => {
               <Button
                 key={category.id}
                 bg={selected === category.id ? "logo-color" : "#116CA0"}
-                color={selected === category.id ? "black-color" : "red"}
+                color={selected === category.id ? "#fffff" : "black-color"}
                 rounded="50px"
                 h="45px"
                 w="280px"

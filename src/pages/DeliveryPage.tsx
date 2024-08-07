@@ -45,7 +45,7 @@ export const DeliveryPage = () => {
     <Box>
       <Header />
 
-      <Container maxW={"100%"} maxH={"100%"} >
+      <Container padding={"0 10%"} maxW={"100%"} >
         <VStack spacing={4} alignItems="stretch">
           <Box overflow={"auto"}>
             <Button m="1rem 0" onClick={() => navigate("/admin")}>
