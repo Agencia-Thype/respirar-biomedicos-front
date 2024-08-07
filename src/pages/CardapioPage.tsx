@@ -139,7 +139,7 @@ export const CardapioPage = () => {
             ml={{ base: 0, md: "1rem" }}
             display={{ base: "none", md: "flex" }}
             mt={"80px"}
-            
+            // width={{ base: "none", md: "35%", lg: "40%" }}
             alignItems={"flex-start"} 
           >
             {categories?.map((category) => (
@@ -160,14 +160,15 @@ export const CardapioPage = () => {
             ))}
           </Flex>
           <Container
+            // width={"100%"}
             maxW={"5xl"}
-            w={{ base: "100%", md: "80%" }}
-            px={{ base: "1rem", md: "0" }}
+            w={{ base: "100%", md: "65%", lg: "60%"}}
+            // px={{ base: "1rem", md: "0" }}
             
           >
-            <Flex flexDir="column" justifyContent="center" alignItems="flex-start" >
+            <Flex width={"100%"} flexDir="column" justifyContent="center" alignItems="flex-start" >
               {selected ? (
-                <SimpleGrid  columns={[1, 2, 3, 4, 5]} spacing="10rem">
+                <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="10rem">
                   {cardapio
                     .filter((item) => item.categoryId === selected)
                     .map((item) => (
@@ -181,7 +182,7 @@ export const CardapioPage = () => {
                   <Fragment key={category.id}>
                     <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
                     <Flex
-                    width={"100%"}
+                      
                       overflowX={"scroll"}
                       gap={"2rem"}
                       paddingBottom={"2rem"}

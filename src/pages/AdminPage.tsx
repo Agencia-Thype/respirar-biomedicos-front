@@ -57,7 +57,7 @@ export const AdminPage = () => {
         gap={{ base: "3rem" }}
         padding={"0 10%"}
       >
-        {/* <Heading
+        <Heading
           onClick={handleSubMenu}
           cursor={"pointer"}
           fontFamily={"Montserrat"}
@@ -65,7 +65,7 @@ export const AdminPage = () => {
           borderBottom={showSubMenu ? "solid 1px white" : "none"}
         >
           Atualizar Catálogo
-        </Heading> */}
+        </Heading>
         <Heading
           onClick={() => navigate("/orders")}
           cursor={"pointer"}
@@ -175,7 +175,7 @@ export const AdminPage = () => {
             ml={{ base: 0, md: "1rem" }}
             display={{ base: "none", md: "flex" }}
             mt={"80px"}
-            width={{ base: "none", md: "35%", lg: "40%" }}
+            // width={{ base: "none", md: "35%", lg: "40%" }}
             alignItems={"flex-start"} 
           >
             {categories?.map((category) => (
@@ -218,7 +218,8 @@ export const AdminPage = () => {
                   <Fragment key={category.id}>
                     <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
                     <Flex
-                    width={"100%"}
+                    
+                      // width={"100%"}
                       overflowX={"scroll"}
                       gap={"2rem"}
                       paddingBottom={"2rem"}

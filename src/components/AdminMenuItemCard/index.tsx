@@ -1,38 +1,40 @@
 import { useState } from "react";
 import { IMenuItemInterfaceData } from "../../interfaces/menuItem.interfaces";
-import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
   Flex,
-  Grid,
-  GridItem,
   Heading,
-  Image,  
+  Image,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { BsCartPlusFill } from "react-icons/bs";
-import { ModalConfirm } from "../MenuItemCard/ModalConfirm";
-import { FaCaretDown, FaCaretRight } from "react-icons/fa";
+import { EditMenuItem } from "../CardapioForms/EditMenuItem";
+import { DeleteMenuItem } from "../CardapioForms/DeleteMenuItem";
 
 interface IMenuItemCardProps {
   item: IMenuItemInterfaceData;
 }
 
 export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const [show, setShow] = useState(false);
+  // const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
+  // const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
 
-  const handleClick = () => {
-    setShow(!show);
-  };
+  const [isEditOpenModal, setIsEditOpenModal] = useState(false)
+  const toggleEditModal = () => setIsEditOpenModal(!isEditOpenModal)
 
+  const [isDeleteOpenModal, setIsDeleteOpenModal] = useState(false)
+  const toggleDeleteModal = () => setIsDeleteOpenModal(!isDeleteOpenModal)
   return (
     <>
-      <Flex width={'290.5px' }
-          height={'415px' }  align={"center"} justify={"center"} bg={"#E9F1F5"} borderRadius={"32px"} border={"1px solid #116CA0"} overflow={"hidden"}>
-            
+      <Flex width={'290.5px'}
+            height={'415px'} 
+            align={"center"} 
+            justify={"center"} 
+            bg={"#E9F1F5"} 
+            borderRadius={"32px"} 
+            border={"1px solid #116CA0"} 
+            overflow={"hidden"}>            
         <Flex
           borderRadius={"10px"}
           align={"center"}
@@ -48,21 +50,19 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
               borderTopRadius="32px"
               borderBottomRadius="0px"              
               w="100%"
-              h={'151px' }
+              h={'151px'}
               objectFit="contain"
             />
           </Flex>
-          
           <Flex flexDir={"column"} w="100%" textAlign="center" gap={"1.5rem"} mt={"10px"} padding={"2% 6%"}>
             <Heading
               fontWeight={"bold"}
-              fontSize={'16px' }
-              // size={"md"}
+              fontSize={'16px'}
               color="#131212"
               overflow="hidden"
               display="-webkit-box"
               sx={{
-                WebkitLineClamp: 1, // Ajuste o número de linhas conforme necessário
+                WebkitLineClamp: 1, 
                 WebkitBoxOrient: "vertical",
               }}
             >
@@ -71,11 +71,11 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
             <Text
               height="95px"
               fontSize="0.8rem"
-              fontFamily="roboto"
+              fontFamily="Inter"
               overflow="hidden"
               display="-webkit-box"
               sx={{
-                WebkitLineClamp: 5, // Ajuste o número de linhas conforme necessário
+                WebkitLineClamp: 5, 
                 WebkitBoxOrient: "vertical",
               }}
               textAlign="justify"
@@ -94,22 +94,21 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
 
           <Flex width={"100%"} justifyContent={"center"} gap={"1rem"}>
             <Flex
-            bg="#FFFFFF"              
-            w="100px"
-            h="36px"
-            border={"1px solid #116CA0"}
-            borderRadius="32px"              
-            cursor={"pointer"}
-            align={"center"}
-            justify={"center"}            
-            color={"#116CA0"}              
-            alignItems="center"
-            justifyContent="center"              
-            _hover={{ bg: "#F6B519"}}
+              bg="#FFFFFF"              
+              w="100px"
+              h="36px"
+              border={"1px solid #116CA0"}
+              borderRadius="32px"              
+              cursor={"pointer"}
+              align={"center"}
+              justify={"center"}            
+              color={"#116CA0"}              
+              alignItems="center"
+              justifyContent="center"              
+              _hover={{ bg: "#F6B519"}}
+              // onClick={onDeleteOpen}
             >
-              <Link to={`/produto/${item.id}`}>
-                Ver produto
-              </Link>
+              Excluir              
             </Flex>
             <Flex
               bg="#116CA0"              
@@ -119,19 +118,20 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
               cursor={"pointer"}
               align={"center"}
               justify={"center"}
-              onClick={onOpen}
               color={"#FFFFFF"}              
               alignItems="center"
               justifyContent="center"              
               _hover={{ bg: "#F6B519"}}
+              onClick={toggleEditModal}
             >
-              Comprar
+              Editar
             </Flex>
           </Flex>
         </Flex>
       </Flex>
 
-      <ModalConfirm isOpen={isOpen} onClose={onClose} item={item} />
+      {isEditOpenModal && <EditMenuItem toggleEditModal={toggleEditModal} item={item} />}
+      {isDeleteOpenModal && <DeleteMenuItem toggleDeleteModal={toggleDeleteModal}item={item} />}
     </>
   );
 };

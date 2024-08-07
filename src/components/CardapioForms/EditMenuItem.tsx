@@ -15,24 +15,51 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateMenuItemSchema } from "../../schemas/menuItem.schemas";
 import { IMenuItemUpdate } from "../../interfaces/menuItem.interfaces";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 import { MenuItemContext } from "../../contexts/MenuItemContext";
+import { IMenuItemInterfaceData } from '../../interfaces/menuItem.interfaces';
+import { createPortal } from "react-dom";
 
-export const EditMenuItem = () => {
+interface ModalEditProps {
+  toggleEditModal: () => void
+  item: IMenuItemInterfaceData
+}
+
+export const EditMenuItem = ({ toggleEditModal, item }: ModalEditProps) => {
+  const ref = useRef<HTMLDivElement>(null)
   const { data: categories, isFetching } = useContext(CategoriesContext);
   const {
-    data: menuItens,
-    listItemDetail,
+    data: menuItens,    
     menuItemDeatilData,
     updateMenuItem,
   } = useContext(MenuItemContext);
 
-  const [itemId, setItemId] = useState("");
+  const itemId = item.id
 
   useEffect(() => {
-    listItemDetail(itemId);
-  }, [itemId]);
+    const handleClick = (event: MouseEvent) => {
+        if(!ref.current) {
+            return
+        }
+
+        if(!event.target) {
+            return
+        }
+
+        if(!ref.current.contains(event.target as HTMLElement)) {
+          toggleEditModal()
+        }
+    }
+    window.addEventListener("mousedown", handleClick)
+
+    return () => {
+        window.removeEventListener("mousedown", handleClick)
+    }
+}, [toggleEditModal])
+  // useEffect(() => {
+  //   listItemDetail(item.id);
+  // }, [item.id]);
 
   const {
     register,
@@ -71,119 +98,114 @@ export const EditMenuItem = () => {
         ...filtredData,
       };
     }
-
+    console.log(newData)
     updateMenuItem({ newData, itemId });
   };
 
-  return (
-    <>
-      <Select
-        bg="title-color"
-        borderRadius={"20px"}
-        onChange={(e) => setItemId(e.target.value)}
-        maxW={"400px"}
-        margin={"0 auto"}
-        pt="20px"
+  return createPortal (
+    <Flex 
+      
+      justifyContent={"center"}
+      alignItems={"center"}
+      top={0}
+      backgroundColor={"rgba(0, 0, 0, 0.85)"}
+      w={"100vw"}
+      h={"100vh"}
+      position={"fixed"}
+      zIndex={999}
       >
-        <option value="">Selecione o produto</option>
-        {menuItens.map((item) => (
-          <option value={item.id} key={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </Select>
-      {itemId !== "" && (
-        <Flex
-          as="form"
-          flexDir={"column"}
-          maxW={"400px"}
-          margin={"0 auto"}
-          mt="2rem"
-          gap="1rem"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Divider />
-          <FormControl isInvalid={!!errors.name}>
-            <FormLabel color={"primary-color"}>Nome</FormLabel>
-            <Input
-              placeholder="Digite o nome do produto"
-              {...register("name")}
-              bg="title-color"
-              defaultValue={menuItemDeatilData?.name}
-              borderRadius={"20px"}
-            />
-            {!!errors.name && (
-              <FormErrorMessage>{errors.name.message}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isInvalid={!!errors.imageURL}>
-            <FormLabel color={"primary-color"}>Imagem</FormLabel>
-            <Input
-              placeholder="Digite a URL da imagem"
-              defaultValue={menuItemDeatilData?.imageURL}
-              {...register("imageURL")}
-              bg="title-color"
-              borderRadius={"20px"}
-            />
-            {!!errors.imageURL && (
-              <FormErrorMessage>{errors.imageURL.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
-          <FormControl isInvalid={!!errors.price}>
-            <FormLabel color={"primary-color"}>Preço</FormLabel>
-            <Input
-              bg="title-color"
-              borderRadius={"20px"}
-              placeholder="Digite o preço do produto"
-              {...register("price")}
-              defaultValue={menuItemDeatilData?.price?.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
-              type="text"
-            />
-            {!!errors.price && (
-              <FormErrorMessage>{errors.price.message}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isInvalid={!!errors.description}>
-            <FormLabel color={"primary-color"}>Descrição</FormLabel>
-            <Textarea
-              bg="title-color"
-              borderRadius={"20px"}
-              placeholder="Digite a descrição do produto"
-              defaultValue={menuItemDeatilData?.description}
-              {...register("description")}
-            />
-            {errors.description && (
-              <FormErrorMessage>{errors.description.message}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isInvalid={!!errors.categoryId}>
-            <FormLabel color={"primary-color"}>Categoria</FormLabel>
-            <Select
-              {...register("categoryId")}
-              bg="title-color"
-              borderRadius={"20px"}
-            >
-              <option>Selecione a categoria</option>
-              {isFetching ? (
-                <Spinner />
-              ) : (
-                categories?.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))
+          <Flex
+            as="form"
+            flexDir={"column"}
+            maxW={"400px"}
+            margin={"0 auto"}
+            mt="2rem"
+            gap="1rem"
+            onSubmit={handleSubmit(onSubmit)}
+            ref={ref}
+          >
+            <Divider />
+            <FormControl isInvalid={!!errors.name}>
+              <FormLabel color={"primary-color"}>Nome</FormLabel>
+              <Input
+                placeholder="Digite o nome do produto"
+                {...register("name")}
+                bg="title-color"
+                defaultValue={item.name}
+                borderRadius={"20px"}
+              />
+              {!!errors.name && (
+                <FormErrorMessage>{errors.name.message}</FormErrorMessage>
               )}
-            </Select>
-          </FormControl>
-          <Button bg="logo-color" border={"20px"} type="submit">
-            Atualizar
-          </Button>
-        </Flex>
-      )}
-    </>
+            </FormControl>
+            <FormControl isInvalid={!!errors.imageURL}>
+              <FormLabel color={"primary-color"}>Imagem</FormLabel>
+              <Input
+                placeholder="Digite a URL da imagem"
+                defaultValue={item.imageURL}
+                {...register("imageURL")}
+                bg="title-color"
+                borderRadius={"20px"}
+              />
+              {!!errors.imageURL && (
+                <FormErrorMessage>{errors.imageURL.message}</FormErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl isInvalid={!!errors.price}>
+              <FormLabel color={"primary-color"}>Preço</FormLabel>
+              <Input
+                bg="title-color"
+                borderRadius={"20px"}
+                placeholder="Digite o preço do produto"
+                {...register("price")}
+                defaultValue={item.price?.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+                type="text"
+              />
+              {!!errors.price && (
+                <FormErrorMessage>{errors.price.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isInvalid={!!errors.description}>
+              <FormLabel color={"primary-color"}>Descrição</FormLabel>
+              <Textarea
+                bg="title-color"
+                borderRadius={"20px"}
+                placeholder="Digite a descrição do produto"
+                defaultValue={item.description}
+                {...register("description")}
+              />
+              {errors.description && (
+                <FormErrorMessage>{errors.description.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isInvalid={!!errors.categoryId}>
+              <FormLabel color={"primary-color"}>Categoria</FormLabel>
+              <Select
+                {...register("categoryId")}
+                bg="title-color"
+                borderRadius={"20px"}
+              >
+                <option>Selecione a categoria</option>
+                {isFetching ? (
+                  <Spinner />
+                ) : (
+                  categories?.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))
+                )}
+              </Select>
+            </FormControl>
+            <Button bg="logo-color" border={"20px"} type="submit">
+              Atualizar
+            </Button>
+          </Flex>      
+    </Flex>,
+        document.body
   );
 };
