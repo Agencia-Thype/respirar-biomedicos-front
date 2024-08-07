@@ -3,11 +3,13 @@ import BG from "../assets/bg 1.png";
 
 export const theme = extendTheme({
   colors: {
-    "primary-color": "#BFB6AC",
+    "primary-color": "#3182CE",
+    "input-background": "#EDF2F7",
     "second-color": "#CBAF86",
-    "logo-color": "#F6B51C",
+    "logo-color": "#116CA0",
     "title-color": "#EDE2CA",
-    "black-color": "#251919",
+    "black-color": "#E9F1F5",
+    "button-background": "#3182CE",
   },
   fonts: {
     heading: `'Inter', cursive`,
@@ -16,7 +18,7 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
-      color: "title-color"
+      color: "title-color",
       // body: {
       //   backgroundImage: BG,
       //   backgroundAttachment: "fixed",
