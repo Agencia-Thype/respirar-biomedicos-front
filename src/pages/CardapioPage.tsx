@@ -110,142 +110,139 @@ export const CardapioPage = () => {
           />
         </Flex>
       </Flex>
-      <Heading
-        mt={"5%"}
-        textAlign={"center"}
-        size={{ base: "2xl", md: "3xl", lg: "4xl" }}
-      >
-        Produtos
-      </Heading>
-      <Flex
-        width={"100%"}
-        padding={"0 10%"}
-        justifyContent={"space-between"}
-        flexDirection={"column"}
-        gap={"3rem"}
-      >
-        <Flex align="center" flexDir="column" justify="center" w="100%">
-          {isMobile && (
-            <Button mt="1rem" onClick={onOpen}>
-              <GiHamburgerMenu />
-              <Text ml={2}>Produtos</Text>
-            </Button>
-          )}
-        </Flex>
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Produtos</DrawerHeader>
-            <DrawerBody>
-              <Flex justify={"center"} flexDir={"column"}>
-                {categories?.map((category) => (
-                  <Button
-                    key={category.id}
-                    bg={selected === category.id ? "logo-color" : "#E9F1F5"}
-                    color={
-                      selected === category.id ? "black-color" : "gray.800"
-                    }
-                    rounded={"50px"}
-                    h="50px"
-                    w="90%"
-                    transition={"0.3s"}
-                    _hover={{ bg: "logo-color", color: "black-color" }}
-                    onClick={() => handleButtonClick(category.id)}
-                  >
-                    {category.name}
-                  </Button>
-                ))}
-              </Flex>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-        <Flex width={"100%"} gap={"5rem"}>
-          <Flex
-            flexDir="column"
-            align="center"
-            position="sticky"
-            top="4rem"
-            ml={{ base: 0, md: "1rem" }}
-            display={{ base: "none", md: "flex" }}
-            mt={"80px"}
-            alignItems={"flex-start"}
-          >
-            {categories?.map((category) => (
-              <Button
-                key={category.id}
-                bg={selected === category.id ? "logo-color" : "#116CA0"}
-                color={selected === category.id ? "#fffff" : "black-color"}
-                rounded="50px"
-                h="45px"
-                w="280px"
-                transition="0.3s"
-                _hover={{ bg: "logo-color", color: "black-color" }}
-                onClick={() => handleButtonClick(category.id)}
-                mb="1rem"
-              >
-                {category.name}
+      <Flex w={"100%"} flexDirection={"column"} padding={"5% 10%"}>
+        <Heading
+          textAlign={"center"}
+          size={{ base: "2xl", md: "3xl", lg: "4xl" }}
+        >
+          Produtos
+        </Heading>
+        <Flex
+          width={"100%"}
+          justifyContent={"space-between"}
+          flexDirection={"column"}
+          gap={"3rem"}
+        >
+          <Flex align="center" flexDir="column" justify="center" w="100%">
+            {isMobile && (
+              <Button mt="1rem" onClick={onOpen}>
+                <GiHamburgerMenu />
+                <Text ml={2}>Produtos</Text>
               </Button>
-            ))}
+            )}
           </Flex>
-          <Container
-            
-            maxW={"5xl"}
-
-            w={{ base: "100%", md: "65%", lg: "60%"}}
-           
-            
-          >
-            <Flex width={"100%"} flexDir="column" justifyContent="center" alignItems="flex-start" >
-
-              {selected ? (
-                <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="10rem">
-                  {cardapio
-                    .filter((item) => item.categoryId === selected)
-                    .map((item) => (
-                      <Fragment key={item.id}>
-                        <MenuItensCard item={item} />
-                      </Fragment>
-                    ))}
-                </SimpleGrid>
-              ) : (
-                categories?.map((category) => (
-                  <Fragment key={category.id}>
-                    <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
-                    <Flex
-                      overflowX={"scroll"}
-                      gap={"2rem"}
-                      paddingBottom={"2rem"}
-                      sx={{
-                        "::-webkit-scrollbar": {
-                          height: "6px",
-                        },
-                        "::-webkit-scrollbar-track": {
-                          background: "none",
-                        },
-                        "::-webkit-scrollbar-thumb": {
-                          backgroundColor: "#116CA0",
-                          borderRadius: "20px",
-                          border: "3px solid transparent",
-                        },
-                      }}
+          <Drawer placement="left"  onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Produtos</DrawerHeader>
+              <DrawerBody>
+                <Flex justify={"center"} flexDir={"column"}>
+                  {categories?.map((category) => (
+                    <Button
+                      key={category.id}
+                      bg={selected === category.id ? "logo-color" : "#E9F1F5"}
+                      color={
+                        selected === category.id ? "black-color" : "gray.800"
+                      }
+                      rounded={"50px"}
+                      h="50px"
+                      w="90%"
+                      transition={"0.3s"}
+                      _hover={{ bg: "logo-color", color: "black-color" }}
+                      onClick={() => handleButtonClick(category.id)}
                     >
-                      {cardapio
-                        .filter((item) => item.categoryId === category.id)
-                        .map((item) => (
-                          <Fragment key={item.id}>
-                            <Box w="100%">
-                              <MenuItensCard item={item} />
-                            </Box>
-                          </Fragment>
-                        ))}
-                    </Flex>
-                  </Fragment>
-                ))
-              )}
+                      {category.name}
+                    </Button>
+                  ))}
+                </Flex>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+          <Flex width={"100%"} gap={"5rem"}>
+            <Flex
+              flexDir="column"
+              align="center"
+              position="sticky"
+              top="4rem"
+              ml={{ base: 0, md: "1rem" }}
+              display={{ base: "none", md: "flex" }}
+              mt={"80px"}
+              alignItems={"flex-start"}
+            >
+              {categories?.map((category) => (
+                <Button
+                  key={category.id}
+                  bg={selected === category.id ? "logo-color" : "#116CA0"}
+                  color={selected === category.id ? "#fffff" : "black-color"}
+                  rounded="50px"
+                  h="45px"
+                  w="280px"
+                  transition="0.3s"
+                  _hover={{ bg: "logo-color", color: "black-color" }}
+                  onClick={() => handleButtonClick(category.id)}
+                  mb="1rem"
+                >
+                  {category.name}
+                </Button>
+              ))}
             </Flex>
-          </Container>
+            <Container
+              maxW={"5xl"}
+              w={{ base: "100%", md: "65%", lg: "60%"}}
+            >
+              <Flex width={"100%"} flexDir="column" justifyContent="center" alignItems="flex-start" >
+
+                {selected ? (
+                  <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="10rem">
+                    {cardapio
+                      .filter((item) => item.categoryId === selected)
+                      .map((item) => (
+                        <Fragment key={item.id}>
+                          <MenuItensCard item={item} />
+                        </Fragment>
+                      ))}
+                  </SimpleGrid>
+                ) : (
+                  categories?.map((category) => (
+                    <Fragment key={category.id}>
+                      <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
+                      <Flex
+                        overflowX={"scroll"}
+                        gap={"2rem"}
+                        paddingBottom={"2rem"}
+                        sx={{
+                          "::-webkit-scrollbar": {
+                            height: "6px",
+                          },
+                          "::-webkit-scrollbar-track": {
+                            background: "none",
+                          },
+                          "::-webkit-scrollbar-thumb": {
+                            backgroundColor: "#116CA0",
+                            borderRadius: "20px",
+                            border: "3px solid transparent",
+                          },
+                        }}
+                      >
+                        {cardapio
+                          .filter((item) => item.categoryId === category.id)
+                          .map((item) => (
+                            <Fragment key={item.id}>
+                              <Box w="100%">
+                                <MenuItensCard item={item} />
+                              </Box>
+                            </Fragment>
+                          ))}
+                      </Flex>
+                    </Fragment>
+                  ))
+                )}
+              </Flex>
+            </Container>
+          </Flex>
         </Flex>
+
       </Flex>
       <Footer />
     </Flex>
