@@ -84,7 +84,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>CEP</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     maxLength={8}
@@ -94,7 +94,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>Complemento</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     onChange={(e) => setAddressComplemnt(e.target.value)}
@@ -103,7 +103,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>Numero</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     onChange={(e) => setAddressNumber(e.target.value)}
@@ -123,7 +123,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>Endereço</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     value={cepValue?.logradouro}
@@ -132,7 +132,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>Cidade</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     value={cepValue?.localidade}
@@ -141,7 +141,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
                 <FormControl>
                   <FormLabel color={"black"}>Estado</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     value={cepValue?.uf}
@@ -150,7 +150,7 @@ export const ModalCreateAddress = ({ id, isOpen, onClose }: IModalProps) => {
               </VStack>
             </Flex>
             <Flex w="100%" align={"center"} justify={"center"} gap="1rem">
-              <Button colorScheme="yellow" type="submit">
+              <Button color="button-background" type="submit">
                 Cadastrar
               </Button>
               <Button

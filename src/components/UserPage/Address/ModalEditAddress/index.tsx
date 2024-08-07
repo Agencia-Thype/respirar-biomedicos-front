@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   ICepAPI,
   IReturnCreateAddress,
@@ -102,15 +102,15 @@ export const ModalEditAddress = ({
       return data;
     } else if (type === "number") {
       data = data.split(",")[1];
-
       return data;
     }
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Atualizar Endereço</ModalHeader>
+      <ModalContent bg="white"> {/* Fundo branco */}
+        <ModalHeader color="primary-color">Atualizar Endereço</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex
@@ -124,9 +124,9 @@ export const ModalEditAddress = ({
             <Flex gap="1rem">
               <VStack spacing={6}>
                 <FormControl>
-                  <FormLabel color={"black"}>CEP</FormLabel>
+                  <FormLabel color={"primary-color"}>CEP</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     maxLength={8}
@@ -135,9 +135,9 @@ export const ModalEditAddress = ({
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color={"black"}>Complemento</FormLabel>
+                  <FormLabel color={"primary-color"}>Complemento</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     onChange={(e) => setAddressComplemnt(e.target.value)}
@@ -145,9 +145,9 @@ export const ModalEditAddress = ({
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color={"black"}>Numero</FormLabel>
+                  <FormLabel color={"primary-color"}>Número</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     onChange={(e) => setAddressNumber(e.target.value)}
@@ -156,7 +156,7 @@ export const ModalEditAddress = ({
                 </FormControl>
                 <FormControl>
                   <Checkbox
-                    color="black"
+                    color="primary-color"
                     size="lg"
                     onChange={(e) => setAddressPreference(e.target.checked)}
                   >
@@ -166,9 +166,9 @@ export const ModalEditAddress = ({
               </VStack>
               <VStack spacing={6}>
                 <FormControl>
-                  <FormLabel color={"black"}>Endereço</FormLabel>
+                  <FormLabel color={"primary-color"}>Endereço</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     isDisabled
@@ -181,9 +181,9 @@ export const ModalEditAddress = ({
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color={"black"}>Cidade</FormLabel>
+                  <FormLabel color={"primary-color"}>Cidade</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     value={cepValue?.localidade}
@@ -192,9 +192,9 @@ export const ModalEditAddress = ({
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color={"black"}>Estado</FormLabel>
+                  <FormLabel color={"primary-color"}>Estado</FormLabel>
                   <Input
-                    bg="title-color"
+                    bg="input-background"
                     borderRadius={"20px"}
                     type="text"
                     value={cepValue?.uf}
@@ -205,11 +205,13 @@ export const ModalEditAddress = ({
               </VStack>
             </Flex>
             <Flex w="100%" align={"center"} justify={"center"} gap="1rem">
-              <Button colorScheme="yellow" type="submit">
+              <Button bg="logo-color" color="white" type="submit">
                 Atualizar
               </Button>
               <Button
-                colorScheme="red"
+                bg="transparent"
+                borderColor="logo-color"
+                color="logo-color"
                 variant={"outline"}
                 mr={3}
                 onClick={onClose}
