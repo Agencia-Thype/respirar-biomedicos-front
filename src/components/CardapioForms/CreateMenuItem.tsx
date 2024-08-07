@@ -17,8 +17,8 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
-import { IMenuItemCreate, IMenuItemMutation } from "../../interfaces/menuItem.interfaces";
+import { useContext, useEffect, useRef, useState } from "react";
+import { IMenuItemCreate, IMenuItemInterfaceData, IMenuItemMutation } from "../../interfaces/menuItem.interfaces";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
@@ -26,8 +26,14 @@ import { MenuItemContext } from "../../contexts/MenuItemContext";
 import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
 import { ICategoryDataRequest } from "../../interfaces/categories.intefaces";
 import { api } from "../../services/api";
+import { createPortal } from "react-dom";
 
-export const CreateMenuItem = () => {
+interface ModalCreateProps {
+  toggleCreateModal: () => void  
+}
+
+export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
+  const ref = useRef<HTMLDivElement>(null)
   const { data: categories, isFetching } = useContext(CategoriesContext);
   const { createMenuItem, menuItemDeatilData } = useContext(MenuItemContext);
 
@@ -82,9 +88,38 @@ export const CreateMenuItem = () => {
     // Exemplo: createCategory({ name: newCategoryName });
     onClose();
   };
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+        if(!ref.current) {
+            return
+        }
 
-  return (
-    <>
+        if(!event.target) {
+            return
+        }
+
+        if(!ref.current.contains(event.target as HTMLElement)) {
+          toggleCreateModal()
+        }
+    }
+    window.addEventListener("mousedown", handleClick)
+
+    return () => {
+        window.removeEventListener("mousedown", handleClick)
+    }
+}, [toggleCreateModal])
+
+  return createPortal (
+    <Flex
+      justifyContent={"center"}
+      alignItems={"center"}
+      top={0}
+      backgroundColor={"rgba(0, 0, 0, 0.85)"}
+      w={"100vw"}
+      h={"100vh"}
+      position={"fixed"}
+      zIndex={999}
+    >
       <Flex
         as="form"
         flexDir={"column"}
@@ -93,6 +128,7 @@ export const CreateMenuItem = () => {
         mt="2rem"
         gap="1rem"
         onSubmit={handleSubmit(onSubmit)}
+        ref={ref}
       >
         <FormControl isInvalid={!!errors.name}>
           <FormLabel color={"primary-color"}>Nome</FormLabel>
@@ -203,6 +239,7 @@ export const CreateMenuItem = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Flex>,
+        document.body
   );
 };
