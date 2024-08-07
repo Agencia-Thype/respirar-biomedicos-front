@@ -64,7 +64,7 @@ export const AdminPage = () => {
           fontSize={"22px"}
           borderBottom={showSubMenu ? "solid 1px white" : "none"}
         >
-          Atualizar Catálogo
+          Adicionar Produto
         </Heading>
         <Heading
           onClick={() => navigate("/orders")}

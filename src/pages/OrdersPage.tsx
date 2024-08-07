@@ -1,4 +1,4 @@
-import { Container, Image, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Image, Spinner } from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -10,6 +10,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { OrderContext } from "../contexts/OrdersContext";
 import { IOrdersData } from "../interfaces/orders.interfaces";
@@ -17,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import useAdminAuth from "../components/useAdminAuth";
 
 export const OrdersPage = () => {
-  useAdminAuth()
+  useAdminAuth();
   const { data, statusOrder, isFetching } = useContext(OrderContext);
 
   const [orders, setOrders] = useState<IOrdersData>();
@@ -60,11 +61,7 @@ export const OrdersPage = () => {
             Voltar
           </Button>
           {orders?.length === 0 ? (
-            <Image
-              src="https://cdn.discordapp.com/attachments/682800725855961174/1103086877013188629/Igor_Garcia_Create_a_funny_image_of_a_burger_with_sad_face_wait_19d577bb-3f46-4126-ac35-a190237db01d.png"
-              w="30%"
-              m="0 auto"
-            />
+            <Image src="" w="30%" m="0 auto" />
           ) : (
             <Table variant="simple" bg="white" borderRadius={"10px"}>
               <Thead>
@@ -80,6 +77,9 @@ export const OrdersPage = () => {
                   </Th>
                   <Th textAlign={"center"} fontFamily={"Montserrat"}>
                     Pedido
+                  </Th>
+                  <Th textAlign={"center"} fontFamily={"Montserrat"}>
+                    Telefone do Usuário
                   </Th>
                   <Th textAlign={"center"} fontFamily={"Montserrat"}>
                     Ações
@@ -107,6 +107,14 @@ export const OrdersPage = () => {
                                 `${item.quantity}x ${item.menuItem.name}. ${item.instructions}`
                             )}
                           </Td>
+                          <Td textAlign={"center"}>
+                            <Link
+                              to={`https://api.whatsapp.com/send?phone=${order.user.phoneNumber}`}
+                            >
+                              {order.user.phoneNumber}
+                            </Link>
+                          </Td>
+
                           <Td textAlign={"center"}>
                             {order.orderConfirm ? (
                               <Button
