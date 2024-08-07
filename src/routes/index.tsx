@@ -14,6 +14,7 @@ import { api } from "../services/api";
 import { useEffect, useState } from "react";
 import  ProductDetailPage  from "../pages/ProductDetailPage";
 import {Produto} from "../pages/ProductDetailPage"
+import { SalePage } from "../pages/SalePage";
 
 
 export const Routers: React.FC = () => {
@@ -48,6 +49,7 @@ export const Routers: React.FC = () => {
       <Route path="/user" element={<UserPage />} />
       <Route path="/contacts" element={<ContactPage />} />
       <Route path="/rent" element={<RentPage />} />
+      <Route path="/sale" element={<SalePage />} />
       {produtos.map((produto) => (
         <Route
           key={produto.id}
