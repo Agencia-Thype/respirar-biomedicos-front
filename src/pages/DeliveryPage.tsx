@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { OrderContext } from "../contexts/OrdersContext";
-import { Container, Image } from "@chakra-ui/react";
+import { Container, Flex, Image } from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import {
 import { IOrdersData } from "../interfaces/orders.interfaces";
 import { useNavigate } from "react-router-dom";
 import useAdminAuth from "../components/useAdminAuth";
+import { Header } from "../components/Header";
 
 export const DeliveryPage = () => {
   useAdminAuth();
@@ -52,7 +53,10 @@ export const DeliveryPage = () => {
    
 
   return (
-    <Container maxW={"8xl"}>
+    <Box>
+    <Header/>
+    
+    <Container maxW={"8xl"} bg={"red"}>
       <VStack spacing={4} alignItems="stretch">
         <Box overflow={"auto"}>
           <Button m="1rem 0" onClick={() => navigate("/admin")}>
@@ -131,5 +135,6 @@ export const DeliveryPage = () => {
         </Box>
       </VStack>
     </Container>
+    </Box>
   );
 };
