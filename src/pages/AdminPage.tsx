@@ -83,55 +83,22 @@ export const AdminPage = () => {
           Entregas
         </Heading>
       </Flex>
-      {/* {showSubMenu && (
-        <Flex
-          overflowX={"auto"}
-          justify={{ base: "flex-start", md: "center" }}
-          align={"center"}
-          gap="3rem"
-          mt="3rem"
+      <Flex
+        w={"100%"}
+        flexDirection={"column"}
+        padding={"5% 10%"}
+      >
+        <Heading
+          textAlign={"center"}
+          size={{ base: "2xl", md: "3xl", lg: "4xl" }}
         >
-          <Text
-            color={selectedMenu === 0 ? "white" : "gray"}
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            borderBottom={selectedMenu === 0 ? "2px solid white" : ""}
-            onClick={() => handleClick(0)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Adicionar
-          </Text>
-          <Text
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            color={selectedMenu === 1 ? "white" : "gray"}
-            borderBottom={selectedMenu === 1 ? "2px solid white" : ""}
-            onClick={() => handleClick(1)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Editar
-          </Text>
-          <Text
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            color={selectedMenu === 2 ? "white" : "gray"}
-            borderBottom={selectedMenu === 2 ? "2px solid white" : ""}
-            onClick={() => handleClick(2)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Deletar
-          </Text>
-        </Flex>
-      )}
-      {selectedMenu === 0 ? (
-        <CreateMenuItem />
-      ) : selectedMenu === 1 ? (
-        <EditMenuItem />
-      ) : selectedMenu === 2 ? (
-        <DeleteMenuItem />
-      ) : null} */}
-      <Heading mt={"5%"} textAlign={"center"} size={{ base: "2xl", md: "3xl", lg: "4xl" }}>Produtos</Heading>
-      <Flex  width={"100%"} padding={"0 10%"} justifyContent={"space-between"} flexDirection={"column"} gap={"3rem"}>
+          Produtos
+        </Heading>
+        <Flex  
+          width={"100%"}
+          justifyContent={"space-between"}
+          flexDirection={"column"}
+          gap={"3rem"}>
         <Flex align="center" flexDir="column" justify="center" w="100%">
           {isMobile && (
             <Button mt="1rem" onClick={onOpen}>
@@ -175,7 +142,6 @@ export const AdminPage = () => {
             ml={{ base: 0, md: "1rem" }}
             display={{ base: "none", md: "flex" }}
             mt={"80px"}
-            // width={{ base: "none", md: "35%", lg: "40%" }}
             alignItems={"flex-start"} 
           >
             {categories?.map((category) => (
@@ -195,12 +161,9 @@ export const AdminPage = () => {
               </Button>
             ))}
           </Flex>
-          <Container
-            // width={"100%"}
+          <Container           
             maxW={"5xl"}
             w={{ base: "100%", md: "65%", lg: "60%"}}
-            // px={{ base: "1rem", md: "0" }}
-            
           >
             <Flex width={"100%"} flexDir="column" justifyContent="center" alignItems="flex-start" >
               {selected ? (
@@ -257,6 +220,54 @@ export const AdminPage = () => {
             </Flex>
           </Container>
         </Flex>
+      </Flex>
+      {/* {showSubMenu && (
+        <Flex
+          overflowX={"auto"}
+          justify={{ base: "flex-start", md: "center" }}
+          align={"center"}
+          gap="3rem"
+          mt="3rem"
+        >
+          <Text
+            color={selectedMenu === 0 ? "white" : "gray"}
+            fontSize={"22px"}
+            fontFamily={"Montserrat"}
+            borderBottom={selectedMenu === 0 ? "2px solid white" : ""}
+            onClick={() => handleClick(0)}
+            _hover={{ color: "white", cursor: "pointer" }}
+          >
+            Adicionar
+          </Text>
+          <Text
+            fontSize={"22px"}
+            fontFamily={"Montserrat"}
+            color={selectedMenu === 1 ? "white" : "gray"}
+            borderBottom={selectedMenu === 1 ? "2px solid white" : ""}
+            onClick={() => handleClick(1)}
+            _hover={{ color: "white", cursor: "pointer" }}
+          >
+            Editar
+          </Text>
+          <Text
+            fontSize={"22px"}
+            fontFamily={"Montserrat"}
+            color={selectedMenu === 2 ? "white" : "gray"}
+            borderBottom={selectedMenu === 2 ? "2px solid white" : ""}
+            onClick={() => handleClick(2)}
+            _hover={{ color: "white", cursor: "pointer" }}
+          >
+            Deletar
+          </Text>
+        </Flex>
+      )}
+      {selectedMenu === 0 ? (
+        <CreateMenuItem />
+      ) : selectedMenu === 1 ? (
+        <EditMenuItem />
+      ) : selectedMenu === 2 ? (
+        <DeleteMenuItem />
+      ) : null} */}
 
       </Flex>
       <Footer/>

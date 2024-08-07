@@ -106,7 +106,7 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
               alignItems="center"
               justifyContent="center"              
               _hover={{ bg: "#F6B519"}}
-              // onClick={onDeleteOpen}
+              onClick={toggleDeleteModal}
             >
               Excluir              
             </Flex>

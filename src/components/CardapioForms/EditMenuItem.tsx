@@ -103,8 +103,7 @@ export const EditMenuItem = ({ toggleEditModal, item }: ModalEditProps) => {
   };
 
   return createPortal (
-    <Flex 
-      
+    <Flex
       justifyContent={"center"}
       alignItems={"center"}
       top={0}
