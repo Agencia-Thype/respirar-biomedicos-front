@@ -4,13 +4,9 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  HStack,
-  Heading,
-  Radio,
-  RadioGroup,
   Select,
   Text,
-  VStack,
+  Heading,
 } from "@chakra-ui/react";
 import { IMenuItemData } from "../MenuItemCard/ModalConfirm";
 import { CartCard } from "./CartCard";
@@ -28,10 +24,9 @@ export const Cart = () => {
   const [cart, setCart] = useState<IMenuItemData[]>([]);
   const [orderNumber, setOrderNumber] = useState(1);
   const [selectedAddress, setSelectedAddress] = useState(
-    userDetails?.addresses?.find((address) => address.preferred)?.id
+    userDetails?.addresses?.find((address) => address.preferred)?.id || ""
   );
   const [userId, setUserId] = useState("");
-
   const [paymentMethod, setPaymentMethod] = useState("default");
 
   // Load cart and user data from local storage and server
@@ -55,12 +50,11 @@ export const Cart = () => {
     }
 
     const token = localStorage.getItem("@DownTown:Token") || "";
-
     const tokenDecoded = jwt_decode<any>(token);
 
     listUserDetail(tokenDecoded.id);
     setUserId(tokenDecoded.id);
-  }, []);
+  }, [listUserDetail]);
 
   const incrementOrderNumber = () => {
     setOrderNumber((prevOrderNumber) => {
@@ -78,38 +72,29 @@ export const Cart = () => {
   };
 
   const handleRemoveItem = (item: IMenuItemData) => {
-    const newCart = cart.filter((cartItem) => cartItem !== item);
+    const newCart = cart.filter((cartItem) => cartItem.MenuItem.id !== item.MenuItem.id);
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
     handleTotalValue(newCart);
   };
 
   const handleFinishCheckout = () => {
-    const orderItems = cart.map((cartItem) => {
-      return cartItem.MenuItemCart;
-    });
-  
+    const orderItems = cart.map((cartItem) => cartItem.MenuItemCart);
+
     if (!selectedAddress) {
       setSelectedAddress(
-        userDetails?.addresses?.find((address) => address.preferred)?.id
+        userDetails?.addresses?.find((address) => address.preferred)?.id || ""
       );
     }
-  
+
     const newOrder: ICreateOrder = {
       userId: userId!,
-
-      deliveryAddress: selectedAddress
-
-        ? selectedAddress
-        : userDetails?.addresses?.find((address) => address.preferred)?.id!,
-      paymentMethod: paymentMethod,
+      deliveryAddress: selectedAddress || userDetails?.addresses?.find((address) => address.preferred)?.id!,
+      paymentMethod,
       orderItems,
-
-      orderNumber: orderNumber,
-      confirmDelivery: false, // Adicione esta linha com o valor padrão desejado
+      orderNumber,
+      confirmDelivery: false,
     };
-  
-    console.log(newOrder)
 
     createOrder({ newOrder, incrementOrderNumber });
   };
@@ -119,68 +104,55 @@ export const Cart = () => {
   };
 
   return (
-    <>
-      <Flex
-        flexDir={{ base: "column", md: "row" }}
-        gap="1rem"
-        align={"center"}
-        justify={"center"}
-        maxW={"auto"}
-        margin="0 auto"
-      >
-        <Text
-          fontSize={"20px"}
-          textAlign={"center"}
-          w="80%"
-          color="primary-color"
-        >
+    <Flex
+      flexDir={{ base: "column", md: "row" }}
+      gap="1rem"
+      align="center"
+      justify="center"
+      p="1rem"
+    >
+      <Flex flexDir={{ base: "column", md: "row" }} gap="1rem" w="100%">
+        <Text fontSize="20px" textAlign="center" w="80%" color="primary-color">
           Endereço de entrega:
         </Text>
         <Select
           bg="primary-color"
-          value={
-            selectedAddress ||
-            userDetails?.addresses?.find((address) => address.preferred)?.id ||
-            ""
-          }
+          value={selectedAddress}
           onChange={(event) => setSelectedAddress(event.target.value)}
         >
-          <option>Selecione o Endereço</option>
-          {userDetails?.addresses?.map((address) => {
-            return (
-              <option value={address?.id} key={address?.id}>
-                {address?.street} - {address?.city}, {address.state}
-              </option>
-            );
-          })}
+          <option value="">Selecione o Endereço</option>
+          {userDetails?.addresses?.map((address) => (
+            <option value={address.id} key={address.id}>
+              {address.street} - {address.city}, {address.state}
+            </option>
+          ))}
         </Select>
       </Flex>
-      <Flex flexDir={"column"} gap="1rem">
-        {cart.map((item, index) => {
-          return (
-            <React.Fragment key={index}>
-              <CartCard
-                item={item}
-                onRemove={handleRemoveItem}
-                handleTotalValue={handleTotalValue}
-              />
-            </React.Fragment>
-          );
-        })}
+      <Flex flexDir="column" gap="1rem" w="100%">
+        {cart.map((item) => (
+          <CartCard
+            key={item.MenuItem.id}
+            item={item}
+            onRemove={handleRemoveItem}
+            handleTotalValue={handleTotalValue}
+          />
+        ))}
       </Flex>
       <Flex
-        align={"center"}
-        justify={"center"}
-        w={{ base: "100%", md: "50%" }}
-        margin="0 auto"
+        justify="center"
+        align="center"
+        flexDir="column"
+        gap="1rem"
+        w="100%"
+        p="1rem"
       >
         <FormControl as="fieldset">
           <FormLabel color="primary-color" as="legend">
             Selecione o método de pagamento:
           </FormLabel>
-
           <Select
             bg="primary-color"
+            value={paymentMethod}
             onChange={(e) => handleChange(e.target.value)}
           >
             <option value="default">Selecione o método de pagamento</option>
@@ -190,16 +162,7 @@ export const Cart = () => {
             <option value="PIX">PIX</option>
           </Select>
         </FormControl>
-      </Flex>
-      <Flex
-        justify={"center"}
-        align={"flex-end"}
-        w="100%"
-        mt="1rem"
-        gap="1rem"
-        flexDir={"column"}
-      >
-        <Heading fontFamily={"Inter"} fontSize={"28px"}>
+        <Heading fontFamily="Inter" fontSize="28px">
           Total:{" "}
           {totalValue.toLocaleString("pt-BR", {
             style: "currency",
@@ -207,13 +170,13 @@ export const Cart = () => {
           })}
         </Heading>
         <Button
-          isDisabled={paymentMethod === "default" ? true : false}
+          isDisabled={paymentMethod === "default"}
           onClick={handleFinishCheckout}
           colorScheme="green"
         >
           Finalizar Compra
         </Button>
       </Flex>
-    </>
+    </Flex>
   );
 };

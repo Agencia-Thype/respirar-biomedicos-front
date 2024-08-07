@@ -28,19 +28,19 @@ export const UserAddresses = ({ addresses }: IUserAddress) => {
             return <UserAddressCard address={address} key={address.id} />;
           })}
           <Flex
-            bg="transparent"
+            bg="#116CA0"
             border="2px dotted white"
             w="auto"
-            h="100px"
+            h="50px"
             borderRadius={"10px"}
             align={"center"}
             justify={"center"}
             cursor={"pointer"}
             transition="0.3s"
-            _hover={{ bg: "#ffffff42", color: "black" }}
+            _hover={{ bg: "#ffffff", color: "black" }}
             onClick={onOpen}
           >
-            <Icon as={BsPlusSquare} color="white" boxSize="10" />
+            <Icon as={BsPlusSquare} color="white" boxSize="8" />
           </Flex>
         </Flex>
       </Flex>

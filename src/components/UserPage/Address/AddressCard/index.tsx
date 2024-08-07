@@ -18,7 +18,7 @@ export const UserAddressCard = ({ address }: IUserAddressData) => {
         bg="#ffffffcd"
         p="1.5rem"
         borderRadius={"10px"}
-        border={address.preferred ? "4px solid #F6B51C" : ""}
+        border={address.preferred ? "4px solid #116CA0" : ""}
       >
         {address.preferred && (
           <Flex

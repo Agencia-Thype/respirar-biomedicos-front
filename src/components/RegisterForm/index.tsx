@@ -10,7 +10,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ICreateUser } from "../../interfaces/users.interfaces";
@@ -20,6 +19,7 @@ import axios from "axios";
 import { ICepAPI } from "../../interfaces/addresses.interfaces";
 import { UsersContext } from "../../contexts/UsersContext";
 import { useNavigate } from "react-router-dom";
+import { Header } from "../Header";
 
 export const RegisterForm = () => {
   const { createUser } = useContext(UsersContext);
@@ -28,7 +28,7 @@ export const RegisterForm = () => {
   const [addressComplement, setAddressComplemnt] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [addressPreference, setAddressPreference] = useState(true);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -79,7 +79,7 @@ export const RegisterForm = () => {
           <FormControl isInvalid={!!errors.name}>
             <FormLabel color={"primary-color"}>Nome</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               placeholder="Digite seu nome"
               {...register("name")}
@@ -93,7 +93,7 @@ export const RegisterForm = () => {
             <Input
               placeholder="Digite seu melhor email"
               {...register("email")}
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
             />
             {!!errors.email ? (
@@ -110,7 +110,7 @@ export const RegisterForm = () => {
               type="password"
               placeholder="Digite sua senha"
               {...register("password")}
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
             />
             {!!errors.password && (
@@ -122,7 +122,7 @@ export const RegisterForm = () => {
             <Input
               placeholder="Digite seu celular"
               {...register("phoneNumber")}
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
             />
             {!!errors.phoneNumber && (
@@ -134,7 +134,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>CEP</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               maxLength={8}
@@ -144,7 +144,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>Complemento</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               onChange={(e) => setAddressComplemnt(e.target.value)}
@@ -153,7 +153,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>Numero</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               onChange={(e) => setAddressNumber(e.target.value)}
@@ -164,7 +164,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>Endereço</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               value={cepValue?.logradouro}
@@ -173,7 +173,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>Cidade</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               value={cepValue?.localidade}
@@ -182,7 +182,7 @@ export const RegisterForm = () => {
           <FormControl>
             <FormLabel color={"primary-color"}>Estado</FormLabel>
             <Input
-              bg="title-color"
+              bg="input-background"
               borderRadius={"20px"}
               type="text"
               value={cepValue?.uf}
@@ -198,7 +198,7 @@ export const RegisterForm = () => {
               Endereço Preferido
             </Checkbox>
           </FormControl>
-          <Button bg="logo-color" w="100%" type="submit">
+          <Button bg="button-background" color="white" w="100%" type="submit">
             Cadastrar
           </Button>
         </VStack>
