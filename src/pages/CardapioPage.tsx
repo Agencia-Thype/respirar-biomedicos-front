@@ -50,8 +50,7 @@ export const CardapioPage = () => {
     <Flex flexDir="column" w="100%">
       <Header />
       <Flex
-        width={"100%"}
-        // height={"100vh"}
+        width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
         backgroundImage="url('../src/assets/blue-grunge-background.jpg')"
         backgroundPosition="center"
@@ -72,16 +71,11 @@ export const CardapioPage = () => {
         }}
         flexDirection={{ base: "column", md: "row", lg: "row" }}
       >
-        <Flex
-          width={"100%"}
-          padding={"3% 0"}
-          flexDirection={"column"}
-          gap={"3rem"}
-        >
+        <Flex width="100%" padding="3% 0" flexDirection="column" gap="3rem">
           <Heading fontSize={{ base: "36px", md: "48px", lg: "72px" }}>
             Respire bem!
           </Heading>
-          <Container margin={"0"} padding={"0"} color={"#116CA0"}>
+          <Container margin="0" padding="0" color="#116CA0">
             <Box as="h2" fontSize="36px">
               Viva bem!
             </Box>
@@ -92,36 +86,29 @@ export const CardapioPage = () => {
               quasi porro quam!
             </Text>
           </Container>
-          <Button
-            w={"240px"}
-            h={"60px"}
-            background={"#116CA0"}
-            color={"#E9F1F5"}
-          >
+          <Button w="240px" h="60px" background="#116CA0" color="#E9F1F5">
             Saiba Mais
           </Button>
         </Flex>
-        <Flex width={"50%"} justifyContent={"center"}>
+        <Flex width="50%" justifyContent="center">
           <Image
-            src={"../src/assets/Group 12.png"}
+            src="../src/assets/Group 12.png"
             h="100%"
-            // h="50%"
             objectFit="contain"
           />
         </Flex>
       </Flex>
-      <Flex w={"100%"} flexDirection={"column"} padding={"5% 10%"}>
+      <Flex w="100%" flexDirection="column" padding="3% 2%">
         <Heading
-          textAlign={"center"}
+          textAlign="center"
           size={{ base: "2xl", md: "3xl", lg: "4xl" }}
         >
           Produtos
         </Heading>
         <Flex
-          width={"100%"}
-          justifyContent={"space-between"}
-          flexDirection={"column"}
-          gap={"3rem"}
+          width="100%"
+          justifyContent="space-between"
+          flexDirection="column"
         >
           <Flex align="center" flexDir="column" justify="center" w="100%">
             {isMobile && (
@@ -131,13 +118,13 @@ export const CardapioPage = () => {
               </Button>
             )}
           </Flex>
-          <Drawer placement="left"  onClose={onClose} isOpen={isOpen}>
+          <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
               <DrawerCloseButton />
               <DrawerHeader>Produtos</DrawerHeader>
               <DrawerBody>
-                <Flex justify={"center"} flexDir={"column"}>
+                <Flex justify="center" flexDir="column">
                   {categories?.map((category) => (
                     <Button
                       key={category.id}
@@ -145,10 +132,11 @@ export const CardapioPage = () => {
                       color={
                         selected === category.id ? "black-color" : "gray.800"
                       }
-                      rounded={"50px"}
+                      rounded="50px"
                       h="50px"
                       w="90%"
-                      transition={"0.3s"}
+                      fontSize="10px"
+                      transition="0.3s"
                       _hover={{ bg: "logo-color", color: "black-color" }}
                       onClick={() => handleButtonClick(category.id)}
                     >
@@ -159,16 +147,16 @@ export const CardapioPage = () => {
               </DrawerBody>
             </DrawerContent>
           </Drawer>
-          <Flex width={"100%"} gap={"5rem"}>
+          <Flex>
             <Flex
+              width="18%"
               flexDir="column"
               align="center"
               position="sticky"
               top="4rem"
               ml={{ base: 0, md: "1rem" }}
               display={{ base: "none", md: "flex" }}
-              mt={"80px"}
-              alignItems={"flex-start"}
+              alignItems="flex-start"
             >
               {categories?.map((category) => (
                 <Button
@@ -176,8 +164,9 @@ export const CardapioPage = () => {
                   bg={selected === category.id ? "logo-color" : "#116CA0"}
                   color={selected === category.id ? "#fffff" : "black-color"}
                   rounded="50px"
-                  h="45px"
-                  w="280px"
+                  h="25px"
+                  w="180px"
+                  fontSize="12px"
                   transition="0.3s"
                   _hover={{ bg: "logo-color", color: "black-color" }}
                   onClick={() => handleButtonClick(category.id)}
@@ -187,14 +176,15 @@ export const CardapioPage = () => {
                 </Button>
               ))}
             </Flex>
-            <Container
-              maxW={"5xl"}
-              w={{ base: "100%", md: "65%", lg: "60%"}}
-            >
-              <Flex width={"100%"} flexDir="column" justifyContent="center" alignItems="flex-start" >
-
+            <Container maxW="5xl" w={{ base: "100%", md: "65%", lg: "75%" }}>
+              <Flex width="100%" flexDir="column" alignItems="flex-start">
                 {selected ? (
-                  <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="10rem">
+                  <SimpleGrid
+                    columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                    spacing="12px"
+                    paddingBottom="2rem"
+                    justifyItems="center"
+                  >
                     {cardapio
                       .filter((item) => item.categoryId === selected)
                       .map((item) => (
@@ -206,35 +196,26 @@ export const CardapioPage = () => {
                 ) : (
                   categories?.map((category) => (
                     <Fragment key={category.id}>
-                      <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
-                      <Flex
-                        overflowX={"scroll"}
-                        gap={"2rem"}
-                        paddingBottom={"2rem"}
-                        sx={{
-                          "::-webkit-scrollbar": {
-                            height: "6px",
-                          },
-                          "::-webkit-scrollbar-track": {
-                            background: "none",
-                          },
-                          "::-webkit-scrollbar-thumb": {
-                            backgroundColor: "#116CA0",
-                            borderRadius: "20px",
-                            border: "3px solid transparent",
-                          },
+                      <Heading fontSize={"18px"}  m="0.2rem 0 0.5rem 0">{category.name}</Heading>
+                      <SimpleGrid
+                        w={"100%"}
+                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                        spacing={{
+                          base: "40px",
+                          sm: "50px",
+                          md: "60px",
+                          lg: "78px",
                         }}
+                        paddingBottom="2rem"
                       >
                         {cardapio
                           .filter((item) => item.categoryId === category.id)
                           .map((item) => (
                             <Fragment key={item.id}>
-                              <Box w="100%">
-                                <MenuItensCard item={item} />
-                              </Box>
+                              <MenuItensCard item={item} />
                             </Fragment>
                           ))}
-                      </Flex>
+                      </SimpleGrid>
                     </Fragment>
                   ))
                 )}
@@ -242,7 +223,6 @@ export const CardapioPage = () => {
             </Container>
           </Flex>
         </Flex>
-
       </Flex>
       <Footer />
     </Flex>
