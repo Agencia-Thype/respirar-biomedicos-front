@@ -11,11 +11,17 @@ import { MenuItemContext } from "../contexts/MenuItemContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AdminMenuItensCard } from "../components/AdminMenuItemCard";
+import { IMenuItemInterfaceData } from "../interfaces/menuItem.interfaces";
+
+
 
 export const AdminPage = () => {
   useAdminAuth();
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
+
+  const [isCreateOpenModal, setIsCreateOpenModal] = useState(false)
+  const toggleCreateModal = () => setIsCreateOpenModal(!isCreateOpenModal)
 
   const navigate = useNavigate();
 
@@ -58,7 +64,7 @@ export const AdminPage = () => {
         padding={"0 10%"}
       >
         <Heading
-          onClick={handleSubMenu}
+          onClick={toggleCreateModal}
           cursor={"pointer"}
           fontFamily={"Montserrat"}
           fontSize={"22px"}
@@ -221,6 +227,7 @@ export const AdminPage = () => {
           </Container>
         </Flex>
       </Flex>
+      {isCreateOpenModal && <CreateMenuItem toggleCreateModal={toggleCreateModal} />}
       {/* {showSubMenu && (
         <Flex
           overflowX={"auto"}
