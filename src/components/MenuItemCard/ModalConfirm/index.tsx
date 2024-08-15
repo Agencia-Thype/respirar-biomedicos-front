@@ -68,7 +68,7 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
   const options = Array.from({ length: 10 }, (_, i) => i + 1);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={{ base: "", md: "2xl" }}>
+    <Modal  isOpen={isOpen} onClose={onClose} size={{ base: "", md: "2xl" }}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Confirmar Pedido</ModalHeader>
