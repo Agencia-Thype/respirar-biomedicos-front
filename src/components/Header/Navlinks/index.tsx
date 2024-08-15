@@ -6,10 +6,14 @@ import {
   MenuItemOption,
   MenuList,
   Stack,
+  InputGroup,
+  Input,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import { MenuItem } from "./MenuItem";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BsCartFill, BsPersonFill } from "react-icons/bs";
+import { BsCartFill, BsPersonFill, BsSearch } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { IMenuItemData } from "../../MenuItemCard/ModalConfirm";
 import jwt_decode from "jwt-decode";
@@ -25,6 +29,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
 
   const [activeLink, setActiveLink] = useState(location.pathname);
   const [auth, setAuth] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("@DownTown:Token") || "";
 
@@ -62,6 +67,10 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
     localStorage.removeItem("@DownTown:Admin");
     setAuth(false);
     navigate("/");
+  };
+
+  const handleSearch = () => {
+    navigate(`/cardapio?query=${searchQuery}`);
   };
 
   return (
@@ -126,16 +135,35 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
           Empresa
         </MenuItem>
 
+        <InputGroup maxW="300px">
+          <Input
+            placeholder="Buscar produtos"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            color="white" // Define a cor do texto para branco
+          />
+          <InputRightElement>
+            <IconButton
+              aria-label="Search"
+              icon={<BsSearch />}
+              onClick={handleSearch}
+              variant="ghost"
+              color="white" // Define a cor do ícone para branco
+              _hover={{ bg: "gray.700" }} // Hover com fundo mais escuro
+            />
+          </InputRightElement>
+        </InputGroup>
+
         <Menu>
           <MenuButton
             fontFamily={"Montserrat"}
             fontSize={"20px"}
-            _hover={{ textDecor: "none", color: "logo-color" }}
+            _hover={{ textDecor: "none", color: "white" }} // Define a cor de hover para branco
             fontWeight={activeLink === "admin" ? "bold" : "400"}
-            color={activeLink === "admin" ? "logo-color" : "primary-color"}
+            color={activeLink === "admin" ? "white" : "white"} // Define a cor padrão para branco
             onClick={handleMenu}
           >
-            <BsPersonFill size={25}/>
+            <BsPersonFill size={25} />
           </MenuButton>
           <MenuList>
             {token && auth ? (
@@ -193,7 +221,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
             display={{ base: "none", md: "flex" }}
           >
             <Box pos={"relative"}>
-              <BsCartFill />
+              <BsCartFill color="white" /> {/* Define a cor do ícone do carrinho */}
               <Flex
                 h="20px"
                 w="20px"
@@ -207,6 +235,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
                 pos={"absolute"}
                 top="-3"
                 left="3"
+                color="white" // Define a cor do texto do contador do carrinho para branco
               >
                 {cart.length}
               </Flex>

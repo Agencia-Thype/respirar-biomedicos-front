@@ -51,20 +51,7 @@ export const SliderSale = () => {
 
   return (
     <Box height={"100vh"} overflow={"hidden"} position="relative">
-      {/* Título Fixo Acima do Slider */}
-      <Heading
-        position="absolute"
-        top="10px"
-        left="50%"
-        transform="translateX(-50%)"
-        fontSize="4em"
-        fontWeight="bold"
-        color="#e12222"
-        zIndex="10"
-        textAlign="center"
-      >
-        OFERTA IMPERDÍVEL
-      </Heading>
+      
 
       <Flex
         h={"100vh"}

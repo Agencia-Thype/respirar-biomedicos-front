@@ -24,7 +24,7 @@ export const MenuItem = ({
     <Link
       onClick={onToggle}
       href={to}
-      _hover={{ textDecor: "none", color: "#FFFFFF" }}
+      _hover={{ textDecor: "none", color: "#3182CE" }} // Hover para branco
       textAlign={["left", "left", "center", "center"]}
       display={"flex"}
       alignItems="center"
@@ -32,7 +32,7 @@ export const MenuItem = ({
       fontWeight={activeLink === to ? "bold" : "400"}
       gap="2"
       fontFamily={"Inter, sans-serif"}
-      color={activeLink === to ? "#FFFFF" : "primary-color"}
+      color={activeLink === to ? "#042d4e" : "white"} // Cor padrão azul claro
     >
       {children}
     </Link>
