@@ -70,7 +70,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
   };
 
   const handleSearch = () => {
-    navigate(`/search?query=${searchQuery}`);
+    navigate(`/cardapio?query=${searchQuery}`);
   };
 
   return (

@@ -1,3 +1,11 @@
+import React, { Fragment, useContext, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { MenuItemContext } from "../contexts/MenuItemContext";
+import { CategoriesContext } from "../contexts/CategoriesContext";
+import { MenuItensCard } from "../components/MenuItemCard";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import {
   Button,
   Container,
@@ -17,15 +25,13 @@ import {
   Box,
   Image,
 } from "@chakra-ui/react";
-import React, { Fragment, useContext, useState } from "react";
-import { MenuItemContext } from "../contexts/MenuItemContext";
-import { CategoriesContext } from "../contexts/CategoriesContext";
-import { MenuItensCard } from "../components/MenuItemCard";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
-export const CardapioPage = () => {
+// Função para obter query params da URL
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
+export const CardapioPage: React.FC = () => {
   const { data: cardapio, isFetching: isFetchingCardapio } =
     useContext(MenuItemContext);
   const { data: categories, isFetching: isFetchingCategories } =
@@ -33,6 +39,13 @@ export const CardapioPage = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const navigate = useNavigate();
+  const query = useQuery();
+  const searchQuery = query.get("search")?.toLowerCase() || "";
+
+  useEffect(() => {
+    // Atualiza o estado ou faz outras ações com base na query se necessário
+  }, [searchQuery]);
 
   const handleButtonClick = (button: string) => {
     if (button === selected) {
@@ -42,9 +55,18 @@ export const CardapioPage = () => {
     }
   };
 
+  const handleProductClick = (productId: string) => {
+    navigate(`/product/${productId}`); // Redireciona para a página de detalhes do produto
+  };
+
   if (isFetchingCardapio || isFetchingCategories) {
     return <Spinner />;
   }
+
+  const filteredCardapio = cardapio.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery)
+  );
+
 
   return (
     <Flex flexDir="column" w="100%">
@@ -190,7 +212,7 @@ export const CardapioPage = () => {
                     paddingBottom="2rem"
                     justifyItems="center"
                   >
-                    {cardapio
+                    {filteredCardapio
                       .filter((item) => item.categoryId === selected)
                       .map((item) => (
                         <Fragment key={item.id}>
@@ -199,30 +221,25 @@ export const CardapioPage = () => {
                       ))}
                   </SimpleGrid>
                 ) : (
-                  categories?.map((category) => (
-                    <Fragment key={category.id}>
-                      <Heading fontSize={"18px"}  m="0.2rem 0 0.5rem 0">{category.name}</Heading>
-                      <SimpleGrid
-                        w={"100%"}
-                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-                        spacing={{
-                          base: "40px",
-                          sm: "50px",
-                          md: "60px",
-                          lg: "78px",
-                        }}
-                        paddingBottom="2rem"
-                      >
-                        {cardapio
-                          .filter((item) => item.categoryId === category.id)
-                          .map((item) => (
-                            <Fragment key={item.id}>
-                              <MenuItensCard item={item} />
-                            </Fragment>
-                          ))}
-                      </SimpleGrid>
-                    </Fragment>
-                  ))
+                  <SimpleGrid
+                    columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                    spacing={{
+                      base: "40px",
+                      sm: "50px",
+                      md: "60px",
+                      lg: "78px",
+                    }}
+                    paddingBottom="2rem"
+                    justifyItems="center"
+                  >
+                    {filteredCardapio
+                      .filter((item) => item.name === selected)
+                      .map((item) => (
+                        <Fragment key={item.id}>
+                          <MenuItensCard item={item} />
+                        </Fragment>
+                      ))}
+                  </SimpleGrid>
                 )}
               </Flex>
             </Container>

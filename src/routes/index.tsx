@@ -51,9 +51,7 @@ export const Routers: React.FC = () => {
       <Route path="/contacts" element={<ContactPage />} />
       <Route path="/rent" element={<RentPage />} />
       <Route path="/sale" element={<SalePage />} />
-      <Route path="/" element={<ProductSearch />} />
-        <Route path="/products" element={<CardapioPage />} />
-        <Route path="/product/:productId" element={<ProductDetailPage produtos={[]} />} />
+    
       {produtos.map((produto) => (
         <Route
           key={produto.id}
