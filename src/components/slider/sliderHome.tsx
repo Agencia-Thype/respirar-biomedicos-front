@@ -11,7 +11,7 @@ import img7 from "../../assets/image/img7.png";
 import img8 from "../../assets/image/img8.png";
 import img9 from "../../assets/image/img9.jpeg";
 import { useEffect, useRef, useState } from "react";
-import { Thumbnail } from "./thumbnail";
+import  Thumbnail  from "./thumbnail";
 
 
 
@@ -163,7 +163,7 @@ export const Slider = () => {
         </Button>
         <Button
           onClick={handleNext}
-          background={"#3182CE"}
+          background={"#92d1e4"}
           borderRadius={"50%"}
         >
           {">"}
