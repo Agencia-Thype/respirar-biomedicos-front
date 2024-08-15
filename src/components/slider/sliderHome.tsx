@@ -1,6 +1,7 @@
-/// <reference types="node" />
-import { Box, LinkOverlay, LinkBox, Button, Flex, Heading, Text } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Box, LinkOverlay, LinkBox, Button, Flex, Heading } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Thumbnail from "./thumbnail";
 import img1 from "../../assets/image/img1.png";
 import img2 from "../../assets/image/img2.png";
 import img3 from "../../assets/image/img3.png";
@@ -10,10 +11,6 @@ import img6 from "../../assets/image/img6.png";
 import img7 from "../../assets/image/img7.png";
 import img8 from "../../assets/image/img8.png";
 import img9 from "../../assets/image/img9.jpeg";
-import { useEffect, useRef, useState } from "react";
-import  Thumbnail  from "./thumbnail";
-
-
 
 const images = [
   { src: img1, label: "C-PAP" },
@@ -28,11 +25,9 @@ const images = [
 ];
 
 export const Slider = () => {
-  const navigate = useNavigate();
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+  const navigate = useNavigate();
   const delay = 7000;
 
   const resetTimeout = () => {
@@ -68,12 +63,15 @@ export const Slider = () => {
     );
   };
 
+  // Rotaciona o array de thumbnails para colocar o ativo na frente
+  const reorderedImages = [...images.slice(currentIndex), ...images.slice(0, currentIndex)];
+
   return (
     <Box height={"100vh"} overflow={"hidden"}>
       <Flex
         h={"100vh"}
         className="carousel"
-        transition="transform 0.5s ease-in-out"
+        transition="transform 0.3s ease-in-out"
         transform={`translateX(${-currentIndex * 100}%)`}
       >
         {images.map((image, index) => (
@@ -93,7 +91,7 @@ export const Slider = () => {
             <Flex
               backgroundColor={"transparent"}
               backgroundImage={
-                "linear-gradient(120deg, rgba(255, 255, 255, 0.883), rgba(99, 194, 206, 0.632) )"
+                "linear-gradient(120deg, rgba(255, 252, 252, 0.345), rgba(99, 194, 206, 0.329) )"
               }
               backdropFilter={"blur(20px)"}
               flexDirection={"column"}
@@ -135,11 +133,11 @@ export const Slider = () => {
         gap="20px"
         zIndex="100"
       >
-        {images.map((image, index) => (
+        {reorderedImages.map((image, index) => (
           <Thumbnail
             key={index}
             image={image}
-            isActive={index === currentIndex}
+            isActive={index === 0} // O primeiro thumbnail é sempre o ativo
           />
         ))}
       </Flex>
@@ -172,3 +170,5 @@ export const Slider = () => {
     </Box>
   );
 };
+
+export default Slider;
