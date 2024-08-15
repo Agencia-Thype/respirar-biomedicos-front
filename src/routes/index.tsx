@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import  ProductDetailPage  from "../pages/ProductDetailPage";
 import {Produto} from "../pages/ProductDetailPage"
 import { SalePage } from "../pages/SalePage";
+import ProductSearch from "../components/Header/Research";
 
 
 export const Routers: React.FC = () => {
@@ -50,6 +51,9 @@ export const Routers: React.FC = () => {
       <Route path="/contacts" element={<ContactPage />} />
       <Route path="/rent" element={<RentPage />} />
       <Route path="/sale" element={<SalePage />} />
+      <Route path="/" element={<ProductSearch />} />
+        <Route path="/products" element={<CardapioPage />} />
+        <Route path="/product/:productId" element={<ProductDetailPage produtos={[]} />} />
       {produtos.map((produto) => (
         <Route
           key={produto.id}

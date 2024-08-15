@@ -6,10 +6,14 @@ import {
   MenuItemOption,
   MenuList,
   Stack,
+  InputGroup,
+  Input,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import { MenuItem } from "./MenuItem";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BsCartFill, BsPersonFill } from "react-icons/bs";
+import { BsCartFill, BsPersonFill, BsSearch } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { IMenuItemData } from "../../MenuItemCard/ModalConfirm";
 import jwt_decode from "jwt-decode";
@@ -25,6 +29,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
 
   const [activeLink, setActiveLink] = useState(location.pathname);
   const [auth, setAuth] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("@DownTown:Token") || "";
 
@@ -62,6 +67,10 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
     localStorage.removeItem("@DownTown:Admin");
     setAuth(false);
     navigate("/");
+  };
+
+  const handleSearch = () => {
+    navigate(`/search?query=${searchQuery}`);
   };
 
   return (
@@ -126,6 +135,22 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
           Empresa
         </MenuItem>
 
+        <InputGroup maxW="300px">
+          <Input
+            placeholder="Buscar produtos"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <InputRightElement>
+            <IconButton
+              aria-label="Search"
+              icon={<BsSearch />}
+              onClick={handleSearch}
+              variant="ghost"
+            />
+          </InputRightElement>
+        </InputGroup>
+
         <Menu>
           <MenuButton
             fontFamily={"Montserrat"}
@@ -135,7 +160,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
             color={activeLink === "admin" ? "logo-color" : "primary-color"}
             onClick={handleMenu}
           >
-            <BsPersonFill size={25}/>
+            <BsPersonFill size={25} />
           </MenuButton>
           <MenuList>
             {token && auth ? (

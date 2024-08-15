@@ -181,7 +181,12 @@ export const CardapioPage = () => {
                 {selected ? (
                   <SimpleGrid
                     columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-                    spacing="12px"
+                    spacing={{
+                      base: "40px",
+                      sm: "50px",
+                      md: "60px",
+                      lg: "78px",
+                    }}
                     paddingBottom="2rem"
                     justifyItems="center"
                   >
