@@ -108,9 +108,7 @@ export const CardapioPage: React.FC = () => {
               quasi porro quam!
             </Text>
           </Container>
-          <Button w="240px" h="60px" background="#116CA0" color="#E9F1F5">
-            Saiba Mais
-          </Button>
+          
         </Flex>
         <Flex width="50%" justifyContent="center">
           <Image

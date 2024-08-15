@@ -140,6 +140,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
             placeholder="Buscar produtos"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            color="white" // Define a cor do texto para branco
           />
           <InputRightElement>
             <IconButton
@@ -147,6 +148,8 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
               icon={<BsSearch />}
               onClick={handleSearch}
               variant="ghost"
+              color="white" // Define a cor do ícone para branco
+              _hover={{ bg: "gray.700" }} // Hover com fundo mais escuro
             />
           </InputRightElement>
         </InputGroup>
@@ -155,9 +158,9 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
           <MenuButton
             fontFamily={"Montserrat"}
             fontSize={"20px"}
-            _hover={{ textDecor: "none", color: "logo-color" }}
+            _hover={{ textDecor: "none", color: "white" }} // Define a cor de hover para branco
             fontWeight={activeLink === "admin" ? "bold" : "400"}
-            color={activeLink === "admin" ? "logo-color" : "primary-color"}
+            color={activeLink === "admin" ? "white" : "white"} // Define a cor padrão para branco
             onClick={handleMenu}
           >
             <BsPersonFill size={25} />
@@ -218,7 +221,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
             display={{ base: "none", md: "flex" }}
           >
             <Box pos={"relative"}>
-              <BsCartFill />
+              <BsCartFill color="white" /> {/* Define a cor do ícone do carrinho */}
               <Flex
                 h="20px"
                 w="20px"
@@ -232,6 +235,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
                 pos={"absolute"}
                 top="-3"
                 left="3"
+                color="white" // Define a cor do texto do contador do carrinho para branco
               >
                 {cart.length}
               </Flex>
