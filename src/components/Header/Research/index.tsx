@@ -8,7 +8,7 @@ const ProductSearch: React.FC = () => {
 
   const handleSearch = () => {
     if (query.trim()) {
-      navigate(`/cardapio?search=${encodeURIComponent(query.trim())}`); // Redireciona para a página de produtos com a query de busca
+      navigate(`/cardapio?query=${encodeURIComponent(query.trim())}`); // Redireciona para a página de cardápio com a query de busca
     }
   };
 

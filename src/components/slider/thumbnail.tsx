@@ -12,7 +12,8 @@ const Thumbnail = ({ image, isActive, color = "#3182CE" }: ThumbnailProps) => {
       as="img"
       src={image.src}
       alt={image.label}
-      border={isActive ? `2px solid ${color}` : "none"}
+       borderRadius="10px"
+      border={isActive ? "2px solid #3182CE" : "2px solid transparent"}
       width="90px"
       height="90px"
       cursor="pointer"

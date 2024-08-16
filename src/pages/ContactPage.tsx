@@ -98,7 +98,7 @@ export const ContactPage = () => {
               <Text color={"#116CA0"}>Sexta e Sábado: 18h00 às 00h00</Text>
               <Text color={"#116CA0"}>Domingo: 18h00 às 22h30</Text>
             </Flex>
-            <Flex flexDir={"column"} gap="1rem">
+            {/* <Flex flexDir={"column"} gap="1rem">
               <Heading fontFamily={"Inter"}  color={"#116CA0"}>Redes Sociais</Heading>
               <Text color={"#116CA0"}>
                 Siga-nos em nossas redes sociais para ficar por dentro das
@@ -130,7 +130,7 @@ export const ContactPage = () => {
                   _hover={{ transform: "scale(1.2)" }}
                 />
               </Flex>
-            </Flex>
+            </Flex> */}
           </Flex>
           <Flex flexDir={"column"} gap="2rem" w={{ base: "100%", lg: "30%" }}>
             <Flex
