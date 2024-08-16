@@ -49,9 +49,9 @@ import {
                         </AspectRatio>
                     </Flex>
                 </Flex>
-            </Flex>
-            <Flex padding={"5% 10%"} justifyContent={"space-between"} flexDir={{ base: "column", lg: "row" }} gap="1rem" pb="2rem">
-                <Flex maxW={"calc(100%/3)"} flexDir={"column"} gap="1rem">
+            </Flex >
+            <Flex padding={"5% 10%"} h={"30%"} justifyContent={"space-between"} flexDir={{ base: "column", lg: "row" }} gap="1rem" pb="2rem">
+                <Flex  maxW={"calc(100%/2)"} flexDir={"column"} gap="1rem">
                     <Flex flexDir={"column"} gap="0.5rem">
                         <Heading fontFamily={"Inter"}  color={"#116CA0"}>Endereço</Heading>
                         <Text color={"#116CA0"}>
@@ -71,13 +71,13 @@ import {
                         <Text color={"#116CA0"}>respirarbiomedicos@gmail.com</Text>
                     </Flex>
                 </Flex>
-                <Flex maxW={"calc(100%/3)"}  flexDir={"column"} gap="0.5rem">
+                <Flex maxW={"calc(100%/2)"}  flexDir={"column"} gap="0.5rem">
                     <Heading fontFamily={"Inter"}  color={"#116CA0"}>Horario de Funcionamento:</Heading>
                     <Text color={"#116CA0"}>Segunda a Quinta: 18h00 às 23h00</Text>
                     <Text color={"#116CA0"}>Sexta e Sábado: 18h00 às 00h00</Text>
                     <Text color={"#116CA0"}>Domingo: 18h00 às 22h30</Text>
                 </Flex>
-                <Flex maxW={"calc(100%/3)"} flexDir={"column"} gap="1rem">
+                {/* <Flex maxW={"calc(100%/3)"} flexDir={"column"} gap="1rem">
                     <Heading fontFamily={"Inter"}  color={"#116CA0"}>Redes Sociais</Heading>
                     <Text color={"#116CA0"}>
                     Siga-nos em nossas redes sociais para ficar por dentro das
@@ -109,7 +109,7 @@ import {
                         _hover={{ transform: "scale(1.2)" }}
                     />
                     </Flex>
-                </Flex>
+                </Flex> */}
                 {/* <Flex flexDir={"column"} gap="2rem" w={{ base: "100%", lg: "30%" }}>
                 </Flex> */}
                 
