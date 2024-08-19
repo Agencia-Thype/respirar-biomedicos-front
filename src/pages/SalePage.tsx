@@ -27,11 +27,12 @@ import { Header } from "../components/Header";
 import { Slider } from "../components/slider/sliderHome";
 import { SliderSale } from "../components/slider/sliderSale";
 import { Footer } from "../components/Footer";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const SalePage = () => {
+export const SalePage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   return (
     <Container padding={"0"} maxW={"100vw"}>
-      <Header />
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <SliderSale />
       <Flex
         padding={"5% 10%"}

@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../contexts/OrdersContext";
+import { ProductSearchProps } from "../../interfaces/menuItem.interfaces";
 
-export const Header = () => {
+export const Header: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   const { ordersQuantity } = useContext(OrderContext);
   const { isOpen, onToggle } = useDisclosure();
   const [quantity, setQuantity] = useState(
@@ -76,7 +77,7 @@ export const Header = () => {
         </Flex>
         <MenuToggle isOpen={isOpen} onToggle={onToggle} />
       </Flex>
-      <NavLinks isOpen={isOpen} onToggle={onToggle} />
+      <NavLinks handleSearch={handleSearch} isOpen={isOpen} onToggle={onToggle} setFilteredCardapio={setFilteredCardapio} />
     </Flex>
   );
 };

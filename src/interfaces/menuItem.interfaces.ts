@@ -56,3 +56,40 @@ export type IMenuItemUpdateMutation = {
   newData: IMenuItemUpdate;
   itemId: string;
 };
+export interface Produto {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  categoryId: string;
+  imageURL: string;
+  category: ICategoryData;
+}
+
+export interface ProductDetailPageProps {
+  produtos: Produto[];
+  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  handleSearch: ()=> void
+}
+
+
+export interface ProductListProps {
+  cardapio: IMenuItemInterfaceData[];
+  filteredCardapio: IMenuItemInterfaceData[];
+  selected: string | null;
+  categories?: ICategoryData[];
+  isSearching: boolean;
+  handleSearch: ()=> void
+}
+
+export interface ProductSearchProps {
+  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  handleSearch: ()=> void
+}
+
+export interface ProductListSearchProps {
+  filteredCardapio: IMenuItemInterfaceData[]
+  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  handleSearch: ()=> void;
+  isSearching: boolean
+}

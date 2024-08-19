@@ -17,19 +17,23 @@ import { BsCartFill, BsPersonFill, BsSearch } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { IMenuItemData } from "../../MenuItemCard/ModalConfirm";
 import jwt_decode from "jwt-decode";
+import ProductSearch from "../Research";
+import { IMenuItemInterfaceData, ProductListProps, ProductSearchProps } from "../../../interfaces/menuItem.interfaces";
 
 interface NavLinksProps {
   isOpen: boolean;
   onToggle: () => void;
+  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  handleSearch: ()=> void
 }
 
-export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
+export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }: NavLinksProps) => {
   let location = useLocation();
   const navigate = useNavigate();
 
   const [activeLink, setActiveLink] = useState(location.pathname);
   const [auth, setAuth] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("@DownTown:Token") || "";
 
@@ -69,11 +73,11 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
     navigate("/");
   };
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      navigate(`/cardapio?query=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
+  // const handleSearch = () => {
+  //   if (searchQuery.trim()) {
+  //     navigate(`/cardapio?query=${encodeURIComponent(searchQuery.trim())}`);
+  //   }
+  // };
 
   return (
     <Flex
@@ -136,8 +140,8 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
         >
           Empresa
         </MenuItem>
-
-        <InputGroup maxW="300px">
+        <ProductSearch handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
+        {/* <InputGroup maxW="300px">
           <Input
             placeholder="Buscar produtos"
             value={searchQuery}
@@ -154,7 +158,7 @@ export const NavLinks = ({ isOpen, onToggle }: NavLinksProps) => {
               _hover={{ bg: "gray.700" }} // Hover com fundo mais escuro
             />
           </InputRightElement>
-        </InputGroup>
+        </InputGroup> */}
 
         <Menu>
           <MenuButton

@@ -11,11 +11,11 @@ import { MenuItemContext } from "../contexts/MenuItemContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AdminMenuItensCard } from "../components/AdminMenuItemCard";
-import { IMenuItemInterfaceData } from "../interfaces/menuItem.interfaces";
+import { IMenuItemInterfaceData, ProductListSearchProps } from "../interfaces/menuItem.interfaces";
 
 
 
-export const AdminPage = () => {
+export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,setFilteredCardapio, handleSearch}) => {
   useAdminAuth();
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
@@ -53,7 +53,7 @@ export const AdminPage = () => {
   }
   return (
     <Container maxW={"100%"} p={"0"}>
-      <Header/>
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <Heading mt={"3rem"} fontSize={"34px"} padding={"0 10%"}>Bem Vindo</Heading>
       <Flex
         justify={{ base: "flex-start", md: "center" }}

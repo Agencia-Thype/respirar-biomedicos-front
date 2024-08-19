@@ -23,8 +23,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "../components/Header";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const ContactPage = () => {
+export const ContactPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   const contactFormSchema = z.object({
     name: z.string().min(3, { message: "Pelo menos 3 caracteres" }),
     email: z.string().email({ message: "Email invalido" }),
@@ -49,7 +50,7 @@ export const ContactPage = () => {
 
   return (
     <Container padding={"0"} maxW={"100vw"}>
-      <Header/>
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <Flex padding={"0 10%"} flexDir={"column"} gap="2rem" mt="2rem">
         <Heading fontFamily={"Inter"} textAlign={"center"}  color={"#116CA0"}>Sobre nós</Heading>
         <Image border={"2px solid #116CA0"} src={image} />

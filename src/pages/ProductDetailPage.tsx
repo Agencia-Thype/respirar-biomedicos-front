@@ -4,26 +4,11 @@ import { ICategoryData } from '../interfaces/categories.intefaces';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Flex, Heading, Image, Text, Button, Box, SimpleGrid, Center } from '@chakra-ui/react';
-import { IMenuItemInterfaceData } from '../interfaces/menuItem.interfaces';
+import { IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
 import { ModalConfirm } from '../components/MenuItemCard/ModalConfirm';
 
 
-
-export interface Produto {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  categoryId: string;
-  imageURL: string;
-  category: ICategoryData;
-}
-
-export interface ProductDetailPageProps {
-  produtos: Produto[];
-}
-
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos }) => {
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos,  setFilteredCardapio, handleSearch }) => {
   const { productId } = useParams<{ productId: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,7 +32,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos }) => {
 
   return (
     <Flex flexDirection="column" minHeight="100vh">
-      <Header />
+      <Header  handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
       <Flex flexDirection="column" width="100%" padding="20px" flex="1">
         <Center>
           <Flex width="80%" padding="20px" flexDirection={{ base: "column", md: "row" }}>

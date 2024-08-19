@@ -25,13 +25,11 @@ import {
   Box,
   Image,
 } from "@chakra-ui/react";
+import { ProductList } from "../components/ProductList";
+import { IMenuItemInterfaceData, ProductListSearchProps, ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-// Função para obter query params da URL
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
 
-export const CardapioPage: React.FC = () => {
+export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
   const { data: cardapio, isFetching: isFetchingCardapio } =
     useContext(MenuItemContext);
   const { data: categories, isFetching: isFetchingCategories } =
@@ -40,12 +38,8 @@ export const CardapioPage: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
-  const query = useQuery();
-  const searchQuery = query.get("search")?.toLowerCase() || "";
+  
 
-  useEffect(() => {
-    // Atualiza o estado ou faz outras ações com base na query se necessário
-  }, [searchQuery]);
 
   const handleButtonClick = (button: string) => {
     if (button === selected) {
@@ -55,22 +49,18 @@ export const CardapioPage: React.FC = () => {
     }
   };
 
-  const handleProductClick = (productId: string) => {
-    navigate(`/product/${productId}`); // Redireciona para a página de detalhes do produto
-  };
+
 
   if (isFetchingCardapio || isFetchingCategories) {
     return <Spinner />;
   }
 
-  const filteredCardapio = cardapio.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery)
-  );
+  
 
 
   return (
     <Flex flexDir="column" w="100%">
-      <Header />
+      <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
       <Flex
         width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
@@ -167,81 +157,43 @@ export const CardapioPage: React.FC = () => {
               </DrawerBody>
             </DrawerContent>
           </Drawer>
-          <Flex>
-            <Flex
-              width="18%"
-              flexDir="column"
-              align="center"
-              position="sticky"
-              top="4rem"
-              ml={{ base: 0, md: "1rem" }}
-              display={{ base: "none", md: "flex" }}
-              alignItems="flex-start"
-            >
-              {categories?.map((category) => (
-                <Button
-                  key={category.id}
-                  bg={selected === category.id ? "logo-color" : "#116CA0"}
-                  color={selected === category.id ? "#fffff" : "black-color"}
-                  rounded="50px"
-                  h="25px"
-                  w="180px"
-                  fontSize="12px"
-                  transition="0.3s"
-                  _hover={{ bg: "logo-color", color: "black-color" }}
-                  onClick={() => handleButtonClick(category.id)}
-                  mb="1rem"
-                >
-                  {category.name}
-                </Button>
-              ))}
-            </Flex>
-            <Container maxW="5xl" w={{ base: "100%", md: "65%", lg: "75%" }}>
-              <Flex width="100%" flexDir="column" alignItems="flex-start">
-                {selected ? (
-                  <SimpleGrid
-                    columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-                    spacing={{
-                      base: "40px",
-                      sm: "50px",
-                      md: "60px",
-                      lg: "78px",
-                    }}
-                    paddingBottom="2rem"
-                    justifyItems="center"
-                  >
-                    {filteredCardapio
-                      .filter((item) => item.categoryId === selected)
-                      .map((item) => (
-                        <Fragment key={item.id}>
-                          <MenuItensCard item={item} />
-                        </Fragment>
-                      ))}
-                  </SimpleGrid>
-                ) : (
-                  <SimpleGrid
-                    columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-                    spacing={{
-                      base: "40px",
-                      sm: "50px",
-                      md: "60px",
-                      lg: "78px",
-                    }}
-                    paddingBottom="2rem"
-                    justifyItems="center"
-                  >
-                    {filteredCardapio
-                      .filter((item) => item.name === selected)
-                      .map((item) => (
-                        <Fragment key={item.id}>
-                          <MenuItensCard item={item} />
-                        </Fragment>
-                      ))}
-                  </SimpleGrid>
-                )}
-              </Flex>
-            </Container>
+          <Flex width={"100%"} gap={"5rem"}>
+          <Flex
+            flexDir="column"
+            align="center"
+            position="sticky"
+            top="4rem"
+            ml={{ base: 0, md: "1rem" }}
+            display={{ base: "none", md: "flex" }}
+            mt={"80px"}
+            alignItems={"flex-start"} 
+          >
+            {categories?.map((category) => (
+              <Button
+                key={category.id}
+                bg={selected === category.id ? "logo-color" : "#116CA0"}
+                color={selected === category.id ? "black-color" : "#FFFFFF"}
+                rounded="50px"
+                h="45px"
+                w="280px"
+                transition="0.3s"
+                _hover={{ bg: "logo-color", color: "black-color" }}
+                onClick={() => handleButtonClick(category.id)}
+                mb="1rem"
+              >
+                {category.name}
+              </Button>
+            ))}
           </Flex>
+          <ProductList
+            handleSearch={handleSearch}
+            cardapio={cardapio || []}
+            categories={categories || []}
+            selected={selected}
+            isSearching={isSearching}
+            filteredCardapio={filteredCardapio}
+          />
+        </Flex>
         </Flex>
       </Flex>
       <Footer />

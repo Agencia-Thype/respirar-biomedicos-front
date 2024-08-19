@@ -25,11 +25,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const RentPage = () => {
+export const RentPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   return (
     <Container padding={"0"} maxW={"100vw"}>
-      <Header />
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <Flex
         padding={"5% 10%"}
         width={"100%"}
