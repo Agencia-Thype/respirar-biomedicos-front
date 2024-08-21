@@ -64,6 +64,9 @@ export interface Produto {
   categoryId: string;
   imageURL: string;
   category: ICategoryData;
+  featuredProduct: boolean;
+  sale: boolean;
+  resume: string
 }
 
 export interface ProductDetailPageProps {

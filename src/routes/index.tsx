@@ -46,7 +46,7 @@ export const Routers: React.FC = () => {
   };
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/cardapio" element={<CardapioPage handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/carrinho" element={<CartPage />} />
       <Route path="/login" element={<LoginPage />} />

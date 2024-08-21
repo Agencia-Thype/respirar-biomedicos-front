@@ -17,7 +17,7 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ setFilteredCardapio, hand
 
       setFilteredCardapio(result);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -25,15 +25,6 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ setFilteredCardapio, hand
     setInput(value);
     fetchData(value);
   };
-
-  // const handleSearch = () => {
-  //   if (input.trim()) {
-  //     navigate("/cardapio");
-  //   } else {
-  //     // Se a busca estiver vazia, opcionalmente você pode querer limpar o estado de filtragem
-  //     setFilteredCardapio([]);
-  //   }
-  // };
 
   return (
     <div>

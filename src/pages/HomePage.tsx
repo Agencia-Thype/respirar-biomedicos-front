@@ -20,12 +20,36 @@ import { Header } from "../components/Header";
 import lifestyleImg from "../assets/image/lifestyle-people.jpg";
 import { ProductCard } from "../components/ProductsCards";
 import CPAP from "../assets/image/CPAP.png";
+import { ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
+import { api } from "../services/api";
+import { useEffect, useState } from "react";
 
-export const HomePage = () => {
+export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
   // const navigate = useNavigate();
+  const [featuredProducts, setFeaturedProducts] = useState<Produto[]>([]);
+
+  useEffect(() => {
+    // Função assíncrona para buscar os produtos destacados
+    const fetchFeaturedProducts = async () => {
+      try {
+        const response = await api.get("/menuItem/");
+        const filteredProducts = response.data.filter((product: Produto) => product.featuredProduct === true);
+
+        // Atualiza o estado com os produtos destacados
+        setFeaturedProducts(filteredProducts);
+      } catch (error) {
+        console.error("Erro ao buscar produtos destacados:", error);
+      }
+    };
+
+    // Chama a função
+    fetchFeaturedProducts();
+  }, []); // O array vazio [] faz com que o efeito execute apenas uma vez, quando o componente monta
+
+  console.log(featuredProducts)
   return (
     <Box>
-      <Header />
+      <Header  handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
       <Slider />
 
       <Flex padding={"8%"}>
@@ -62,34 +86,21 @@ export const HomePage = () => {
                 },
               }}
             >
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
-              <ProductCard
-                description="Travesseiro Multi Máscaras Para CPAP - Perfetto"
-                img={CPAP}
-              />
+              {featuredProducts.length > 0 ? (
+                <ul>
+                  {featuredProducts.map((product) => (
+                    <li key={product.id}>
+                      <ProductCard
+                        description={product.name}
+                        img={product.imageURL}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Nenhum produto destacado encontrado.</p>
+              )}
+              
             </SimpleGrid>
           </Flex>
         </Container>

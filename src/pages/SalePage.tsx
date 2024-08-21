@@ -34,14 +34,14 @@ export const SalePage: React.FC<ProductSearchProps> = ({setFilteredCardapio, han
     <Container padding={"0"} maxW={"100vw"}>
       <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <SliderSale />
-      <Flex
+      {/* <Flex
         padding={"5% 10%"}
         justifyContent={"space-between"}
         flexDir={{ base: "column", lg: "row" }}
         gap="1rem"
         pb="2rem"
       >
-      </Flex>
+      </Flex> */}
       <Footer/>
     </Container>
   );
