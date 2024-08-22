@@ -26,8 +26,11 @@ export const createMenuItemSchema = z.object({
   name: z.string().nonempty({ message: "Campo obrigatório" }),
   price: z.string().nonempty({ message: "Campo obrigatório" }).min(3),
   description: z.string().nonempty({ message: "Campo obrigatório" }),
-  imageURL: z.string().nonempty({ message: "Campo obrigatório" }),
+  imageURL: z.array(z.string().url("Deve ser uma URL válida.")).min(1, "Ao menos uma URL de imagem é necessária"), 
+  resume: z.string().max(300, "O resumo deve ter no máximo 300 caracteres"),
   categoryId: z.string().nonempty({ message: "Campo obrigatório" }),
+  sale: z.boolean().default(false),  // Campo booleano
+  featuredProduct: z.boolean().default(false),  // Campo booleano
 });
 
 export const createMenuItemRequestSchema = createMenuItemSchema.extend({
