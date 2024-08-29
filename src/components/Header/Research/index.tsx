@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Input, Button } from "@chakra-ui/react";
+import { Input, Button, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { ProductSearchProps, Produto } from "../../../interfaces/menuItem.interfaces";
 import { api } from "../../../services/api";
+import { BsSearch } from "react-icons/bs";
 
 const ProductSearch: React.FC<ProductSearchProps> = ({ setFilteredCardapio, handleSearch }) => {
   const [input, setInput] = useState("");
@@ -27,14 +28,16 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ setFilteredCardapio, hand
   };
 
   return (
-    <div>
+    <Flex gap={"3%"}>
       <Input
         value={input}
         onChange={(e) => handleChange(e.target.value)}
         placeholder="Buscar produtos..."
       />
-      <Button onClick={handleSearch}>Buscar</Button>
-    </div>
+      <Button onClick={handleSearch}>
+        <BsSearch size={25} />
+      </Button>
+    </Flex>
   );
 };
 

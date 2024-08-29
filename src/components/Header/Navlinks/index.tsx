@@ -171,7 +171,7 @@ export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }
           >
             <BsPersonFill size={25} />
           </MenuButton>
-          <MenuList>
+          <MenuList zIndex={"10"}>
             {token && auth ? (
               <>
                 <MenuItemOption onClick={() => navigate("/admin")}>
@@ -242,6 +242,7 @@ export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }
                 top="-3"
                 left="3"
                 color="white" // Define a cor do texto do contador do carrinho para branco
+                
               >
                 {cart.length}
               </Flex>

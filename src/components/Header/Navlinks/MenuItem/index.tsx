@@ -33,6 +33,7 @@ export const MenuItem = ({
       gap="2"
       fontFamily={"Inter, sans-serif"}
       color={activeLink === to ? "#042d4e" : "white"} // Cor padrão azul claro
+      
     >
       {children}
     </Link>

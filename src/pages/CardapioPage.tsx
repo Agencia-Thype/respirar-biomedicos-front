@@ -51,9 +51,9 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
 
 
 
-  if (isFetchingCardapio || isFetchingCategories) {
-    return <Spinner />;
-  }
+  // if (isFetchingCardapio || isFetchingCategories) {
+  //   return <Spinner />;
+  // }
 
   
 
