@@ -228,53 +228,7 @@ export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,s
         </Flex>
       </Flex>
       {isCreateOpenModal && <CreateMenuItem toggleCreateModal={toggleCreateModal} />}
-      {/* {showSubMenu && (
-        <Flex
-          overflowX={"auto"}
-          justify={{ base: "flex-start", md: "center" }}
-          align={"center"}
-          gap="3rem"
-          mt="3rem"
-        >
-          <Text
-            color={selectedMenu === 0 ? "white" : "gray"}
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            borderBottom={selectedMenu === 0 ? "2px solid white" : ""}
-            onClick={() => handleClick(0)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Adicionar
-          </Text>
-          <Text
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            color={selectedMenu === 1 ? "white" : "gray"}
-            borderBottom={selectedMenu === 1 ? "2px solid white" : ""}
-            onClick={() => handleClick(1)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Editar
-          </Text>
-          <Text
-            fontSize={"22px"}
-            fontFamily={"Montserrat"}
-            color={selectedMenu === 2 ? "white" : "gray"}
-            borderBottom={selectedMenu === 2 ? "2px solid white" : ""}
-            onClick={() => handleClick(2)}
-            _hover={{ color: "white", cursor: "pointer" }}
-          >
-            Deletar
-          </Text>
-        </Flex>
-      )}
-      {selectedMenu === 0 ? (
-        <CreateMenuItem />
-      ) : selectedMenu === 1 ? (
-        <EditMenuItem />
-      ) : selectedMenu === 2 ? (
-        <DeleteMenuItem />
-      ) : null} */}
+      
 
       </Flex>
       <Footer/>

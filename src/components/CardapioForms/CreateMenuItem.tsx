@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -27,6 +28,7 @@ import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
 import { ICategoryDataRequest } from "../../interfaces/categories.intefaces";
 import { api } from "../../services/api";
 import { createPortal } from "react-dom";
+import { BsDashCircleFill, BsNodeMinus, BsNodeMinusFill, BsNodePlus, BsNodePlusFill, BsPlusCircleFill } from "react-icons/bs";
 
 interface ModalCreateProps {
   toggleCreateModal: () => void  
@@ -53,7 +55,10 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
     formState: { errors: categoryErrors },
   } = useForm<ICategoryDataRequest>();
 
-  const onSubmit: SubmitHandler<IMenuItemCreate> = (data) => {
+  const onSubmit: SubmitHandler<IMenuItemCreate> = (data, event) => {
+    if (event) {
+      event.preventDefault(); // Evitar comportamento de envio padrão
+  }
     let priceWithoutCurrency = data.price.replace("R$", "").trim();
     let formatedCurrency = priceWithoutCurrency.replace(",", ".");
     const newData: IMenuItemMutation = {
@@ -61,7 +66,8 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
       price: +formatedCurrency,
     };
     console.log(newData)
-    createMenuItem(newData);
+    createMenuItem(newData)
+    toggleCreateModal()
   };
 
   const format = (price: string) => {
@@ -81,6 +87,7 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
         }
     })
       console.log(response)
+      onClose()
     } catch (error) {
       console.log(error)
     }
@@ -88,26 +95,22 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
     // Exemplo: createCategory({ name: newCategoryName });
     onClose();
   };
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-        if(!ref.current) {
-            return
-        }
+  
 
-        if(!event.target) {
-            return
-        }
 
-        if(!ref.current.contains(event.target as HTMLElement)) {
-          toggleCreateModal()
-        }
-    }
-    window.addEventListener("mousedown", handleClick)
+const [productImageInputs, setProductImageInputs] = useState<string[]>([""]);
 
-    return () => {
-        window.removeEventListener("mousedown", handleClick)
-    }
-}, [toggleCreateModal])
+    const addProductImageInput = () => {
+        setProductImageInputs([...productImageInputs, ""]);
+    };
+
+    const removeProductImageInput = (index: number) => {
+        const updatedProductImage = [...productImageInputs];
+        updatedProductImage.splice(index, 1);
+        setProductImageInputs(updatedProductImage);
+    };
+
+
 
   return createPortal (
     <Flex
@@ -123,12 +126,16 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
       <Flex
         as="form"
         flexDir={"column"}
-        maxW={"400px"}
-        margin={"0 auto"}
-        mt="2rem"
+        w={"360px"}
+        // h={"900px"}
+        // margin={"0 auto"}
+        // mt="2rem"
         gap="1rem"
+        p={"5% 3%"}
         onSubmit={handleSubmit(onSubmit)}
         ref={ref}
+        backgroundColor={"rgba(255, 255, 255, 1)"}
+        borderRadius={"16px"}
       >
         <FormControl isInvalid={!!errors.name}>
           <FormLabel color={"primary-color"}>Nome</FormLabel>
@@ -136,29 +143,48 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
             placeholder="Digite o nome do produto"
             {...register("name")}
             bg="title-color"
-            borderRadius={"20px"}
+            borderRadius={"12px"}
           />
           {!!errors.name && (
             <FormErrorMessage>{errors.name.message}</FormErrorMessage>
           )}
-        </FormControl>
-        <FormControl isInvalid={!!errors.imageURL}>
-          <FormLabel color={"primary-color"}>Imagem</FormLabel>
-          <Input
-            placeholder="Digite a URL da imagem"
-            {...register("imageURL")}
-            bg="title-color"
-            borderRadius={"20px"}
-          />
-          {!!errors.imageURL && (
-            <FormErrorMessage>{errors.imageURL.message}</FormErrorMessage>
-          )}
-        </FormControl>
+        </FormControl>    
+
+
+        {productImageInputs.map((value, index) => (
+                            <Flex className="labelEntities" key={index}>
+                                <Flex  className="divEntities" gap={"10px"}>
+                                    <Flex flexDir={"column"}>
+                                      <FormLabel color={"primary-color"} htmlFor={`Imagem-${index}`}>{`Imagem - ${index + 1}`}</FormLabel>
+                                      <Input id={`Imagem-${index}`} bg="title-color" borderRadius={"12px"} placeholder="Digite o link da imagem" type="text" {...register(`imageURL.${index}`)} value={value} onChange={(e) => {
+                                            const updatedProductImage = [...productImageInputs];
+                                            updatedProductImage[index] = e.target.value;
+                                            setProductImageInputs(updatedProductImage);
+                                        }}/>
+                                    </Flex>
+                                    
+                                    <Flex className="entitiesBtn" gap={"6px"}>
+                                        <button                                           
+                                            type="button"
+                                            onClick={() => removeProductImageInput(index)}
+                                        >
+                                            <BsDashCircleFill color="#3182CE" size={25}/>
+                                        </button>
+                                        <button type="button" onClick={addProductImageInput}>
+                                        <BsPlusCircleFill size={25} color="#3182CE"/>
+                                            
+                                        </button>
+                                    </Flex>
+                                </Flex>
+                            </Flex>
+                        ))}
+
+
         <FormControl isInvalid={!!errors.price}>
           <FormLabel color={"primary-color"}>Preço</FormLabel>
           <Input
             bg="title-color"
-            borderRadius={"20px"}
+            borderRadius={"12px"}
             placeholder="Digite o preço do produto"
             {...register("price")}
             onChange={(e) => format(e.target.value)}
@@ -169,11 +195,26 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
             <FormErrorMessage>{errors.price.message}</FormErrorMessage>
           )}
         </FormControl>
+        <FormControl isInvalid={!!errors.resume}>
+          <FormLabel color={"primary-color"}>Resumo</FormLabel>
+          <Textarea
+            bg="title-color"
+            borderRadius={"12px"}
+            placeholder="Digite o preço do produto"
+            {...register("resume")}
+            // onChange={(e) => format(e.target.value)}
+            // value={price}
+            // type="text"
+          />
+          {!!errors.resume && (
+            <FormErrorMessage>{errors.resume.message}</FormErrorMessage>
+          )}
+        </FormControl>
         <FormControl isInvalid={!!errors.description}>
           <FormLabel color={"primary-color"}>Descrição</FormLabel>
           <Textarea
             bg="title-color"
-            borderRadius={"20px"}
+            borderRadius={"12px"}
             placeholder="Digite a descrição do produto"
             {...register("description")}
           />
@@ -187,7 +228,7 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
             <Select
               {...register("categoryId")}
               bg="title-color"
-              borderRadius={"20px"}
+              borderRadius={"12px"}
             >
               <option>Selecione a categoria</option>
               {isFetching ? (
@@ -205,8 +246,39 @@ export const CreateMenuItem = ({ toggleCreateModal }: ModalCreateProps) => {
             </Button>
           </Flex>
         </FormControl>
-        <Button bg="logo-color" border={"20px"} type="submit">
+
+        <FormControl isInvalid={!!errors.sale}>
+          <FormLabel htmlFor="sale" color={"primary-color"}>Promoção</FormLabel>
+          <Checkbox
+            bg="title-color"
+            borderRadius={"12px"}
+            type="checkbox"
+            {...register("sale")}
+          />
+          {errors.sale && (
+            <FormErrorMessage>{errors.sale.message}</FormErrorMessage>
+          )}
+        </FormControl>
+
+        <FormControl isInvalid={!!errors.featuredProduct}>
+          <FormLabel htmlFor="featuredProduct" color={"primary-color"}>Produtos em Destaque</FormLabel>
+          <Checkbox
+            bg="title-color"
+            borderRadius={"12px"}
+            type="checkbox"
+            {...register("featuredProduct")}
+          />
+          {errors.featuredProduct && (
+            <FormErrorMessage>{errors.featuredProduct.message}</FormErrorMessage>
+          )}
+        </FormControl>
+
+
+        <Button bg="logo-color" color={"#FFFFFF"} border={"12px"} type="submit">
           Adicionar
+        </Button>
+        <Button colorScheme="red" mt={4} onClick={toggleCreateModal}>
+          Cancelar
         </Button>
       </Flex>
 

@@ -7,7 +7,7 @@ export const theme = extendTheme({
     "input-background": "#EDF2F7",
     "second-color": "#CBAF86",
     "logo-color": "#116CA0",
-    "title-color": "#EDE2CA",
+    "title-color": "#EDF2F7",
     "black-color": "#E9F1F5",
     "button-background": "#3182CE",
   },
