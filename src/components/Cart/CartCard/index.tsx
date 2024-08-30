@@ -71,7 +71,7 @@ export const CartCard = ({
         maxW="100%"
         h={{ base: "auto", md: "100px" }}
         objectFit="cover"
-        src={item?.MenuItem.imageURL}
+        src={item?.MenuItem.imageURL[0]}
         borderRadius="20px"
       />
       <Flex flexDir="column" gap="0.5rem" flex="1">

@@ -54,7 +54,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
             overflow="hidden"
           >
             <Image
-              src={item.imageURL}
+              src={item.imageURL[0]}
               bg="#ffff"
               borderTopRadius="32px"
               borderBottomRadius="0px"

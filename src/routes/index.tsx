@@ -48,13 +48,13 @@ export const Routers: React.FC = () => {
     <Routes>
       <Route path="/" element={<HomePage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/cardapio" element={<CardapioPage handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/carrinho" element={<CartPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPager />} />
+      <Route path="/carrinho" element={<CartPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />} />
+      <Route path="/login" element={<LoginPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
+      <Route path="/register" element={<RegisterPager handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/admin" element={<AdminPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/orders" element={<OrdersPage />} />
-      <Route path="/delivery" element={<DeliveryPage />} />
-      <Route path="/user" element={<UserPage />} />
+      <Route path="/orders" element={<OrdersPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
+      <Route path="/delivery" element={<DeliveryPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
+      <Route path="/user" element={<UserPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/contacts" element={<ContactPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/rent" element={<RentPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/sale" element={<SalePage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />} />

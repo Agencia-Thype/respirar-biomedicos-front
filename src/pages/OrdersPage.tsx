@@ -17,8 +17,9 @@ import { IOrdersData } from "../interfaces/orders.interfaces";
 import { useNavigate } from "react-router-dom";
 import useAdminAuth from "../components/useAdminAuth";
 import { Header } from "../components/Header";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const OrdersPage = () => {
+export const OrdersPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   useAdminAuth();
   const { data, statusOrder, isFetching } = useContext(OrderContext);
 
@@ -56,7 +57,7 @@ export const OrdersPage = () => {
 
   return (
     <Box>
-      <Header />
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       <Container padding={"0 10%"} maxW={"100%"}>
         <VStack spacing={4} alignItems="stretch">
           <Box overflow={"auto"}>

@@ -2,13 +2,14 @@ import { Flex, Container, Heading, Link, Text } from "@chakra-ui/react";
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const LoginPage = () => {
+export const LoginPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, handleSearch}) => {
   const navigate = useNavigate();
   return (
     <Flex flexDir="column" w="100%">
       <Flex w="100%">
-        <Header />
+        <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
       </Flex>
       <Flex justifyContent="center" w="100%">
         <Container maxW="lg" mt="1rem">

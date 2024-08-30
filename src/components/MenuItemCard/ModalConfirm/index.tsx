@@ -77,7 +77,7 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
           <Flex gap="1rem" flexDir={{ base: "column", lg: "row" }}>
             <Image
               w={{ base: "100%", lg: "30%" }}
-              src={item.imageURL}
+              src={item.imageURL[0]}
               borderRadius={"10"}
               objectFit={"cover"}
             />

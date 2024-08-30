@@ -114,7 +114,7 @@ export const SliderSale = () => {
             >
               <Flex width={"50%"} justifyContent={"center"} alignItems={"center"}>                
                 <Flex  height={"500px"} overflow={"hidden"}>
-                  <Image height={"100%"} src={item.imageURL}/>
+                  <Image height={"100%"} src={item.imageURL[0]}/>
                 </Flex>
               </Flex>
               <Flex

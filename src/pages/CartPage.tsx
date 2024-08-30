@@ -2,8 +2,9 @@ import { Container, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import { Cart } from "../components/Cart";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header"; // Certifique-se de que o Header está sendo importado corretamente
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const CartPage = () => {
+export const CartPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, handleSearch}) => {
   const token = localStorage.getItem("@DownTown:Token");
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ export const CartPage = () => {
   return (
     <Flex flexDir="column" w="100%">
       <Flex w="100%">
-        <Header />
+        <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
       </Flex>
       <Container maxW={{ base: "8xl", md: "6xl", "2xl": "8xl" }} p="1rem">
         <Flex flexDir="column"  gap="2rem" pb="1rem">

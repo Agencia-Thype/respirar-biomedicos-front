@@ -18,7 +18,7 @@ export interface IMenuItemContext {
       name: string;
       price: number;
       description: string;
-      imageURL: string;
+      imageURL: string[];
       categoryId: string;
     },
     any,

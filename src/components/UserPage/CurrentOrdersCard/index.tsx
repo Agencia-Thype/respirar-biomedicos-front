@@ -27,7 +27,7 @@ export const CurrentOrdersCard = ({ order }: IUserDetailsOrderProps) => {
           align={{ base: "center" }}
         >
           <Image
-            src={item.menuItem.imageURL}
+            src={item.menuItem.imageURL[0]}
             w={{ base: "70%", lg: "30%" }}
             borderRadius={"10px"}
             objectFit={"cover"}

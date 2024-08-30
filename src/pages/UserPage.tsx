@@ -8,8 +8,9 @@ import { CurrentOrdersCard } from "../components/UserPage/CurrentOrdersCard";
 import { OrderContext } from "../contexts/OrdersContext";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const UserPage = () => {
+export const UserPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   const { listUserProfile, userProfile } = useContext(UsersContext);
   const { handleAddress } = useContext(AddressesContext);
   const { statusChange } = useContext(OrderContext);
@@ -28,7 +29,7 @@ export const UserPage = () => {
   return (
     <Flex flexDir="column" w="100%">
       <Flex w="100%">
-        <Header />
+        <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
       </Flex>
       <Container maxW={"8xl"}>
         <Heading mt="2rem">

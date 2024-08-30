@@ -7,8 +7,9 @@ import useAdminAuth from "../components/useAdminAuth";
 import { Header } from "../components/Header";
 import { User } from "../schemas/orders.schemas";
 import { userSchema } from "../schemas/users.schemas";
+import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const DeliveryPage = () => {
+export const DeliveryPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   useAdminAuth();
   const { data, deleteOrder, statusOrder, statusChange } = useContext(OrderContext);
 
@@ -43,7 +44,7 @@ export const DeliveryPage = () => {
 
   return (
     <Box>
-      <Header />
+      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
 
       <Container padding={"0 10%"} maxW={"100%"} >
         <VStack spacing={4} alignItems="stretch">
