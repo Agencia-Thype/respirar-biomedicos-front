@@ -53,13 +53,13 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
       <Slider />
 
       <Flex padding={"8%"}>
-        <Container maxW={"7xl"}>
+        <Container maxW={"100%"} m={"0"}>
           <Flex
-            flexDir={"column"}
-            // mt="2rem"
-            justify={"space-around"}
+            flexDir={"column"}            
+            justify={"space-between"}
             alignItems={"center"}
             gap="5rem"
+            width={"100%"}
             // h={"100%"}
           >
             <Heading color={"#116CA0"} fontSize={"48px"} fontWeight={"800"}>
@@ -92,7 +92,7 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
                     <li key={product.id}>
                       <ProductCard
                         description={product.name}
-                        img={product.imageURL}
+                        img={product.imageURL[0]}
                       />
                     </li>
                   ))}

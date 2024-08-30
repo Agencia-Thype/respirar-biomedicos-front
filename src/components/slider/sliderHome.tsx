@@ -83,10 +83,10 @@ export const Slider = () => {
             backgroundImage={`url(${image.src})`}
             backgroundSize="cover"
             backgroundPosition="center"
-            padding={"150px"}
+            padding={"5% 10%"}
             justifyContent="flex-start"
             position="relative"
-            paddingLeft={"150px"}
+            // paddingLeft={"150px"}
           >
             <Flex
               backgroundColor={"transparent"}
@@ -99,12 +99,12 @@ export const Slider = () => {
               className="content"
               color="#fff"
               textShadow="0 5px 10px #64a7b344"
-              width={"40%"}
-              height={"30%"}
+              width={"640px"}
+              height={"540px"}
               borderRadius={"40px"}
               padding={"4%"}
             >
-              <Heading fontSize="3em" fontWeight="bold" color="#3182CE">
+              <Heading textAlign={"center"} fontSize="3em" fontWeight="bold" color="#3182CE">
                 {image.label.toUpperCase()}
               </Heading>
 
@@ -148,7 +148,7 @@ export const Slider = () => {
         left="15%"
         transform="translateX(-50%)"
         zIndex="100"
-        width="300px"
+        p={"0 10%"}
         maxWidth="30%"
         gap="10px"
       >
