@@ -4,7 +4,7 @@ import { menuItemDataSchema, menuItemForOrder } from "./menuItem.schemas";
 export const orderItemSchema = z.object({
   quantity: z.number(),
   total: z.number(),
-  instructions: z.string(),
+  // instructions: z.string(),
   menuItemId: z.string(),
 });
 

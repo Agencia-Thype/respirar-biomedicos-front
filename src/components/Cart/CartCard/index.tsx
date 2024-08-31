@@ -92,7 +92,11 @@ export const CartCard = ({
         <Select
           size="sm"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => {
+            const newQuantity = Number(e.target.value);
+            setQuantity(newQuantity);
+            updateCart(newQuantity);
+          }}
         >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>

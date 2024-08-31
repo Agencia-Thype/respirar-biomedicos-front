@@ -20,6 +20,9 @@ export interface IMenuItemContext {
       description: string;
       imageURL: string[];
       categoryId: string;
+      sale: boolean;
+      featuredProduct: boolean;
+      resume: string
     },
     any,
     string,

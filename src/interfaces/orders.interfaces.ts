@@ -38,7 +38,7 @@ export interface ICreateOrder extends z.infer<typeof createOrderSchema> {
     menuItemId: string;
     quantity: number;
     total: number;
-    instructions: string;
+    // instructions: string;
   }[];
   orderNumber: number;
 }
