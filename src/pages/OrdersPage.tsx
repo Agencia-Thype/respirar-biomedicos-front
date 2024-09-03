@@ -108,7 +108,7 @@ export const OrdersPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, h
                             <Td textAlign={"center"}>
                               {order.orderItems.map(
                                 (item) =>
-                                  `${item.quantity}x ${item.menuItem.name}. ${item.instructions}`
+                                  `${item.quantity}x ${item.menuItem.name}`
                               )}
                             </Td>
                             <Td textAlign={"center"}>

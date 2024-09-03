@@ -12,7 +12,7 @@ interface IMenuItemDataProps {
     menuItemId: string;
     quantity: number;
     total: number;
-    instructions: string;
+    // instructions: string;
   };
   MenuItem: IMenuItemData;
 }
@@ -36,7 +36,7 @@ export const LastOrderCard = ({ order }: IUserDetailsOrderProps) => {
     item.orderItems.forEach((orderItem) => {
       const menuItem: IMenuItemDataProps = {
         MenuItemCart: {
-          instructions: orderItem.instructions,
+          // instructions: orderItem.instructions,
           menuItemId: orderItem.menuItemId,
           quantity: orderItem.quantity,
           total: orderItem.total,
