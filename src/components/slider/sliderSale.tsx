@@ -145,7 +145,7 @@ export const SliderSale = () => {
         bottom="20px"
         left="50%"
         transform="translateX(-50%)"
-        zIndex="100"
+        zIndex="50"
         width="300px"
         maxWidth="30%"
         gap="10px"

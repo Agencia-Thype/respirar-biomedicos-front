@@ -147,7 +147,7 @@ export const Slider = () => {
         bottom="440px"
         left="15%"
         transform="translateX(-50%)"
-        zIndex="100"
+        zIndex="50"
         p={"0 10%"}
         maxWidth="30%"
         gap="10px"

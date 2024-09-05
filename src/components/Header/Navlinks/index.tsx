@@ -82,15 +82,23 @@ export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }
   return (
     <Flex
       display={{ base: isOpen ? "block" : "none", md: "flex" }}
+      background={"red"}
       flexBasis={{ base: "100%", md: "auto" }}
     >
       <Stack
         spacing={5}
-        align={{ base: "flex-start", sm: "center" }}
-        justify={{ base: "space-between" }}
-        direction={{ base: "column", sm: "row" }}
+        align={{ base: "center", md: "flex-start" }}
+        justify={{ base: "flex-start" }}
+        direction={{ base: "column", md: "row" }}
         pt={{ base: "8", lg: "0" }}
         paddingRight={[5]}
+        position={{base:"fixed", md: "static"}}
+        background={"#116CA0"}
+        // width={{base:"100%",}}
+        // height={{base:"100vh"}}
+        // left={{base:"0"}}
+        // top={{base:"0"}}
+        zIndex={{base:"55"}}
       >
         <MenuItem
           onToggle={onToggle}

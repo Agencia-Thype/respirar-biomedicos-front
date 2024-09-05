@@ -33,6 +33,8 @@ export const Header: React.FC<ProductSearchProps> = ({setFilteredCardapio, handl
       bg="#116CA0"
       height={"10vh"}
       width={"100%"}
+      display={"flex"}
+      justifyContent={{base:"center", md: "space-between"}}
     >
       <Flex
         justify={{ base: "space-between" }}
@@ -56,7 +58,7 @@ export const Header: React.FC<ProductSearchProps> = ({setFilteredCardapio, handl
           onClick={() => navigate("/carrinho")}
         >
           <Box pos={"relative"}>
-            <BsCartFill size={25} />
+            <BsCartFill size={25} color=""/>
             <Flex
               h="20px"
               w="20px"

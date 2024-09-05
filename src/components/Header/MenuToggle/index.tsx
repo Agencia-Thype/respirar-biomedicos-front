@@ -17,12 +17,13 @@ export const MenuToggle = ({ isOpen, onToggle }: IMenuOpenProps) => {
           base: "block",
           md: "none",
         }}
-        color="logo-color"
+        color="#FFFFFF"
+        zIndex={"56"}
       >
         {isOpen ? (
-          <IoMdClose size={"30px"} cursor="pointer" color="logo-color" />
+          <IoMdClose size={"50px"} cursor="pointer" color="#FFFFFF" />
         ) : (
-          <GiHamburgerMenu size={"30px"} cursor="pointer" />
+          <GiHamburgerMenu size={"30px"} cursor="pointer" color="#FFFFFF" />
         )}
       </Box>
     </Flex>
