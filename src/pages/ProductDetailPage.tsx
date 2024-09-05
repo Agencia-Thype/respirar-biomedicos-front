@@ -7,17 +7,16 @@ import { Flex, Heading, Image, Text, Button, Box, SimpleGrid, Center } from '@ch
 import { IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
 import { ModalConfirm } from '../components/MenuItemCard/ModalConfirm';
 
-
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos,  setFilteredCardapio, handleSearch }) => {
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilteredCardapio, handleSearch }) => {
   const { productId } = useParams<{ productId: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0); // Estado para controlar a imagem selecionada
 
   if (!productId) {
     return <div>Product not found</div>;
   }
 
   const product = produtos.find((p) => p.id === productId) as unknown as IMenuItemInterfaceData;
-
 
   if (!product) {
     return <div>Product not found</div>;
@@ -31,33 +30,49 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos,  setFil
     setIsModalOpen(false);
   };
 
+  const handleImageClick = (index: number) => {
+    setSelectedImageIndex(index); // Atualiza o estado com o índice da imagem clicada
+  };
+
   return (
     <Flex flexDirection="column" minHeight="100vh">
-      <Header  handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
+      <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
       <Flex flexDirection="column" width="100%" padding="20px" flex="1">
         <Center>
-          <Flex width="80%" padding="20px" flexDirection={{ base: "column", md: "row" }}>
-            <Flex width={{ base: "100%", md: "40%" }} padding="20px" flexDirection="row" justifyContent="flex-end">
+          <Flex width="80%" padding="20px" flexDirection={{ base: 'column', md: 'row' }}>
+            <Flex width={{ base: '100%', md: '40%' }} padding="20px" flexDirection="row" justifyContent="flex-end">
               <SimpleGrid columns={1} spacing={4} marginRight="20px">
-              {product.imageURL.map((url, index) => (
-                <Image
-                  key={index}
-                  src={url}
-                  alt={`Thumbnail ${index + 1}`}
-                  boxSize="80px"
-                  objectFit="cover"
-                  border="1px solid #ccc"
-                />))}
+                {product.imageURL.map((url, index) => (
+                  <Image
+                    key={index}
+                    src={url}
+                    alt={`Thumbnail ${index + 1}`}
+                    boxSize="80px"
+                    objectFit="cover"
+                    border="1px solid #ccc"
+                    cursor="pointer"
+                    onClick={() => handleImageClick(index)} // Adiciona o evento de clique
+                  />
+                ))}
               </SimpleGrid>
               <Box border="1px solid #ccc" padding="10px" borderRadius="md" width="100%" maxWidth="400px" maxHeight="400px">
-                <Image src={product.imageURL[0]} alt={product.name} boxSize="100%" objectFit="cover" />
+                <Image
+                  src={product.imageURL[selectedImageIndex]} // Renderiza a imagem com base no estado selecionado
+                  alt={product.name}
+                  boxSize="100%"
+                  objectFit="cover"
+                />
               </Box>
             </Flex>
-            <Flex flexDirection="column" width={{ base: "100%", md: "60%" }} padding="20px" alignItems="flex-start" textAlign="left">
+            <Flex flexDirection="column" width={{ base: '100%', md: '60%' }} padding="20px" alignItems="flex-start" textAlign="left">
               <Heading mb="4">{product.name}</Heading>
-              <Text fontSize="xl" fontWeight="bold" mb="4">R$ {product.price}</Text>
-              <Text mb="4" textAlign={"justify"}>{product.resume}</Text>
-              <Button mt="4"  colorScheme="blue" size="sm" onClick={handleAddToCartClick}>
+              <Text fontSize="xl" fontWeight="bold" mb="4">
+                R$ {product.price}
+              </Text>
+              <Text mb="4" textAlign="justify">
+                {product.resume}
+              </Text>
+              <Button mt="4" colorScheme="blue" size="sm" onClick={handleAddToCartClick}>
                 Adicionar ao Carrinho
               </Button>
             </Flex>
@@ -65,7 +80,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos,  setFil
         </Center>
         <Center width="100%">
           <Box width="80%" padding="20px">
-            <Heading size="md" mb="4" textAlign="center">Descrição</Heading>
+            <Heading size="md" mb="4" textAlign="center">
+              Descrição
+            </Heading>
             <Text textAlign="justify">{product.description}</Text>
           </Box>
         </Center>

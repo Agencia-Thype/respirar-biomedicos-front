@@ -70,7 +70,7 @@ export const LoginForm = () => {
           )}
         </FormControl>
 
-        <Button borderRadius={"20px"} w="100%" type="submit" bg="logo-color">
+        <Button borderRadius={"20px"} w="100%" type="submit" bg="logo-color" color={"#FFFFFF"}>
           Login
         </Button>
       </VStack>
