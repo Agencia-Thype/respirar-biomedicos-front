@@ -20,20 +20,21 @@ import { Header } from "../components/Header";
 import lifestyleImg from "../assets/image/lifestyle-people.jpg";
 import { ProductCard } from "../components/ProductsCards";
 import CPAP from "../assets/image/CPAP.png";
-import { ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
+import { IMenuItemInterfaceData, ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
 import { api } from "../services/api";
 import { useEffect, useState } from "react";
+import { MenuItensCard } from "../components/MenuItemCard";
 
 export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
   // const navigate = useNavigate();
-  const [featuredProducts, setFeaturedProducts] = useState<Produto[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<IMenuItemInterfaceData[]>([]);
 
   useEffect(() => {
     // Função assíncrona para buscar os produtos destacados
     const fetchFeaturedProducts = async () => {
       try {
         const response = await api.get("/menuItem/");
-        const filteredProducts = response.data.filter((product: Produto) => product.featuredProduct === true);
+        const filteredProducts = response.data.filter((product: IMenuItemInterfaceData) => product.featuredProduct === true);
 
         // Atualiza o estado com os produtos destacados
         setFeaturedProducts(filteredProducts);
@@ -88,12 +89,9 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
             >
               {featuredProducts.length > 0 ? (
                 <ul>
-                  {featuredProducts.map((product) => (
-                    <li key={product.id}>
-                      <ProductCard
-                        description={product.name}
-                        img={product.imageURL[0]}
-                      />
+                  {featuredProducts.map((item) => (
+                    <li key={item.id}>
+                      <MenuItensCard item={item}/>
                     </li>
                   ))}
                 </ul>
@@ -128,7 +126,7 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
                   as="article"
                   bg="#116CA0"
                   color="#FFFFFF"
-                  w={"240px"}
+                  // w={"240px"}
                   borderRadius="md"
                   display={"flex"}
                   justifyContent={"center"}

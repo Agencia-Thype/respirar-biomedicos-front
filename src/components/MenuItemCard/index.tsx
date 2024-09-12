@@ -29,7 +29,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
   return (
     <>
       <Flex
-        width={{ base: "90%", sm: "250px" }}  
+        width={"450px"}  
         height="auto"
         maxWidth="250px"
         align="center"
@@ -38,7 +38,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
         borderRadius="32px"
         border="1px solid #116CA0"
         overflow="hidden"
-        p="4px"
+        p="4%"
       >
         <Flex
           borderRadius="10px"
@@ -112,7 +112,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
           <Flex width="100%" justifyContent="center" gap="1rem">
             <Flex
               bg="#FFFFFF"
-              w="90px"
+              w="120px"
               h="30px"
               border="1px solid #116CA0"
               borderRadius="32px"
@@ -123,14 +123,15 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
               alignItems="center"
               justifyContent="center"
               _hover={{ bg: "#F6B519"}}
+              fontSize={{ base: "15px" }}
             >
-              <Link to={`/produto/${item.id}`} style={{ fontSize: '0.7rem', padding: '0 4px' }}>
+              <Link to={`/produto/${item.id}`} >
                 Ver produto
               </Link>
             </Flex>
             <Flex
               bg="#116CA0"
-              w="90px"
+              w="120px"
               h="30px"
               borderRadius="32px"
               cursor="pointer"
@@ -141,6 +142,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
               alignItems="center"
               justifyContent="center"
               _hover={{ bg: "#F6B519"}}
+              fontSize={{ base: "15px" }}
             >
               Comprar
             </Flex>

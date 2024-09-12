@@ -99,12 +99,12 @@ export const Slider = () => {
               className="content"
               color="#fff"
               textShadow="0 5px 10px #64a7b344"
-              width={"640px"}
-              height={"540px"}
+              width={{base: "70%",md:"50%",lg:"45%"}}
+              height={"35%"}
               borderRadius={"40px"}
               padding={"4%"}
             >
-              <Heading textAlign={"center"} fontSize="3em" fontWeight="bold" color="#3182CE">
+              <Heading textAlign={"center"} fontSize={{ base: "1rem", md: "1.5rem", lg: "2rem" }} fontWeight="bold" color="#3182CE">
                 {image.label.toUpperCase()}
               </Heading>
 
