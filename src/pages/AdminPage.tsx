@@ -64,7 +64,7 @@ export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,s
         padding={"0 10%"}
       >
         <Heading
-          onClick={toggleCreateModal}
+          onClick={() => navigate("/admin/createItem")}
           cursor={"pointer"}
           fontFamily={"Montserrat"}
           fontSize={"22px"}

@@ -16,6 +16,7 @@ import  ProductDetailPage  from "../pages/ProductDetailPage";
 import {IMenuItemInterfaceData, Produto} from "../interfaces/menuItem.interfaces"
 import { SalePage } from "../pages/SalePage";
 import ProductSearch from "../components/Header/Research";
+import { AddMenuItemPage } from "../pages/AddMenuItemPage";
 
 
 export const Routers: React.FC = () => {
@@ -52,6 +53,7 @@ export const Routers: React.FC = () => {
       <Route path="/login" element={<LoginPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/register" element={<RegisterPager handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/admin" element={<AdminPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
+      <Route path="/admin/createItem" element={<AddMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/orders" element={<OrdersPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/delivery" element={<DeliveryPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/user" element={<UserPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
