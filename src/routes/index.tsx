@@ -17,6 +17,8 @@ import {IMenuItemInterfaceData, Produto} from "../interfaces/menuItem.interfaces
 import { SalePage } from "../pages/SalePage";
 import ProductSearch from "../components/Header/Research";
 import { AddMenuItemPage } from "../pages/AddMenuItemPage";
+import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
+import { RecoverPasswordPage } from "../pages/RecoverPasswordPage";
 
 
 export const Routers: React.FC = () => {
@@ -51,6 +53,8 @@ export const Routers: React.FC = () => {
       <Route path="/cardapio" element={<CardapioPage handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/carrinho" element={<CartPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/login" element={<LoginPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
+      <Route path="/login/forgotPassword" element={<ForgotPasswordPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
+      <Route path="/login/recoverPassword" element={<RecoverPasswordPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/register" element={<RegisterPager handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/admin" element={<AdminPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/admin/createItem" element={<AddMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />

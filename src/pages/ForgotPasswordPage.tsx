@@ -3,8 +3,9 @@ import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
+import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
 
-export const LoginPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, handleSearch}) => {
+export const ForgotPasswordPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, handleSearch}) => {
   const navigate = useNavigate();
   return (
     <Flex flexDir="column" w="100%">
@@ -13,19 +14,19 @@ export const LoginPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, h
       </Flex>
       <Flex justifyContent="center" w="100%">
         <Container maxW="lg" mt="1rem">
-          <Heading textAlign="center">Login</Heading>
-          <LoginForm />
+          <Heading textAlign="center">Esqueci a Senha</Heading>
+          <ForgotPasswordForm />
           <Flex w={"100%"} justifyContent={"center"} mt={"1rem"} gap={"3rem"}>
             <Text 
               fontSize="18px"
               cursor="pointer"
               color="primary-color" 
               textAlign="center" 
-              onClick={() => navigate("/login/forgotPassword")}
+              onClick={() => navigate("/login")}
             >
-              Esqueci a senha
+              Login
             </Text>
-            <Text
+            {/* <Text
               fontSize="18px"
               cursor="pointer"
               onClick={() => navigate("/register")}
@@ -33,7 +34,7 @@ export const LoginPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, h
               textAlign="center"
             >
               Cadastre-se
-            </Text>
+            </Text> */}
           </Flex>
         </Container>
       </Flex>
