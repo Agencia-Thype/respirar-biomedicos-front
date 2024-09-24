@@ -17,6 +17,7 @@ import {
 import { api } from "../../services/api";
 import { error } from "console";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
   
   interface IForgotData {
     email: string
@@ -37,9 +38,11 @@ import { useNavigate } from "react-router-dom";
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             const response = await api.post("/newPassword/forgot", data)
             console.log(response.data)
+            toast.success(response.data)
             navigate("/login/recoverPassword")
             return response.data
-        } catch (error) {            
+        } catch (error) {        
+            toast.error("Erro ao enviar o código")    
             console.log(error);
         }
     };

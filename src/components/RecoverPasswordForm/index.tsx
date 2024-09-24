@@ -17,6 +17,7 @@ import {
 import { api } from "../../services/api";
 import { error } from "console";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
   
   interface IRecoverData {
     email: string
@@ -35,16 +36,18 @@ import { useNavigate } from "react-router-dom";
   
     const onSubmit = async (data: IRecoverData) => {
         console.log(data)
-        // try {
-        //     const token = localStorage.getItem("@DownTown:Token");
-        //     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        //     const response = await api.post("/newPassword/recover", data)
-        //     console.log(response.data)
-        //     navigate("/")
-        //     return response.data
-        // } catch (error) {            
-        //     console.log(error);
-        // }
+        try {
+            const token = localStorage.getItem("@DownTown:Token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            const response = await api.post("/newPassword/recover", data)
+            console.log(response.data)
+            toast.success("Senha alterada com sucesso");
+            navigate("/login")
+            return response.data
+        } catch (error) {
+            toast.error("Erro ao alterar a senha")
+            console.log(error);
+        }
     };
   
     return (
@@ -89,9 +92,8 @@ import { useNavigate } from "react-router-dom";
             <Input
               borderRadius={"20px"}
               bg="title-color"
-              placeholder="Insira sua senha"
-              type="password"
-              {...register("password")}
+              placeholder="Insira o código enviado"              
+              {...register("code")}
             />
             {!!errors.code && (
               <FormErrorMessage>{errors.code.message}</FormErrorMessage>
