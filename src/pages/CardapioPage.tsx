@@ -64,7 +64,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
       <Flex
         width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
-        backgroundImage="url('../src/assets/blue-grunge-background.jpg')"
+        //backgroundImage="url('../src/assets/blue-grunge-background.jpg')"
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
@@ -102,7 +102,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
         </Flex>
         <Flex width="50%" justifyContent="center">
           <Image
-            src="../src/assets/Group 12.png"
+            //src="../src/assets/Group 12.png"
             h="100%"
             objectFit="contain"
           />
