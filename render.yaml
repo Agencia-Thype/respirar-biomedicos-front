@@ -1,8 +1,7 @@
 services:
   - type: web
     name: nginx-service
-    runtime: node  # Adiciona o runtime para Node.js
-    dockerfilePath: ./Dockerfile  # Verifique se o caminho está correto
+    runtime: node  # Define o ambiente Node.js gerenciado
     buildCommand: "npm run build"
     startCommand: "nginx -g 'daemon off;'"
     envVars:
