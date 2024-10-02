@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: nginx-service
+    env: docker
+    dockerfilePath: Dockerfile
+    buildCommand: "npm run build"
+    startCommand: "nginx -g 'daemon off;'"
+    publish:
+      path: /app/dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: persistent-disk
+      mountPath: /app
+    plan: free
+    envVarGroups: 
+      - common_env_group
+
