@@ -6,6 +6,8 @@ import { MenuItensCard } from "../components/MenuItemCard";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import grupoImagem from "../assets/grupo.png"; //resolvido o problema de compilação de imagem
+import bgImagem from "../assets/background.png";
 import {
   Button,
   Container,
@@ -27,20 +29,13 @@ import {
 } from "@chakra-ui/react";
 import { ProductList } from "../components/ProductList";
 import { IMenuItemInterfaceData, ProductListSearchProps, ProductSearchProps } from "../interfaces/menuItem.interfaces";
-
-
 export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
-  const { data: cardapio, isFetching: isFetchingCardapio } =
-    useContext(MenuItemContext);
-  const { data: categories, isFetching: isFetchingCategories } =
-    useContext(CategoriesContext);
+  const { data: cardapio, isFetching: isFetchingCardapio } = useContext(MenuItemContext);
+  const { data: categories, isFetching: isFetchingCategories } = useContext(CategoriesContext);
   const [selected, setSelected] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
-  
-
-
   const handleButtonClick = (button: string) => {
     if (button === selected) {
       setSelected(null);
@@ -49,14 +44,9 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
     }
   };
 
-
-
   // if (isFetchingCardapio || isFetchingCategories) {
   //   return <Spinner />;
   // }
-
-  
-
 
   return (
     <Flex flexDir="column" w="100%">
@@ -64,7 +54,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
       <Flex
         width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
-        backgroundImage="url('../src/assets/blue-grunge-background.jpg')"
+        backgroundImage= {bgImagem}
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
@@ -102,7 +92,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
         </Flex>
         <Flex width="50%" justifyContent="center">
           <Image
-            src="../src/assets/Group 12.png"
+            src={grupoImagem} //resolvido o problema de compilação de imagem
             h="100%"
             objectFit="contain"
           />
