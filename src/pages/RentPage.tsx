@@ -3,36 +3,22 @@ import {
   Button,
   Container,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
   Heading,
-  Icon,
-  Image,
-  Input,
   Text,
-  Textarea,
 } from "@chakra-ui/react";
-import image from "../assets/image/lifestyle-people.jpg";
-import {
-  AiFillInstagram,
-  AiOutlineTwitter,
-  AiFillFacebook,
-} from "react-icons/ai";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const RentPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
+export const RentPage: React.FC<ProductSearchProps> = ({
+  setFilteredCardapio,
+  handleSearch,
+}) => {
   return (
     <Container padding={"0"} maxW={"100vw"}>
-      <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
+      <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
       <Flex
-        padding={"5% 10%"}
+        padding={{ base: "5% 3%", md: "5% 10%" }} // Padding ajustado para diferentes tamanhos de tela
         width={"100%"}
         bg={"#E9F1F5"}
         flexDir={"column"}
@@ -41,8 +27,13 @@ export const RentPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, han
         <Heading fontFamily={"Inter"} textAlign={"center"} color={"#116CA0"}>
           Locação
         </Heading>
-        <Flex width={"100%"} height={"100%"} gap="5rem">
-          <Flex   width={"50%"} flexDir={"column"} gap="3rem">
+        <Flex
+          width={"100%"}
+          height={"100%"}
+          gap="5rem"
+          flexDirection={{ base: "column", md: "row" }} // Responsivo: coluna no celular, linha em telas maiores
+        >
+          <Flex width={{ base: "100%", md: "50%" }} flexDir={"column"} gap="3rem">
             <Heading fontFamily={"Inter"} color={"#116CA0"}>
               Como alugar
             </Heading>
@@ -56,7 +47,7 @@ export const RentPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, han
               Saiba Mais
             </Button>
           </Flex>
-          <Flex  width={"50%"}>
+          <Flex width={{ base: "100%", md: "50%" }}>
             <AspectRatio width="100%" ratio={16 / 9} border="2px solid #116CA0">
               <iframe
                 width="560"
@@ -70,7 +61,6 @@ export const RentPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, han
           </Flex>
         </Flex>
       </Flex>
-
       <Footer />
     </Container>
   );

@@ -23,7 +23,8 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerContent,
-  SimpleGrid,
+  
+  
   Box,
   Image,
 } from "@chakra-ui/react";
