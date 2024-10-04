@@ -7,16 +7,16 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-    command: npm run build
+    command: 
     networks:
       - app-network
 
-  nginx:
-    image: nginx:alpine
+  apache:
+    image: httpd:alpine
     depends_on:
       - app
     volumes:
-      - ./dist:/usr/share/nginx/html
+      - ./dist:/usr/local/apache2/htdocs/
     ports:
       - "80:80"
     networks:
