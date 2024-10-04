@@ -1,10 +1,14 @@
 version: 1
-staticSites:
-  - name: my-static-site
-    buildCommand: "npm install && npm run build"  # Substitua por seu comando de build, se necessário
-    publishPath: "/dist"  # Substitua pelo caminho do diretório que contém seu index.html
-    rewrites:
-      - source: "/"
+services:
+  - type: web
+    name: Front-Respirar
+    env: static
+    buildCommand: "npm install && npm run build"
+    publishPath: "/dist"
+    routes:
+      - type: rewrite
+        source: "/"
         destination: "/index.html"
-      - source: "/*"
+      - type: rewrite
+        source: "/*"
         destination: "/index.html"
