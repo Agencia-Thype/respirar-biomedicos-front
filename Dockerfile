@@ -18,7 +18,7 @@ FROM httpd:alpine
 COPY --from=build /app/dist /usr/local/apache2/htdocs
 
 # Opcional: Copiar configuração personalizada do Apache, se necessário
-#COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
 # Expor a porta padrão do Apache
 EXPOSE 80
