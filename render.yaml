@@ -1,5 +1,6 @@
 version: 1
 staticSite:
+- type: web
   name: font-respirar
   publishDirectory: dist
   buildCommand: |
