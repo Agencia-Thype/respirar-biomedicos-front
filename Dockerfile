@@ -4,7 +4,7 @@ FROM node:14 AS build
 WORKDIR /app
 
 # Copiar apenas os arquivos de dependências primeiro para otimizar o cache
-COPY package.json package-lock.json .htaccess ./
+COPY package.json package-lock.json nginx.conf ./
 RUN npm install
 
 # Copiar o restante do código após instalar dependências
@@ -12,15 +12,15 @@ COPY . ./
 RUN npm run build
 
 # Estágio de produção
-FROM httpd:alpine
+FROM nginx:alpine
 
-# Copiar a build gerada para o diretório padrão do Apache
-COPY --from=build /app/dist /usr/local/apache2/htdocs
+# Copiar a build gerada para o diretório padrão do Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Opcional: Copiar configuração personalizada do Apache, se necessário
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+# Opcional: Copiar configuração personalizada do Nginx, se necessário
+#COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expor a porta padrão do Apache
+# Expor a porta padrão do Nginx
 EXPOSE 80
 
-CMD ["httpd-foreground"]
+CMD ["nginx", "-g", "daemon off;"]
