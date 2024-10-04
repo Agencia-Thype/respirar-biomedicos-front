@@ -1,10 +1,10 @@
-services:
-  - type: web
-    name: nginx-service
-    runtime: node  # Define o ambiente Node.js gerenciado
-    buildCommand: "npm run build"
-    startCommand: "nginx -g 'daemon off;'"
-    envVars:
-      - key: NODE_ENV
-        value: production
-    plan: free
+version: 1
+staticSites:
+  - name: respirar-biomedicos
+    buildCommand: "npm install && npm run build"  # Substitua por seu comando de build, se necessário
+    publishPath: "/dist"  # Substitua pelo caminho do diretório que contém seu index.html
+    rewrites:
+      - source: "/"
+        destination: "/index.html"
+      - source: "/*"
+        destination: "/index.html"
