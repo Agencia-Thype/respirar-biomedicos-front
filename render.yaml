@@ -1,6 +1,6 @@
 version: 1
 staticSites:
-  - name: respirar-biomedicos
+  - name: my-static-site
     buildCommand: "npm install && npm run build"  # Substitua por seu comando de build, se necessário
     publishPath: "/dist"  # Substitua pelo caminho do diretório que contém seu index.html
     rewrites:
