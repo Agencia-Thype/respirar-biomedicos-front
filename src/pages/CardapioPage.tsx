@@ -1,13 +1,12 @@
-import React, { Fragment, useContext, useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useState, } from "react";
+import {  useNavigate } from "react-router-dom";
 import { MenuItemContext } from "../contexts/MenuItemContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
-import { MenuItensCard } from "../components/MenuItemCard";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import grupoImagem from "../assets/grupo.png"; //resolvido o problema de compilação de imagem
-import bgImagem from "../assets/background.png";
+import grupo from "../assets/grupo.png"; //resolvido o problema de copilação de imagem
+import bg from "../assets/background.webp";
 import {
   Button,
   Container,
@@ -23,39 +22,38 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerContent,
-  
-  
   Box,
   Image,
 } from "@chakra-ui/react";
 import { ProductList } from "../components/ProductList";
-import { IMenuItemInterfaceData, ProductListSearchProps, ProductSearchProps } from "../interfaces/menuItem.interfaces";
+import { ProductListSearchProps, } from "../interfaces/menuItem.interfaces";
 export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
-  const { data: cardapio, isFetching: isFetchingCardapio } = useContext(MenuItemContext);
-  const { data: categories, isFetching: isFetchingCategories } = useContext(CategoriesContext);
+  const { data: cardapio = [], isFetching: isFetchingCardapio } = useContext(MenuItemContext);
+  const { data: categories = [], isFetching: isFetchingCategories } = useContext(CategoriesContext);
   const [selected, setSelected] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
+  
   const handleButtonClick = (button: string) => {
-    if (button === selected) {
-      setSelected(null);
-    } else {
-      setSelected(button);
-    }
+    if (button === selected) { setSelected(null);
+    } else { setSelected(button); }
   };
 
-  // if (isFetchingCardapio || isFetchingCategories) {
-  //   return <Spinner />;
-  // }
-
+  if (isFetchingCardapio || isFetchingCategories) {
+    return (
+      <Flex justify="center" align="center" height="100vh">
+        <Spinner size="xl" label="Carregando..." />
+      </Flex>
+    );
+  }
   return (
     <Flex flexDir="column" w="100%">
       <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
       <Flex
         width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
-        backgroundImage= {bgImagem}
+        backgroundImage= {bg} //resolvido o problema de copilação de imagem
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
@@ -92,11 +90,10 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
           
         </Flex>
         <Flex width="50%" justifyContent="center">
-          <Image
-            src={grupoImagem} //resolvido o problema de compilação de imagem
-            h="100%"
-            objectFit="contain"
-          />
+        <Image 
+         src={grupo} //resolvido o problema de copilação de imagem
+         h={{ base: "80%", md: "100%" }}
+         objectFit="contain" />
         </Flex>
       </Flex>
       <Flex w="100%" flexDirection="column" padding="3% 2%">
