@@ -6,23 +6,12 @@ services:
       dockerfile: Dockerfile
     working_dir: /app
     volumes:
-      - .:/app
-    command: npm run build
-    networks:
-      - app-network
-
-  nginx:
-    image: nginx:alpine
-    depends_on:
-      - app
-    volumes:
-      - ./dist:/usr/share/nginx/html
+      - .:/app  # Mapeia o diretório atual no contêiner para facilitar o desenvolvimento
     ports:
-      - "80:80"
+      - "80:80"  # Mapeando a porta 80 do contêiner para a porta 80 do host
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-

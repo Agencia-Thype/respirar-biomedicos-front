@@ -1,10 +1,10 @@
 # Estágio de construção
-FROM node:14 AS build
+FROM node:20 AS build
 
 WORKDIR /app
 
 # Copiar apenas os arquivos de dependências primeiro para otimizar o cache
-COPY package.json package-lock.json nginx.conf ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copiar o restante do código após instalar dependências
@@ -12,15 +12,18 @@ COPY . ./
 RUN npm run build
 
 # Estágio de produção
-FROM nginx:alpine
+FROM node:14 AS production
 
-# Copiar a build gerada para o diretório padrão do Nginx
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Opcional: Copiar configuração personalizada do Nginx, se necessário
-#COPY nginx.conf /etc/nginx/nginx.conf
+# Instalar o 'serve' globalmente no estágio de produção
+RUN npm install -g serve
 
-# Expor a porta padrão do Nginx
+# Copiar os arquivos de build da etapa anterior
+COPY --from=build /app/dist /app/dist
+
+# Expor a porta 80 onde o servidor será executado
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"] crie um Docker composse a partir disso 
+# Comando para servir a aplicação a partir do diretório dist na porta 80
+CMD ["serve", "-s", "dist", "-l", "80"]
