@@ -47,7 +47,7 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
     fetchFeaturedProducts();
   }, []); // O array vazio [] faz com que o efeito execute apenas uma vez, quando o componente monta
 
-  console.log(featuredProducts)
+  // console.log(featuredProducts)
   return (
     <Box>
       <Header  handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>

@@ -7,7 +7,9 @@ export const baseMenuItemSchema = z.object({
   price: z.number(),
   resume: z.string(),
   description: z.string(),
-  imageURL: z.array(z.string()),
+  images: z
+    .array(z.instanceof(File)) // Espera um array de arquivos do tipo File
+    .min(1, "Pelo menos uma imagem é necessária"),
   sale: z.boolean(),
   featuredProduct: z.boolean(),
   categoryId: z.string(),
@@ -26,15 +28,18 @@ export const menuItemSchema = z.object({
 });
 
 export const createMenuItemSchema = z.object({
-  name: z.string().nonempty({ message: "Campo obrigatório" }),
-  price: z.string().nonempty({ message: "Campo obrigatório" }).min(3),
-  resume: z.string().nonempty({ message: "Campo obrigatório" }).max(300),
-  description: z.string().nonempty({ message: "Campo obrigatório" }),
+  name: z.string().min(1, "Nome é obrigatório"),
+  price: z.string().min(1, "Preço é obrigatório").regex(/^\d+(\.\d{1,2})?$/, "Preço deve ser um número válido"),
+  resume: z.string().min(1, "Resumo é obrigatório"),
+  description: z.string().min(1, "Descrição é obrigatória"),
+  categoryId: z.string().min(1, "Categoria é obrigatória"),
   sale: z.boolean(),
   featuredProduct: z.boolean(),
-  imageURL: z.array(z.string().url("URL da imagem inválida")).max(5, "Você pode adicionar no máximo 5 URLs de imagem"),
-  categoryId: z.string().nonempty({ message: "Campo obrigatório" }),
+  images: z
+    .array(z.instanceof(File)) // Espera um array de arquivos do tipo File
+    .nonempty("Pelo menos uma imagem é necessária"),
 });
+
 
 export const createMenuItemRequestSchema = createMenuItemSchema.extend({
   price: z.number(),

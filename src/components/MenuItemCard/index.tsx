@@ -13,6 +13,7 @@ import {
 import { BsCartPlusFill } from "react-icons/bs";
 import { ModalConfirm } from "./ModalConfirm";
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
+import { baseURL } from "../../services/api";
 
 interface IMenuItemCardProps {
   item: IMenuItemInterfaceData;
@@ -25,6 +26,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
   const handleClick = () => {
     setShow(!show);
   };
+  
 
   return (
     <>
@@ -54,7 +56,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
             overflow="hidden"
           >
             <Image
-              src={item.imageURL[0]}
+              src={`${baseURL}${item.images[0].filePath.replace("\\", "/")}`}
               bg="#ffff"
               borderTopRadius="32px"
               borderBottomRadius="0px"

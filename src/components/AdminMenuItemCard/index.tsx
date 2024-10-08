@@ -45,7 +45,7 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
         >
           <Flex width={"100%"} borderRadius={{ base: '10px', md: '16px', lg: '32px' }} overflow={"hidden"}>            
             <Image
-              src={item.imageURL[0]}
+              // src={item.imageURL[0]}
               bg={"#ffff"}
               borderTopRadius="32px"
               borderBottomRadius="0px"              
