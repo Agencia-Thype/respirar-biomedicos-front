@@ -52,12 +52,25 @@ export const MenuItemProvider = ({ children }: IProvider) => {
     const { mutate: createMenuItem } = useMutation(
         async (data: any): Promise<IMenuItemInterfaceData> => {
             const token = localStorage.getItem("@DownTown:Token");
+            const images = data.images;
+
+            delete data.images;
 
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-            console.log(data)
+            const formData = new FormData();
 
-            const response = await api.post("/menuItem", data);
+            images.forEach((image: File) => {
+                formData.append("images", image);
+            });
+
+            formData.append("data", JSON.stringify(data));
+
+            const response = await api.post("/menuItem", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
 
             return response.data;
         },
@@ -65,12 +78,11 @@ export const MenuItemProvider = ({ children }: IProvider) => {
             onSuccess: (response: IMenuItemInterfaceData) => {
                 toast.success("Item criado com sucesso");
                 refetch();
-                refetchCategories(); // Refetch categories to include the new item
+                refetchCategories();
             },
             onError: (error: AxiosError) => {
-                if (error.response?.status === 400) {
+                if (error.response?.status === 400)
                     toast.error(`${error.message}`);
-                }
             },
         }
     );
