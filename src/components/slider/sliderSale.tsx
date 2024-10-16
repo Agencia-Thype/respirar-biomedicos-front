@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { MenuItemContext } from "../../contexts/MenuItemContext"; // Ajuste o caminho conforme necessário
 import React from "react";
-import { api } from "../../services/api";
-import { Produto } from "../../interfaces/menuItem.interfaces";
+import { api, baseURL } from "../../services/api";
+import { IMenuItemInterfaceData, Produto } from "../../interfaces/menuItem.interfaces";
 
 export const useMenuItemContext = () => {
   const context = React.useContext(MenuItemContext);
@@ -16,14 +16,14 @@ export const useMenuItemContext = () => {
 
 export const SliderSale = () => {
 
-  const [menuItems, setMenuItems] = useState<Produto[]>([]);
+  const [menuItems, setMenuItems] = useState<IMenuItemInterfaceData[]>([]);
 
   useEffect(() => {
     // Função assíncrona para buscar os produtos destacados
     const fetchSaleProducts = async () => {
       try {
         const response = await api.get("/menuItem/");
-        const filteredProducts = response.data.filter((product: Produto) => product.sale === false);
+        const filteredProducts = response.data.filter((product: Produto) => product.sale === true);
 
         // Atualiza o estado com os produtos destacados
         setMenuItems(filteredProducts);
@@ -114,7 +114,7 @@ export const SliderSale = () => {
             >
               <Flex width={"50%"} justifyContent={"center"} alignItems={"center"}>                
                 <Flex  height={"500px"} overflow={"hidden"}>
-                  <Image height={"100%"} src={item.imageURL[0]}/>
+                  <Image height={"100%"} src={`${baseURL}${item.images[0].filePath.replace("\\", "/")}`}/>
                 </Flex>
               </Flex>
               <Flex

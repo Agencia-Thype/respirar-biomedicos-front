@@ -108,7 +108,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
           />
         </Flex>
       </Flex>
-      <Flex w="100%" flexDirection="column" padding="3% 2%">
+      <Flex w="100%" flexDirection="column" padding="1% 10%">
         <Heading
           textAlign="center"
           size={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -166,7 +166,7 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
             ml={{ base: 0, md: "1rem" }}
             display={{ base: "none", md: "flex" }}
             mt={"80px"}
-            alignItems={"flex-start"} 
+            alignItems={"flex-start"}
           >
             {categories?.map((category) => (
               <Button

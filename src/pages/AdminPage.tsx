@@ -188,8 +188,8 @@ export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,s
                   <Fragment key={category.id}>
                     <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
                     <Flex
-                    
-                      // width={"100%"}
+                      
+                      width={"100%"}
                       overflowX={"scroll"}
                       gap={"2rem"}
                       paddingBottom={"2rem"}

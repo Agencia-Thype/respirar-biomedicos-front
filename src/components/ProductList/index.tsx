@@ -26,6 +26,8 @@ export const ProductList: React.FC<ProductListProps> = ({ cardapio, categories =
             <Fragment key={category.id}>
               <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
               <Flex
+                margin={"0"}
+                width={"100%"}
                 overflowX={"scroll"}
                 gap={"2rem"}
                 paddingBottom={"2rem"}
