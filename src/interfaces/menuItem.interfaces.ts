@@ -17,12 +17,12 @@ export interface IMenuItemContext {
       id: string;
       name: string;
       price: number;
+      resume: string;
       description: string;
-      imageURL: string[];
       categoryId: string;
       sale: boolean;
       featuredProduct: boolean;
-      resume: string
+      images: File[]
     },
     any,
     string,

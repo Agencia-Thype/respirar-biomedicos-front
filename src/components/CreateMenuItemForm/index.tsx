@@ -1,62 +1,68 @@
+import React, { useState, useContext } from "react";
 import {
     Button,
     Checkbox,
     Flex,
     FormControl,
     FormErrorMessage,
-    FormHelperText,
     FormLabel,
     Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Select,
-    Spinner,
-    Text,
     Textarea,
-    useDisclosure,
     VStack,
-  } from "@chakra-ui/react";
-  import { SubmitHandler, useForm } from "react-hook-form";
-  import { zodResolver } from "@hookform/resolvers/zod";
-  import { ICreateUser } from "../../interfaces/users.interfaces";
-  import { createUserSchema } from "../../schemas/users.schemas";
-  import { useContext, useState } from "react";
-  import axios from "axios";
-  import { ICepAPI } from "../../interfaces/addresses.interfaces";
-  import { UsersContext } from "../../contexts/UsersContext";
-  import { useNavigate } from "react-router-dom";
-  import { Header } from "../Header";
+    Text,
+    Image,
+    IconButton,
+    Box,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalCloseButton,
+    ModalBody,
+    ModalFooter,
+} from "@chakra-ui/react";
+import { IoMdClose } from "react-icons/io";
+// import { CloseIcon } from "@chakra-ui/icons";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
 import { MenuItemContext } from "../../contexts/MenuItemContext";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 import { ICategoryDataRequest } from "../../interfaces/categories.intefaces";
 import { api } from "../../services/api";
-import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
-import { IMenuItemCreate, IMenuItemMutation } from "../../interfaces/menuItem.interfaces";
-import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
-  
-  export const CreateMenuItemForm = () => {    
 
+interface ICreateMenuItem {
+    name: string;
+    price: number;
+    resume: string;
+    description: string;
+    categoryId: string;
+    sale: boolean;
+    featuredProduct: boolean;
+    images: File[];
+}
+
+export const CreateMenuItemForm = () => {
     const { data: categories, isFetching } = useContext(CategoriesContext);
-    const { createMenuItem, menuItemDeatilData } = useContext(MenuItemContext);
-    
+    const { createMenuItem } = useContext(MenuItemContext);
+
+    const [productImages, setProductImages] = useState<File[]>([]);
+    const [imageError, setImageError] = useState<string | null>(null);
+
+    const [newCategoryName, setNewCategoryName] = useState("");
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
-      } = useForm<IMenuItemCreate>({ resolver: zodResolver(createMenuItemSchema) });
-
-    
-    
-    
-    const [price, setPrice] = useState<string>("");
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [newCategoryName, setNewCategoryName] = useState("");
-
+    } = useForm<ICreateMenuItem>({
+        resolver: zodResolver(createMenuItemSchema),
+    });
 
     const {
         register: registerCategory,
@@ -64,33 +70,7 @@ import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
         formState: { errors: categoryErrors },
       } = useForm<ICategoryDataRequest>();
 
-
-
-  
-    const onSubmit: SubmitHandler<IMenuItemCreate> = (data, event) => {
-        
-        if (event) {
-            event.preventDefault(); // Evitar comportamento de envio padrão
-        }
-        let priceWithoutCurrency = data.price.replace("R$", "").trim();
-        let formatedCurrency = priceWithoutCurrency.replace(",", ".");
-        const newData: IMenuItemMutation = {
-            ...data,
-            price: +formatedCurrency,
-        };
-        console.log(newData)
-        createMenuItem(newData)
-        // toggleCreateModal()
-      };
-
-
-    const format = (price: string) => {
-        let priceWithoutCurrency = price.replace("R$", "").trim();
-        let priceWithCurrency = `R$ ${priceWithoutCurrency}`;
-        setPrice(priceWithCurrency);
-      };
-    
-    const handleAddCategory: SubmitHandler<ICategoryDataRequest> = async (data) => {
+      const handleAddCategory: SubmitHandler<ICategoryDataRequest> = async (data) => {
         try {
             const token = localStorage.getItem("@DownTown:Token")
             
@@ -107,182 +87,178 @@ import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
         
         onClose();
     };
-      
-    
-    
-    const [productImageInputs, setProductImageInputs] = useState<string[]>([""]);
-    
-        const addProductImageInput = () => {
-            setProductImageInputs([...productImageInputs, ""]);
+
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const selectedFiles = Array.from(e.target.files);
+            const totalImages = productImages.length + selectedFiles.length;
+
+            if (totalImages > 5) {
+                setImageError("Você pode adicionar no máximo 5 imagens.");
+                return;
+            }
+
+            const updatedImages = [...productImages, ...selectedFiles];
+
+            setProductImages(updatedImages);
+            setValue("images", updatedImages);
+            setImageError(null);
+        }
+    };
+
+    const removeImage = (index: number) => {
+        const updatedImages = productImages.filter((_, i) => i !== index);
+        setProductImages(updatedImages);
+        setValue("images", updatedImages);
+    };
+
+    const onSubmit: SubmitHandler<ICreateMenuItem> = async (data) => {
+        if (productImages.length === 0) {
+            setImageError("Você deve adicionar pelo menos uma imagem.");
+            return;
+        }
+
+        const fetchedImages: [File, ...File[]] = productImages as [
+            File,
+            ...File[]
+        ];
+
+        const fetchedData = {
+            ...data,
+            price: parseFloat(data.price.toString()),
+            images: fetchedImages,
         };
-    
-        const removeProductImageInput = (index: number) => {
-            const updatedProductImage = [...productImageInputs];
-            updatedProductImage.splice(index, 1);
-            setProductImageInputs(updatedProductImage);
-        };
-  
- ;
-  
+        console.log(fetchedData)
+        createMenuItem(fetchedData);
+    };
+
     return (
-      <>
         <Flex
-          as="form"
-          flexDir={"column"}
-          onSubmit={handleSubmit(onSubmit)}
-          justify="space-evenly"
-          align={"center"}
-          gap={"5rem"}
+            as="form"
+            flexDir={"column"}
+            onSubmit={handleSubmit(onSubmit)}
+            gap={"2rem"}
+            encType="multipart/form-data"
         >
-            <Flex w={"100%"}>
-                <VStack spacing={6} w="100%">
-                    <FormControl isInvalid={!!errors.name}>
-                    <FormLabel color={"primary-color"}>Nome</FormLabel>
+            <VStack spacing={6} w="100%">
+                <FormControl isInvalid={!!errors.name}>
+                    <FormLabel>Nome</FormLabel>
                     <Input
-                        placeholder="Digite o nome do produto"
                         {...register("name")}
-                        bg="title-color"
-                        borderRadius={"12px"}
+                        placeholder="Digite o nome do produto"
                     />
                     {!!errors.name && (
-                        <FormErrorMessage>{errors.name.message}</FormErrorMessage>
+                        <FormErrorMessage>
+                            {errors.name.message}
+                        </FormErrorMessage>
                     )}
-                    </FormControl>
-                    
-                    
+                </FormControl>
 
-                    <FormControl isInvalid={!!errors.price}>
-                    <FormLabel color={"primary-color"}>Preço</FormLabel>
+                <FormControl isInvalid={!!errors.price}>
+                    <FormLabel>Preço</FormLabel>
                     <Input
-                        bg="title-color"
-                        borderRadius={"12px"}
-                        placeholder="Digite o preço do produto"
                         {...register("price")}
-                        onChange={(e) => format(e.target.value)}
-                        value={price}
+                        placeholder="Digite o preço do produto"
                         type="text"
                     />
                     {!!errors.price && (
-                        <FormErrorMessage>{errors.price.message}</FormErrorMessage>
+                        <FormErrorMessage>
+                            {errors.price.message}
+                        </FormErrorMessage>
                     )}
-                    </FormControl>
+                </FormControl>
 
-                    <FormControl isInvalid={!!errors.resume}>
-                    <FormLabel color={"primary-color"}>Resumo</FormLabel>
+                <FormControl isInvalid={!!errors.resume}>
+                    <FormLabel>Resumo</FormLabel>
                     <Textarea
-                        bg="title-color"
-                        borderRadius={"12px"}
-                        placeholder="Digite o preço do produto"
                         {...register("resume")}
+                        placeholder="Digite o resumo do produto"
                     />
                     {!!errors.resume && (
-                        <FormErrorMessage>{errors.resume.message}</FormErrorMessage>
+                        <FormErrorMessage>
+                            {errors.resume.message}
+                        </FormErrorMessage>
                     )}
-                    </FormControl>
+                </FormControl>
 
-                    <FormControl isInvalid={!!errors.description}>
-                    <FormLabel color={"primary-color"}>Descrição</FormLabel>
+                <FormControl isInvalid={!!errors.description}>
+                    <FormLabel>Descrição</FormLabel>
                     <Textarea
-                        bg="title-color"
-                        borderRadius={"12px"}
-                        placeholder="Digite a descrição do produto"
                         {...register("description")}
+                        placeholder="Digite a descrição do produto"
                     />
-                    {errors.description && (
-                        <FormErrorMessage>{errors.description.message}</FormErrorMessage>
+                    {!!errors.description && (
+                        <FormErrorMessage>
+                            {errors.description.message}
+                        </FormErrorMessage>
                     )}
-                    </FormControl>
-                
-                </VStack>
+                </FormControl>
 
-                <VStack spacing={6} w="100%" p="0 1rem">
-                    {productImageInputs.map((value, index) => (
-                                        <Flex className="labelEntities" key={index}>
-                                            <Flex  className="divEntities" gap={"10px"}>
-                                                <Flex flexDir={"column"}>
-                                                <FormLabel color={"primary-color"} htmlFor={`Imagem-${index}`}>{`Imagem - ${index + 1}`}</FormLabel>
-                                                <Input id={`Imagem-${index}`} bg="title-color" borderRadius={"12px"} placeholder="Digite o link da imagem" type="text" {...register(`imageURL.${index}`)} value={value} onChange={(e) => {
-                                                        const updatedProductImage = [...productImageInputs];
-                                                        updatedProductImage[index] = e.target.value;
-                                                        setProductImageInputs(updatedProductImage);
-                                                    }}/>
-                                                </Flex>
-                                                
-                                                <Flex className="entitiesBtn" gap={"6px"}>
-                                                    <button                                           
-                                                        type="button"
-                                                        onClick={() => removeProductImageInput(index)}
-                                                    >
-                                                        <BsDashCircleFill color="#3182CE" size={25}/>
-                                                    </button>
-                                                    <button type="button" onClick={addProductImageInput}>
-                                                    <BsPlusCircleFill size={25} color="#3182CE"/>
-                                                        
-                                                    </button>
-                                                </Flex>
-                                            </Flex>
-                                        </Flex>
-                                    ))}
-                    
-                </VStack>
+                <FormControl isInvalid={!!imageError}>
+                    <FormLabel>Imagens do Produto (Máx: 5)</FormLabel>
+                    <Input
+                        type="file"
+                        multiple
+                        onChange={handleImageChange}
+                        accept="image/*"
+                    />
+                    {imageError && <Text color="red.500">{imageError}</Text>}
+                </FormControl>
 
-                <VStack spacing={6} w="100%">
-                    <FormControl isInvalid={!!errors.sale}>
-                        <FormLabel htmlFor="sale" color={"primary-color"}>Promoção</FormLabel>
-                        <Checkbox
-                            bg="title-color"
-                            borderRadius={"12px"}
-                            type="checkbox"
-                            {...register("sale")}
-                        />
-                        {errors.sale && (
-                            <FormErrorMessage>{errors.sale.message}</FormErrorMessage>
-                        )}
-                    </FormControl>
+                <Box display="flex" flexWrap="wrap" gap={4}>
+                    {productImages.map((image, index) => (
+                        <Box key={index} position="relative">
+                            <Image
+                                src={URL.createObjectURL(image)}
+                                alt={`Imagem ${index + 1}`}
+                                boxSize="100px"
+                                objectFit="cover"
+                                borderRadius="md"
+                            />
+                            <IconButton
+                                aria-label="Remover imagem"
+                                icon={<IoMdClose />}
+                                size="xs"
+                                position="absolute"
+                                top="0"
+                                right="0"
+                                onClick={() => removeImage(index)}
+                            />
+                        </Box>
+                    ))}
+                </Box>
 
-                    <FormControl isInvalid={!!errors.featuredProduct}>
-                        <FormLabel htmlFor="featuredProduct" color={"primary-color"}>Produtos em Destaque</FormLabel>
-                        <Checkbox
-                            bg="title-color"
-                            borderRadius={"12px"}
-                            type="checkbox"
-                            {...register("featuredProduct")}
-                        />
-                        {errors.featuredProduct && (
-                            <FormErrorMessage>{errors.featuredProduct.message}</FormErrorMessage>
-                        )}
-                    </FormControl>
-                    <FormControl isInvalid={!!errors.categoryId}>
-                        <FormLabel color={"primary-color"}>Categoria</FormLabel>
-                        <Flex gap={"12px"}>
-                            <Select
-                            {...register("categoryId")}
-                            bg="title-color"
-                            borderRadius={"12px"}
-                            >
-                            <option>Selecione a categoria</option>
-                            {isFetching ? (
-                                <Spinner />
-                            ) : (
-                                categories?.map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                                ))
-                            )}
-                            </Select>
-                            <Button onClick={onOpen}>
-                            + 
-                            </Button>
-                        </Flex>
-                    </FormControl>
-                </VStack>
-            </Flex>
-            <Button bg="logo-color" color={"#FFFFFF"} border={"12px"} type="submit" maxW={"40%"}>
-                Cadastrar Produto
-            </Button>
-        </Flex>
-        <Modal isOpen={isOpen} onClose={onClose}>
+                <FormControl>
+                    <FormLabel>Categoria</FormLabel>
+                    <Select {...register("categoryId")}>
+                        <option value="">Selecione uma categoria</option>
+                        {categories?.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </Select>
+                    <Button onClick={onOpen}>
+                        + 
+                    </Button>
+                </FormControl>
+
+                <FormControl>
+                    <Checkbox {...register("sale")}>Em Promoção</Checkbox>
+                </FormControl>
+
+                <FormControl>
+                    <Checkbox {...register("featuredProduct")}>
+                        Produto em Destaque
+                    </Checkbox>
+                </FormControl>
+
+                <Button type="submit" colorScheme="blue">
+                    Cadastrar Produto
+                </Button>
+            </VStack>
+            <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
             <ModalHeader>Adicionar categoria</ModalHeader>
@@ -311,8 +287,7 @@ import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
             </ModalBody>
             </ModalContent>
         </Modal>
+        </Flex>
         
-      </>
     );
-  };
-  
+};

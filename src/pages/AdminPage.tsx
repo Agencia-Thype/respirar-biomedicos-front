@@ -1,6 +1,6 @@
 import { Box, Button, Container, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, SimpleGrid, Spinner, Text, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 import { Fragment, useContext, useState } from "react";
-import { CreateMenuItem } from "../components/CardapioForms/CreateMenuItem";
+// import { CreateMenuItem } from "../components/CardapioForms/CreateMenuItem";
 import { EditMenuItem } from "../components/CardapioForms/EditMenuItem";
 import { DeleteMenuItem } from "../components/CardapioForms/DeleteMenuItem";
 import useAdminAuth from "../components/useAdminAuth";
@@ -12,6 +12,7 @@ import { CategoriesContext } from "../contexts/CategoriesContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AdminMenuItensCard } from "../components/AdminMenuItemCard";
 import { IMenuItemInterfaceData, ProductListSearchProps } from "../interfaces/menuItem.interfaces";
+import { CreateMenuItemForm } from "../components/CreateMenuItemForm";
 
 
 
@@ -187,8 +188,8 @@ export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,s
                   <Fragment key={category.id}>
                     <Heading m="1.125rem 0 1.5rem 0">{category.name}</Heading>
                     <Flex
-                    
-                      // width={"100%"}
+                      
+                      width={"100%"}
                       overflowX={"scroll"}
                       gap={"2rem"}
                       paddingBottom={"2rem"}
@@ -227,7 +228,7 @@ export const AdminPage: React.FC<ProductListSearchProps>  = ({filteredCardapio,s
           </Container>
         </Flex>
       </Flex>
-      {isCreateOpenModal && <CreateMenuItem toggleCreateModal={toggleCreateModal} />}
+      {/* {isCreateOpenModal && <CreateMenuItemForm/>} */}
       
 
       </Flex>

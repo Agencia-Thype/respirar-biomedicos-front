@@ -82,7 +82,7 @@ export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }
   return (
     <Flex
       display={{ base: isOpen ? "block" : "none", md: "flex" }}
-      background={"red"}
+      
       flexBasis={{ base: "100%", md: "auto" }}
     >
       <Stack

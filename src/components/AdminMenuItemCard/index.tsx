@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { EditMenuItem } from "../CardapioForms/EditMenuItem";
 import { DeleteMenuItem } from "../CardapioForms/DeleteMenuItem";
+import { baseURL } from "../../services/api";
 
 interface IMenuItemCardProps {
   item: IMenuItemInterfaceData;
@@ -45,7 +46,7 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
         >
           <Flex width={"100%"} borderRadius={{ base: '10px', md: '16px', lg: '32px' }} overflow={"hidden"}>            
             <Image
-              src={item.imageURL[0]}
+              src={`${baseURL}${item.images[0].filePath.replace("\\", "/")}`}
               bg={"#ffff"}
               borderTopRadius="32px"
               borderBottomRadius="0px"              
