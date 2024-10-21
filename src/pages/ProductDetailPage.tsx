@@ -11,7 +11,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilt
   const { productId } = useParams<{ productId: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0); // Estado para controlar a imagem selecionada
-
+console.log(selectedImageIndex)
   if (!productId) {
     return <div>Product not found</div>;
   }
@@ -42,22 +42,23 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilt
           <Flex width="80%" padding="20px" flexDirection={{ base: 'column', md: 'row' }}>
             <Flex width={{ base: '100%', md: '40%' }} padding="20px" flexDirection="row" justifyContent="flex-end">
               <SimpleGrid columns={1} spacing={4} marginRight="20px">
-                {product.imageURL.map((url, index) => (
+                {product.images.map((image, index) => (
                   <Image
-                    key={index}
-                    src={url}
-                    alt={`Thumbnail ${index + 1}`}
-                    boxSize="80px"
-                    objectFit="cover"
-                    border="1px solid #ccc"
-                    cursor="pointer"
-                    onClick={() => handleImageClick(index)} // Adiciona o evento de clique
+                  key={index}
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  boxSize="80px"
+                  objectFit="cover"
+                  border="1px solid #ccc"
+                  cursor="pointer"
+                  onClick={() => handleImageClick(index)} // Adiciona o evento de clique
                   />
                 ))}
+                
               </SimpleGrid>
               <Box border="1px solid #ccc" padding="10px" borderRadius="md" width="100%" maxWidth="400px" maxHeight="400px">
                 <Image
-                  src={product.imageURL[selectedImageIndex]} // Renderiza a imagem com base no estado selecionado
+                  src={product.images[selectedImageIndex]} // Renderiza a imagem com base no estado selecionado
                   alt={product.name}
                   boxSize="100%"
                   objectFit="cover"
