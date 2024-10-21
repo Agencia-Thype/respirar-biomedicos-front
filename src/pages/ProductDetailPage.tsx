@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { Flex, Heading, Image, Text, Button, Box, SimpleGrid, Center } from '@chakra-ui/react';
 import { IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
 import { ModalConfirm } from '../components/MenuItemCard/ModalConfirm';
+import { baseURL } from '../services/api';
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilteredCardapio, handleSearch }) => {
   const { productId } = useParams<{ productId: string }>();
@@ -18,6 +19,7 @@ console.log(selectedImageIndex)
 
   const product = produtos.find((p) => p.id === productId) as unknown as IMenuItemInterfaceData;
 
+  console.log(product)
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -34,6 +36,24 @@ console.log(selectedImageIndex)
     setSelectedImageIndex(index); // Atualiza o estado com o índice da imagem clicada
   };
 
+
+
+  type Props = {
+    text: string;
+  };
+  
+  function TextWithLineBreaks({ text }: Props) {
+    return (
+      <div>
+        {text.split('\n').map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
   return (
     <Flex flexDirection="column" minHeight="100vh">
       <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
@@ -45,7 +65,7 @@ console.log(selectedImageIndex)
                 {product.images.map((image, index) => (
                   <Image
                   key={index}
-                  src={image}
+                  src={`${baseURL}${image.filePath.replace("\\", "/")}`}
                   alt={`Thumbnail ${index + 1}`}
                   boxSize="80px"
                   objectFit="cover"
@@ -58,7 +78,7 @@ console.log(selectedImageIndex)
               </SimpleGrid>
               <Box border="1px solid #ccc" padding="10px" borderRadius="md" width="100%" maxWidth="400px" maxHeight="400px">
                 <Image
-                  src={product.images[selectedImageIndex]} // Renderiza a imagem com base no estado selecionado
+                  src={`${baseURL}${product.images[selectedImageIndex].filePath.replace("\\", "/")}`} // Renderiza a imagem com base no estado selecionado
                   alt={product.name}
                   boxSize="100%"
                   objectFit="cover"
@@ -84,7 +104,9 @@ console.log(selectedImageIndex)
             <Heading size="md" mb="4" textAlign="center">
               Descrição
             </Heading>
-            <Text textAlign="justify">{product.description}</Text>
+            <Text textAlign="justify">
+              <TextWithLineBreaks text={product.description} />
+            </Text>
           </Box>
         </Center>
       </Flex>
