@@ -6,18 +6,20 @@ import { Footer } from '../components/Footer';
 import { Flex, Heading, Image, Text, Button, Box, SimpleGrid, Center } from '@chakra-ui/react';
 import { IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
 import { ModalConfirm } from '../components/MenuItemCard/ModalConfirm';
+import { baseURL } from '../services/api';
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilteredCardapio, handleSearch }) => {
   const { productId } = useParams<{ productId: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0); // Estado para controlar a imagem selecionada
-
+console.log(selectedImageIndex)
   if (!productId) {
     return <div>Product not found</div>;
   }
 
   const product = produtos.find((p) => p.id === productId) as unknown as IMenuItemInterfaceData;
 
+  console.log(product)
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -34,6 +36,24 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilt
     setSelectedImageIndex(index); // Atualiza o estado com o índice da imagem clicada
   };
 
+
+
+  type Props = {
+    text: string;
+  };
+  
+  function TextWithLineBreaks({ text }: Props) {
+    return (
+      <div>
+        {text.split('\n').map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
   return (
     <Flex flexDirection="column" minHeight="100vh">
       <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
@@ -42,22 +62,23 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilt
           <Flex width="80%" padding="20px" flexDirection={{ base: 'column', md: 'row' }}>
             <Flex width={{ base: '100%', md: '40%' }} padding="20px" flexDirection="row" justifyContent="flex-end">
               <SimpleGrid columns={1} spacing={4} marginRight="20px">
-                {product.imageURL.map((url, index) => (
+                {product.images.map((image, index) => (
                   <Image
-                    key={index}
-                    src={url}
-                    alt={`Thumbnail ${index + 1}`}
-                    boxSize="80px"
-                    objectFit="cover"
-                    border="1px solid #ccc"
-                    cursor="pointer"
-                    onClick={() => handleImageClick(index)} // Adiciona o evento de clique
+                  key={index}
+                  src={`${baseURL}${image.filePath.replace("\\", "/")}`}
+                  alt={`Thumbnail ${index + 1}`}
+                  boxSize="80px"
+                  objectFit="cover"
+                  border="1px solid #ccc"
+                  cursor="pointer"
+                  onClick={() => handleImageClick(index)} // Adiciona o evento de clique
                   />
                 ))}
+                
               </SimpleGrid>
               <Box border="1px solid #ccc" padding="10px" borderRadius="md" width="100%" maxWidth="400px" maxHeight="400px">
                 <Image
-                  src={product.imageURL[selectedImageIndex]} // Renderiza a imagem com base no estado selecionado
+                  src={`${baseURL}${product.images[selectedImageIndex].filePath.replace("\\", "/")}`} // Renderiza a imagem com base no estado selecionado
                   alt={product.name}
                   boxSize="100%"
                   objectFit="cover"
@@ -83,7 +104,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ produtos, setFilt
             <Heading size="md" mb="4" textAlign="center">
               Descrição
             </Heading>
-            <Text textAlign="justify">{product.description}</Text>
+            <Text textAlign="justify">
+              <TextWithLineBreaks text={product.description} />
+            </Text>
           </Box>
         </Center>
       </Flex>
