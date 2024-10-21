@@ -7,24 +7,17 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
-  Icon,
   Image,
   Input,
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import image from "../assets/Sede.png";
-import {
-  AiFillInstagram,
-  AiOutlineTwitter,
-  AiFillFacebook,
-} from "react-icons/ai";
+import image from "../assets/Sede.webp";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "../components/Header";
 import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
-
 export const ContactPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
   const contactFormSchema = z.object({
     name: z.string().min(3, { message: "Pelo menos 3 caracteres" }),

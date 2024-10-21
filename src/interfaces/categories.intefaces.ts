@@ -8,5 +8,7 @@ export interface categoriesContextData {
   // createCategory: (data: ICategoryDataRequest) => void;
 }
 
+
+
 export type ICategoryData = z.infer<typeof baseCategorySchema>;
 export type ICategoryDataRequest = z.infer<typeof categorySchemaData>
