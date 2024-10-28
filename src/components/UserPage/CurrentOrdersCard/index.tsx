@@ -1,5 +1,6 @@
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import { IUserDetailsOrderProps } from "../../../interfaces/orders.interfaces";
+import { baseURL } from "../../../services/api";
 
 export const CurrentOrdersCard = ({ order }: IUserDetailsOrderProps) => {
   const formatHour = (date: Date) => {
@@ -8,7 +9,7 @@ export const CurrentOrdersCard = ({ order }: IUserDetailsOrderProps) => {
     const minutes = newDate.getMinutes();
     return `${hour}:${minutes}`;
   };
-
+console.log(order.orderItems)
   return (
     <Flex
       bg="rgba(255, 255, 255, 0.80)"
@@ -27,7 +28,7 @@ export const CurrentOrdersCard = ({ order }: IUserDetailsOrderProps) => {
           align={{ base: "center" }}
         >
           <Image
-            src={item.menuItem.imageURL[0]}
+            src={`${baseURL}${item.menuItem.images[0]}`}
             w={{ base: "70%", lg: "30%" }}
             borderRadius={"10px"}
             objectFit={"cover"}

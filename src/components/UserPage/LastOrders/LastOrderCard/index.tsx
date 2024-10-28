@@ -6,6 +6,7 @@ import {
 import { IMenuItemData } from "../../../../interfaces/menuItem.interfaces";
 import { useContext } from "react";
 import { OrderContext } from "../../../../contexts/OrdersContext";
+import { baseURL } from "../../../../services/api";
 
 interface IMenuItemDataProps {
   MenuItemCart: {
@@ -68,7 +69,7 @@ export const LastOrderCard = ({ order }: IUserDetailsOrderProps) => {
             align={{ base: "center" }}
           >
             <Image
-              src={item.menuItem.imageURL[0]}
+              src={`${baseURL}${item.menuItem.images[0]}`}
               w={{ base: "80%", lg: "40%" }}
               borderRadius={"10px"}
               objectFit={"cover"}

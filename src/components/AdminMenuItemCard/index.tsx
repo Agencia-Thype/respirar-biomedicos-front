@@ -12,6 +12,7 @@ import {
 import { EditMenuItem } from "../CardapioForms/EditMenuItem";
 import { DeleteMenuItem } from "../CardapioForms/DeleteMenuItem";
 import { baseURL } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 interface IMenuItemCardProps {
   item: IMenuItemInterfaceData;
@@ -26,6 +27,7 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
 
   const [isDeleteOpenModal, setIsDeleteOpenModal] = useState(false)
   const toggleDeleteModal = () => setIsDeleteOpenModal(!isDeleteOpenModal)
+  const navigate = useNavigate();
   return (
     <>
       <Flex width={'290.5px'}
@@ -123,7 +125,10 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
               alignItems="center"
               justifyContent="center"              
               _hover={{ bg: "#F6B519"}}
-              onClick={toggleEditModal}
+              onClick={() => {
+                // console.log(item);  // Verifique se o item está vindo corretamente aqui
+                navigate("/admin/editItem", { state: { item } });
+              }}
             >
               Editar
             </Flex>
@@ -131,7 +136,7 @@ export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
         </Flex>
       </Flex>
 
-      {isEditOpenModal && <EditMenuItem toggleEditModal={toggleEditModal} item={item} />}
+      {/* {isEditOpenModal && <EditMenuItem toggleEditModal={toggleEditModal} item={item} />} */}
       {isDeleteOpenModal && <DeleteMenuItem toggleDeleteModal={toggleDeleteModal}item={item} />}
     </>
   );

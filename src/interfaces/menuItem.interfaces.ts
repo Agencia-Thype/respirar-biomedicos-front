@@ -65,7 +65,7 @@ export interface Produto {
   price: number;
   description: string;
   categoryId: string;
-  imageURL: string[];
+  images: File[];
   category: ICategoryData;
   featuredProduct: boolean;
   sale: boolean;

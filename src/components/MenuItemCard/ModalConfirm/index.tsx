@@ -18,6 +18,7 @@ import {
 import { IMenuItemInterfaceData } from "../../../interfaces/menuItem.interfaces";
 import { useContext, useState } from "react";
 import { OrderContext } from "../../../contexts/OrdersContext";
+import { baseURL } from "../../../services/api";
 
 interface IModalConfirm {
   isOpen: boolean;
@@ -77,7 +78,7 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
           <Flex gap="1rem" flexDir={{ base: "column", lg: "row" }}>
             <Image
               w={{ base: "100%", lg: "30%" }}
-              src={item.images[0].filePath}
+              src={`${baseURL}${item.images[0].filePath.replace("\\", "/")}`}
               borderRadius={"10"}
               objectFit={"cover"}
             />

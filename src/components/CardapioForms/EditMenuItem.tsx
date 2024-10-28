@@ -137,17 +137,17 @@ export const EditMenuItem = ({ toggleEditModal, item }: ModalEditProps) => {
                 <FormErrorMessage>{errors.name.message}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={!!errors.imageURL}>
+            <FormControl isInvalid={!!errors.images}>
               <FormLabel color={"primary-color"}>Imagem</FormLabel>
               <Input
                 placeholder="Digite a URL da imagem"
-                defaultValue={item.imageURL}
-                {...register("imageURL")}
+                // defaultValue={item.images}
+                {...register("images")}
                 bg="title-color"
                 borderRadius={"20px"}
               />
-              {!!errors.imageURL && (
-                <FormErrorMessage>{errors.imageURL.message}</FormErrorMessage>
+              {!!errors.images && (
+                <FormErrorMessage>{errors.images.message}</FormErrorMessage>
               )}
             </FormControl>
 

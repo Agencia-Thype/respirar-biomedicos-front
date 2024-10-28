@@ -7,6 +7,8 @@ import {
   Image,
   LinkBox,
   LinkOverlay,
+  List,
+  ListItem,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
@@ -88,13 +90,13 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
               }}
             >
               {featuredProducts.length > 0 ? (
-                <ul>
+                <List display={"flex"} gap={"0.5rem"} w={"100%"}>
                   {featuredProducts.map((item) => (
-                    <li key={item.id}>
+                    <ListItem key={item.id}>
                       <MenuItensCard item={item}/>
-                    </li>
+                    </ListItem>
                   ))}
-                </ul>
+                </List>
               ) : (
                 <p>Nenhum produto destacado encontrado.</p>
               )}

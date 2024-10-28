@@ -50,6 +50,7 @@ export const RegisterForm = () => {
         },
       ],
     };
+    console.log(data)
     createUser({ data });
   };
 

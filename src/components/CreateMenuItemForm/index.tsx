@@ -32,6 +32,7 @@ import { MenuItemContext } from "../../contexts/MenuItemContext";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 import { ICategoryDataRequest } from "../../interfaces/categories.intefaces";
 import { api } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 interface ICreateMenuItem {
     name: string;
@@ -54,6 +55,7 @@ export const CreateMenuItemForm = () => {
     const [newCategoryName, setNewCategoryName] = useState("");
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -131,6 +133,7 @@ export const CreateMenuItemForm = () => {
         };
         console.log(fetchedData)
         createMenuItem(fetchedData);
+        navigate("/admin")
     };
 
     return (
@@ -158,9 +161,10 @@ export const CreateMenuItemForm = () => {
                 <FormControl isInvalid={!!errors.price}>
                     <FormLabel>Preço</FormLabel>
                     <Input
-                        {...register("price")}
+                        {...register("price", { valueAsNumber: true })}
                         placeholder="Digite o preço do produto"
-                        type="text"
+                        type="number"
+                        step="0.01"
                     />
                     {!!errors.price && (
                         <FormErrorMessage>
@@ -170,7 +174,7 @@ export const CreateMenuItemForm = () => {
                 </FormControl>
 
                 <FormControl isInvalid={!!errors.resume}>
-                    <FormLabel>Resumo</FormLabel>
+                    <FormLabel>Resumo (Tam Máx: 800 carácteres)</FormLabel>
                     <Textarea
                         {...register("resume")}
                         placeholder="Digite o resumo do produto"
@@ -196,7 +200,7 @@ export const CreateMenuItemForm = () => {
                 </FormControl>
 
                 <FormControl isInvalid={!!imageError}>
-                    <FormLabel>Imagens do Produto (Máx: 5)</FormLabel>
+                    <FormLabel>Imagens do Produto (Máx: 5) - (Tam Máx: 1 Mb)</FormLabel>
                     <Input
                         type="file"
                         multiple
@@ -231,17 +235,19 @@ export const CreateMenuItemForm = () => {
 
                 <FormControl>
                     <FormLabel>Categoria</FormLabel>
-                    <Select {...register("categoryId")}>
-                        <option value="">Selecione uma categoria</option>
-                        {categories?.map((category) => (
-                            <option key={category.id} value={category.id}>
-                                {category.name}
-                            </option>
-                        ))}
-                    </Select>
-                    <Button onClick={onOpen}>
-                        + 
-                    </Button>
+                    <Flex gap={"1rem"}>
+                        <Select {...register("categoryId")}>
+                            <option value="">Selecione uma categoria</option>
+                            {categories?.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </Select>
+                        <Button onClick={onOpen}>
+                            + 
+                        </Button>
+                    </Flex>
                 </FormControl>
 
                 <FormControl>

@@ -19,6 +19,7 @@ import ProductSearch from "../components/Header/Research";
 import { AddMenuItemPage } from "../pages/AddMenuItemPage";
 import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
 import { RecoverPasswordPage } from "../pages/RecoverPasswordPage";
+import { EditMenuItemPage } from "../pages/EditMenuItemPage";
 
 
 export const Routers: React.FC = () => {
@@ -58,6 +59,7 @@ export const Routers: React.FC = () => {
       <Route path="/register" element={<RegisterPager handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/admin" element={<AdminPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/admin/createItem" element={<AddMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
+      <Route path="/admin/editItem" element={<EditMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
       <Route path="/orders" element={<OrdersPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/delivery" element={<DeliveryPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
       <Route path="/user" element={<UserPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />

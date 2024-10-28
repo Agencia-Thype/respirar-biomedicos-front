@@ -2,6 +2,7 @@ import { Button, Flex, Heading, Image, Select, Text } from "@chakra-ui/react";
 import { IMenuItemData } from "../../MenuItemCard/ModalConfirm";
 import { useContext, useState } from "react";
 import { OrderContext } from "../../../contexts/OrdersContext";
+import { baseURL } from "../../../services/api";
 
 interface ICartCardProp {
   item: IMenuItemData;
@@ -71,7 +72,7 @@ export const CartCard = ({
         maxW="100%"
         h={{ base: "auto", md: "100px" }}
         objectFit="cover"
-        src={item?.MenuItem.imageURL[0]}
+        src={`${baseURL}${item.MenuItem.images[0].filePath.replace("\\", "/")}`}
         borderRadius="20px"
       />
       <Flex flexDir="column" gap="0.5rem" flex="1">
