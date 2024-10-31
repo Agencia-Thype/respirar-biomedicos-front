@@ -50,7 +50,7 @@ export const MenuItemProvider = ({ children }: IProvider) => {
     );
 
     const { mutate: createMenuItem } = useMutation(
-        async (data: any): Promise<IMenuItemInterfaceData> => {
+        async (data: any): Promise<any> => {
             const token = localStorage.getItem("@DownTown:Token");
             const images = data.images;
 
@@ -88,13 +88,28 @@ export const MenuItemProvider = ({ children }: IProvider) => {
     );
 
     const { mutate: updateMenuItem } = useMutation(
-        async ({
-            newData,
-            itemId,
-        }: IMenuItemUpdateMutation): Promise<IMenuItemInterfaceData> => {
+        async (data: any): Promise<IMenuItemInterfaceData> => {
             const token = localStorage.getItem("@DownTown:Token");
+            const images = data.images;
+
+            delete data.images;
+
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            const response = await api.patch(`/menuItem/${itemId}`, newData);
+
+            const formData = new FormData();
+
+            images.forEach((image: File) => {
+                formData.append("images", image);
+            });
+
+            formData.append("data", JSON.stringify(data));
+
+            const response = await api.patch(`/menuItem/${data.id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
             return response.data;
         },
         {
@@ -111,8 +126,11 @@ export const MenuItemProvider = ({ children }: IProvider) => {
     const { mutate: deleteMenuItem } = useMutation(
         async (itemId: string) => {
             const token = localStorage.getItem("@DownTown:Token");
+
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
             const response = await api.delete(`/menuItem/${itemId}`);
+
             return response.data;
         },
         {

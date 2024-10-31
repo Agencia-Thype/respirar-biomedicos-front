@@ -12,6 +12,7 @@ export const EditMenuItemPage: React.FC<ProductListSearchProps> = ({
     handleSearch,
 }) => {
     const navigate = useNavigate();
+
     return (
         <Flex flexDir="column" w="100%">
             <Flex w="100%">
@@ -72,6 +73,7 @@ export const EditMenuItemPage: React.FC<ProductListSearchProps> = ({
                 >
                     Editar Produto
                 </Heading>
+
                 <EditMenuItemForm />
             </Flex>
         </Flex>

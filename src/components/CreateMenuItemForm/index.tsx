@@ -24,7 +24,6 @@ import {
     ModalFooter,
 } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
-// import { CloseIcon } from "@chakra-ui/icons";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createMenuItemSchema } from "../../schemas/menuItem.schemas";
@@ -70,26 +69,27 @@ export const CreateMenuItemForm = () => {
         register: registerCategory,
         handleSubmit: handleSubmitCategory,
         formState: { errors: categoryErrors },
-      } = useForm<ICategoryDataRequest>();
+    } = useForm<ICategoryDataRequest>();
 
-      const handleAddCategory: SubmitHandler<ICategoryDataRequest> = async (data) => {
+    const handleAddCategory: SubmitHandler<ICategoryDataRequest> = async (
+        data
+    ) => {
         try {
-            const token = localStorage.getItem("@DownTown:Token")
-            
-            const response = await api.post('/category/', data, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            console.log(response)
-            onClose()
+            const token = localStorage.getItem("@DownTown:Token");
+
+            const response = await api.post("/category/", data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(response);
+            onClose();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-        
+
         onClose();
     };
-
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -131,9 +131,9 @@ export const CreateMenuItemForm = () => {
             price: parseFloat(data.price.toString()),
             images: fetchedImages,
         };
-        console.log(fetchedData)
+
         createMenuItem(fetchedData);
-        navigate("/admin")
+        navigate("/admin");
     };
 
     return (
@@ -200,7 +200,10 @@ export const CreateMenuItemForm = () => {
                 </FormControl>
 
                 <FormControl isInvalid={!!imageError}>
-                    <FormLabel>Imagens do Produto (Máx: 5) - (Tam Máx: 1 Mb)</FormLabel>
+                    <FormLabel>
+                        Imagens do Produto (Máx: 5) - (Tam Máx: 1 Mb)
+                    </FormLabel>
+                    
                     <Input
                         type="file"
                         multiple
@@ -244,9 +247,7 @@ export const CreateMenuItemForm = () => {
                                 </option>
                             ))}
                         </Select>
-                        <Button onClick={onOpen}>
-                            + 
-                        </Button>
+                        <Button onClick={onOpen}>+</Button>
                     </Flex>
                 </FormControl>
 
@@ -265,35 +266,39 @@ export const CreateMenuItemForm = () => {
                 </Button>
             </VStack>
             <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-            <ModalHeader>Adicionar categoria</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-                <FormControl as="form" onSubmit={handleSubmitCategory(handleAddCategory)}>
-                <FormLabel>Nome da Categoria</FormLabel>
-                <Input
-                    placeholder="Digite o nome da categoria"
-                    {...registerCategory("name")}
-                    // value={newCategoryName}
-                    // onChange={(e) => setNewCategoryName(e.target.value)}
-                />
-                {!!categoryErrors.name && (
-                    <FormErrorMessage>{categoryErrors.name.message}</FormErrorMessage>
-                )}
-                <ModalFooter>
-                    <Button colorScheme="blue" mr={3} type="submit">
-                    Adicionar
-                    </Button>
-                    <Button variant="ghost" onClick={onClose}>
-                    Cancelar
-                    </Button>
-                </ModalFooter>
-                </FormControl>
-            </ModalBody>
-            </ModalContent>
-        </Modal>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Adicionar categoria</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <FormControl
+                            as="form"
+                            onSubmit={handleSubmitCategory(handleAddCategory)}
+                        >
+                            <FormLabel>Nome da Categoria</FormLabel>
+                            <Input
+                                placeholder="Digite o nome da categoria"
+                                {...registerCategory("name")}
+                                // value={newCategoryName}
+                                // onChange={(e) => setNewCategoryName(e.target.value)}
+                            />
+                            {!!categoryErrors.name && (
+                                <FormErrorMessage>
+                                    {categoryErrors.name.message}
+                                </FormErrorMessage>
+                            )}
+                            <ModalFooter>
+                                <Button colorScheme="blue" mr={3} type="submit">
+                                    Adicionar
+                                </Button>
+                                <Button variant="ghost" onClick={onClose}>
+                                    Cancelar
+                                </Button>
+                            </ModalFooter>
+                        </FormControl>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Flex>
-        
     );
 };
