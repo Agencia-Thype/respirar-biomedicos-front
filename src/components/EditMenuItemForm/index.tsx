@@ -58,26 +58,26 @@ export const EditMenuItemForm = () => {
     const location = useLocation();
     const { updateMenuItem } = useContext(MenuItemContext);
 
-    const item = location.state?.item;
+    // const item = location.state?.item;
 
-    const { data: categories, isFetching } = useContext(CategoriesContext);
+    // const { data: categories, isFetching } = useContext(CategoriesContext);
 
-    // const categories = [
-    //     { id: 1, name: "pratos" },
-    //     { id: 2, name: "copos" },
-    // ];
+    const categories = [
+        { id: 1, name: "pratos" },
+        { id: 2, name: "copos" },
+    ];
 
-    // const item = {
-    //     id: "1",
-    //     name: "Produto Exemplo",
-    //     price: 10.99,
-    //     resume: "Um resumo do produto.",
-    //     description: "Uma descrição detalhada do produto.",
-    //     categoryId: "1",
-    //     sale: false,
-    //     featuredProduct: false,
-    //     images: [],
-    // };
+    const item = {
+        id: "1",
+        name: "Produto Exemplo",
+        price: 10.99,
+        resume: "Um resumo do produto.",
+        description: "Uma descrição detalhada do produto.",
+        categoryId: "1",
+        sale: false,
+        featuredProduct: false,
+        images: [],
+    };
 
     const [productImages, setProductImages] = useState<File[]>([]);
     const [imageError, setImageError] = useState<string | null>(null);
