@@ -40,13 +40,13 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
     } else { setSelected(button); }
   };
 
-  if (isFetchingCardapio || isFetchingCategories) {
-    return (
-      <Flex justify="center" align="center" height="100vh">
-        <Spinner size="xl" label="Carregando..." />
-      </Flex>
-    );
-  }
+  // if (isFetchingCardapio || isFetchingCategories) {
+  //   return (
+  //     <Flex justify="center" align="center" height="100vh">
+  //       <Spinner size="xl" label="Carregando..." />
+  //     </Flex>
+  //   );
+  // }
   return (
     <Flex flexDir="column" w="100%">
       <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
