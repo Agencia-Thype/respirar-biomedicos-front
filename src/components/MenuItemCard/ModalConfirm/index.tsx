@@ -15,7 +15,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { IMenuItemInterfaceData } from "../../../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData } from "../../../interfaces/menuItem.interfaces";
 import { useContext, useState } from "react";
 import { OrderContext } from "../../../contexts/OrdersContext";
 import { baseURL } from "../../../services/api";
@@ -23,7 +23,7 @@ import { baseURL } from "../../../services/api";
 interface IModalConfirm {
   isOpen: boolean;
   onClose: () => void;
-  item: IMenuItemInterfaceData;
+  item: IMenuItemCardInterfaceData;
 }
 
 export interface IMenuItemData {
@@ -33,7 +33,7 @@ export interface IMenuItemData {
     total: number;
     instructions: string;
   };
-  MenuItem: IMenuItemInterfaceData;
+  MenuItem: IMenuItemCardInterfaceData;
 }
 
 export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
@@ -41,7 +41,7 @@ export const ModalConfirm = ({ isOpen, onClose, item }: IModalConfirm) => {
   const [obs, setObs] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const addToCart = (item: IMenuItemInterfaceData) => {
+  const addToCart = (item: IMenuItemCardInterfaceData) => {
     const cart: IMenuItemData[] = JSON.parse(
       localStorage.getItem("cart") || "[]"
     );

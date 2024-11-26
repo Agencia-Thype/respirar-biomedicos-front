@@ -18,12 +18,12 @@ import { useEffect, useState } from "react";
 import { IMenuItemData } from "../../MenuItemCard/ModalConfirm";
 import jwt_decode from "jwt-decode";
 import ProductSearch from "../Research";
-import { IMenuItemInterfaceData, ProductListProps, ProductSearchProps } from "../../../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData, ProductListProps, ProductSearchProps } from "../../../interfaces/menuItem.interfaces";
 
 interface NavLinksProps {
   isOpen: boolean;
   onToggle: () => void;
-  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
   handleSearch: ()=> void
 }
 

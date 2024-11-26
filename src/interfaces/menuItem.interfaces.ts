@@ -4,13 +4,14 @@ import {
   baseMenuItemSchema,
   createMenuItemRequestSchema,
   createMenuItemSchema,
+  menuItemCardSchema,
   menuItemDataSchema,
 } from "../schemas/menuItem.schemas";
 import { z } from "zod";
 import { ICategoryData } from "./categories.intefaces";
 
 export interface IMenuItemContext {
-  data: IMenuItemInterfaceData[];
+  data: IMenuItemCardInterfaceData[];
   isFetching: boolean;
   listItemDetail: UseMutateFunction<
     {
@@ -49,6 +50,10 @@ export type IMenuItemInterfaceData = z.infer<typeof baseMenuItemSchema> & {
   categoryId: ICategoryData;
 };
 
+export type IMenuItemCardInterfaceData = z.infer<typeof menuItemCardSchema> & {
+  categoryId: ICategoryData;
+};
+
 export type IMenuItemData = z.infer<typeof menuItemDataSchema>;
 
 export type IMenuItemCreate = z.infer<typeof createMenuItemSchema>;
@@ -74,14 +79,14 @@ export interface Produto {
 
 export interface ProductDetailPageProps {
   produtos: Produto[];
-  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
   handleSearch: ()=> void
 }
 
 
 export interface ProductListProps {
-  cardapio: IMenuItemInterfaceData[];
-  filteredCardapio: IMenuItemInterfaceData[];
+  cardapio: IMenuItemCardInterfaceData[];
+  filteredCardapio: IMenuItemCardInterfaceData[];
   selected: string | null;
   categories?: ICategoryData[];
   isSearching: boolean;
@@ -89,13 +94,13 @@ export interface ProductListProps {
 }
 
 export interface ProductSearchProps {
-  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
   handleSearch: ()=> void
 }
 
 export interface ProductListSearchProps {
-  filteredCardapio: IMenuItemInterfaceData[]
-  setFilteredCardapio: (data: IMenuItemInterfaceData[]) => void;
+  filteredCardapio: IMenuItemCardInterfaceData[]
+  setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
   handleSearch: ()=> void;
   isSearching: boolean
 }

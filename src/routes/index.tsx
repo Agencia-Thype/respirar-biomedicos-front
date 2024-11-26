@@ -13,7 +13,7 @@ import { RentPage } from "../pages/RentPage";
 import { api } from "../services/api";
 import { useEffect, useState } from "react";
 import  ProductDetailPage  from "../pages/ProductDetailPage";
-import {IMenuItemInterfaceData, Produto} from "../interfaces/menuItem.interfaces"
+import {IMenuItemCardInterfaceData, IMenuItemInterfaceData, Produto} from "../interfaces/menuItem.interfaces"
 import { SalePage } from "../pages/SalePage";
 import ProductSearch from "../components/Header/Research";
 import { AddMenuItemPage } from "../pages/AddMenuItemPage";
@@ -25,7 +25,7 @@ import { EditMenuItemPage } from "../pages/EditMenuItemPage";
 export const Routers: React.FC = () => {
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
-  const [filteredCardapio, setFilteredCardapio] = useState<IMenuItemInterfaceData[]>([]);
+  const [filteredCardapio, setFilteredCardapio] = useState<IMenuItemCardInterfaceData[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
   // console.log(filteredCardapio)

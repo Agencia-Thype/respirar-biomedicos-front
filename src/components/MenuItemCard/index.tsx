@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IMenuItemInterfaceData } from "../../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData } from "../../interfaces/menuItem.interfaces";
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -16,7 +16,7 @@ import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 import { baseURL } from "../../services/api";
 
 interface IMenuItemCardProps {
-  item: IMenuItemInterfaceData;
+  item: IMenuItemCardInterfaceData;
 }
 
 export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
@@ -27,7 +27,7 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
     setShow(!show);
   };
   
-
+  console.log(item.images[0].filePath)
   return (
     <>
       <Flex

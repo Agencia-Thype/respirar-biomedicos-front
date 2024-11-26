@@ -3,12 +3,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { MenuItemContext } from "../../contexts/MenuItemContext";
 
 
-import { IMenuItemInterfaceData } from '../../interfaces/menuItem.interfaces';
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData } from '../../interfaces/menuItem.interfaces';
 import { createPortal } from "react-dom";
 
 interface ModalDeleteProps {
   toggleDeleteModal: () => void
-  item: IMenuItemInterfaceData
+  item: IMenuItemCardInterfaceData
 }
 
 export const DeleteMenuItem = ({ toggleDeleteModal, item }:ModalDeleteProps) => {

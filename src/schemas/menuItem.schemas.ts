@@ -1,7 +1,24 @@
 import { boolean, z } from "zod";
 import { baseCategorySchema } from "./category.schemas";
 
-export const baseMenuItemSchema = z.object({
+export const menuItemCardSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    price: z.number(),
+    resume: z.string(),
+    description: z.string(),
+    images: z.array(
+      z.object({
+        filePath: z.string(), // Adiciona o suporte para a propriedade filePath
+      })
+    ).min(1, "Pelo menos uma imagem é necessária"),
+    sale: z.boolean(),
+    featuredProduct: z.boolean(),
+    categoryId: z.string(),
+    category: baseCategorySchema,
+    orderItems: z.array(z.unknown()),
+  });
+  export const baseMenuItemSchema = z.object({
     id: z.string(),
     name: z.string(),
     price: z.number(),

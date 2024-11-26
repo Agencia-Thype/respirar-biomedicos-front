@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IMenuItemInterfaceData } from "../../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData } from "../../interfaces/menuItem.interfaces";
 import {
   Box,
   Button,
@@ -9,13 +9,13 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { EditMenuItem } from "../CardapioForms/EditMenuItem";
+// import { EditMenuItem } from "../CardapioForms/EditMenuItem";
 import { DeleteMenuItem } from "../CardapioForms/DeleteMenuItem";
 import { baseURL } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 interface IMenuItemCardProps {
-  item: IMenuItemInterfaceData;
+  item: IMenuItemCardInterfaceData;
 }
 
 export const AdminMenuItensCard = ({ item }: IMenuItemCardProps) => {
