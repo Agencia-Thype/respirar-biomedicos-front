@@ -4,7 +4,7 @@ import { ICategoryData } from '../interfaces/categories.intefaces';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Flex, Heading, Image, Text, Button, Box, SimpleGrid, Center } from '@chakra-ui/react';
-import { IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData, ProductDetailPageProps } from '../interfaces/menuItem.interfaces';
 import { ModalConfirm } from '../components/MenuItemCard/ModalConfirm';
 import { baseURL } from '../services/api';
 
@@ -17,7 +17,7 @@ console.log(selectedImageIndex)
     return <div>Product not found</div>;
   }
 
-  const product = produtos.find((p) => p.id === productId) as unknown as IMenuItemInterfaceData;
+  const product = produtos.find((p) => p.id === productId) as unknown as IMenuItemCardInterfaceData;
 
   console.log(product)
   if (!product) {
