@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { MenuItemContext } from "../../contexts/MenuItemContext"; // Ajuste o caminho conforme necessário
 import React from "react";
 import { api, baseURL } from "../../services/api";
-import { IMenuItemInterfaceData, Produto } from "../../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData, Produto } from "../../interfaces/menuItem.interfaces";
 
 export const useMenuItemContext = () => {
   const context = React.useContext(MenuItemContext);
@@ -16,7 +16,7 @@ export const useMenuItemContext = () => {
 
 export const SliderSale = () => {
 
-  const [menuItems, setMenuItems] = useState<IMenuItemInterfaceData[]>([]);
+  const [menuItems, setMenuItems] = useState<IMenuItemCardInterfaceData[]>([]);
 
   useEffect(() => {
     // Função assíncrona para buscar os produtos destacados

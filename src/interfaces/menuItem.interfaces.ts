@@ -24,7 +24,9 @@ export interface IMenuItemContext {
       categoryId: string;
       sale: boolean;
       featuredProduct: boolean;
-      images: File[]
+      images: {
+        filePath: string;
+    }[];
     },
     any,
     string,

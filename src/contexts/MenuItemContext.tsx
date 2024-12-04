@@ -1,5 +1,6 @@
 import { createContext, useState, useContext } from "react";
 import {
+    IMenuItemCardInterfaceData,
     IMenuItemContext,
     IMenuItemInterfaceData,
     IMenuItemMutation,
@@ -19,7 +20,7 @@ export const MenuItemContext = createContext<IMenuItemContext>(
 export const MenuItemProvider = ({ children }: IProvider) => {
     const { refetch: refetchCategories } = useContext(CategoriesContext);
     const [menuItemDeatilData, setMenuItemDetailData] = useState<
-        IMenuItemInterfaceData | undefined
+        IMenuItemCardInterfaceData | undefined
     >();
 
     const listMenuItem = async () => {
@@ -33,7 +34,7 @@ export const MenuItemProvider = ({ children }: IProvider) => {
     });
 
     const { mutate: listItemDetail } = useMutation(
-        async (itemId: string): Promise<IMenuItemInterfaceData> => {
+        async (itemId: string): Promise<IMenuItemCardInterfaceData> => {
             const token = localStorage.getItem("@DownTown:Token");
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             const response = await api.get(`/menuItem/${itemId}/`);

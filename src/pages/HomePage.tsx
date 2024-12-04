@@ -22,14 +22,14 @@ import { Header } from "../components/Header";
 import lifestyleImg from "../assets/image/lifestyle-people.jpg";
 import { ProductCard } from "../components/ProductsCards";
 import CPAP from "../assets/image/CPAP.png";
-import { IMenuItemInterfaceData, ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
+import { IMenuItemCardInterfaceData, IMenuItemInterfaceData, ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
 import { api } from "../services/api";
 import { useEffect, useState } from "react";
 import { MenuItensCard } from "../components/MenuItemCard";
 
 export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
   // const navigate = useNavigate();
-  const [featuredProducts, setFeaturedProducts] = useState<IMenuItemInterfaceData[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<IMenuItemCardInterfaceData[]>([]);
 
   useEffect(() => {
     // Função assíncrona para buscar os produtos destacados
