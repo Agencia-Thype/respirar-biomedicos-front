@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { menuItemDataSchema, menuItemForOrder } from "./menuItem.schemas";
+import { menuItemCardDataSchema, menuItemDataSchema, menuItemForOrder } from "./menuItem.schemas";
 
 export const orderItemSchema = z.object({
   quantity: z.number(),
@@ -22,5 +22,5 @@ export const orderItemForOrder = orderItemSchema
   });
 
 export const OrderForUserDetailSchema = orderItemDataSchema.extend({
-  menuItem: menuItemDataSchema
+  menuItem: menuItemCardDataSchema
 })

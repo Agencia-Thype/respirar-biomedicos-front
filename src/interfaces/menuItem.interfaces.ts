@@ -4,6 +4,7 @@ import {
   baseMenuItemSchema,
   createMenuItemRequestSchema,
   createMenuItemSchema,
+  menuItemCardDataSchema,
   menuItemCardSchema,
   menuItemDataSchema,
 } from "../schemas/menuItem.schemas";
@@ -54,7 +55,7 @@ export type IMenuItemCardInterfaceData = z.infer<typeof menuItemCardSchema> & {
   categoryId: ICategoryData;
 };
 
-export type IMenuItemData = z.infer<typeof menuItemDataSchema>;
+export type IMenuItemData = z.infer<typeof menuItemCardDataSchema>;
 
 export type IMenuItemCreate = z.infer<typeof createMenuItemSchema>;
 export type IMenuItemMutation = z.infer<typeof createMenuItemRequestSchema>;

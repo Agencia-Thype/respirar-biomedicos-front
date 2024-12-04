@@ -62,6 +62,7 @@ export const LastOrderCard = ({ order }: IUserDetailsOrderProps) => {
       maxW={"500px"}
     >
       {order?.orderItems?.map((item) => {
+        console.log(item.menuItem.images)
         return (
           <Flex
             flexDir={{ base: "column", lg: "row" }}
@@ -69,7 +70,7 @@ export const LastOrderCard = ({ order }: IUserDetailsOrderProps) => {
             align={{ base: "center" }}
           >
             <Image
-              src={`${baseURL}${item.menuItem.images[0]}`}
+              src={`${baseURL}${item.menuItem?.images?.[0]?.filePath}`}
               w={{ base: "80%", lg: "40%" }}
               borderRadius={"10px"}
               objectFit={"cover"}

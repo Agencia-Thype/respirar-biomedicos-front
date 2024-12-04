@@ -39,6 +39,11 @@ export const menuItemDataSchema = baseMenuItemSchema.omit({
     category: true,
 });
 
+export const menuItemCardDataSchema = menuItemCardSchema.omit({
+    orderItems: true,
+    category: true,
+});
+
 export const menuItemSchema = z.object({
     id: z.string(),
     name: z.string(),
