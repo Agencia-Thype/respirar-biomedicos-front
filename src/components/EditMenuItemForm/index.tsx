@@ -30,13 +30,24 @@ import { updateMenuItemSchema } from "../../schemas/menuItem.schemas";
 import { MenuItemContext } from "../../contexts/MenuItemContext";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 import { ICategoryDataRequest } from "../../interfaces/categories.intefaces";
-import { IMenuItemInterfaceData, IMenuItemUpdate } from "../../interfaces/menuItem.interfaces";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  IMenuItemInterfaceData,
+  IMenuItemUpdate,
+} from "../../interfaces/menuItem.interfaces";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { api, baseURL } from "../../services/api";
 import { boolean } from "zod";
 
 interface IUpdateMenuItemFormProps {
   item: IMenuItemInterfaceData;
+}
+
+interface IImageURL {
+  fileName: string;
+  filePath: string;
+  fileType: string;
+  id: string;
+  menuItemId: string;
 }
 interface IUpdateMenuItem {
   name?: string; // Agora opcional
@@ -46,37 +57,56 @@ interface IUpdateMenuItem {
   categoryId?: string; // Agora opcional
   sale?: boolean; // Agora opcional
   featuredProduct?: boolean; // Agora opcional
-  images?: File[]; // Agora opcional
+  images?: (File | IImageURL)[]; // Agora opcional
 }
 
 // Alternativa usando Partial
-type IUpdateMenuItemPatch = Partial<IUpdateMenuItem>
+type IUpdateMenuItemPatch = Partial<IUpdateMenuItem>;
+
 export const EditMenuItemForm = () => {
-    const location = useLocation();
-    const item = location.state?.item;  // Verifique se location.state está definido
-  
-    // console.log(item.images);
+  const location = useLocation();
+  const item = location.state?.item;
+
   const { data: categories, isFetching } = useContext(CategoriesContext);
-  // const { updateMenuItem } = useContext(MenuItemContext);
-  const updateMenuItem = async (id:string, data:IUpdateMenuItemPatch) => {
-    console.log(id)
-    console.log(data)
+
+  const updateMenuItem = async (id: string, data: IUpdateMenuItemPatch) => {
     try {
+      const { images, ...restData } = data;
       const token = localStorage.getItem("@DownTown:Token");
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      const response = await api.patch(`/menuItem/${id}/`, data,{
+
+      const formData = new FormData();
+
+      if (images && images.length > 0) {
+        images.forEach((image) => {
+          formData.append("images", image instanceof File ? image : JSON.stringify(image));
+        });
+      }
+
+      formData.append("data", JSON.stringify(restData));
+
+      // Log do conteúdo do FormData
+      console.log("Conteúdo do FormData:");
+      formData.forEach((value, key) => {
+        if ((key = "images")) {
+          console.log(`${key}:`, value);
+        }
+      });
+
+      const response = await api.patch(`/menuItem/${id}/`, formData, {
         headers: {
-          'Content-Type': 'application/json', // Certifique-se de que está configurado
+          "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data)
-      return response.data;
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
-  const [productImages, setProductImages] = useState<File[]>([]);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const [fileImages, setFileImages] = useState<File[]>([]);
+  const [urlImages, setUrlImages] = useState<IImageURL[]>(item.images || []);
   const [imageError, setImageError] = useState<string | null>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -100,42 +130,40 @@ export const EditMenuItemForm = () => {
     },
   });
 
-  useEffect(() => {
-    setProductImages(item.images || []);
-  }, [item.images]);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-        const selectedFiles = Array.from(e.target.files);
-        const totalImages = productImages.length + selectedFiles.length;
+      const selectedFiles = Array.from(e.target.files);
+      const totalImages =
+        fileImages.length + urlImages.length + selectedFiles.length;
 
-        if (totalImages > 5) {
-            setImageError("Você pode adicionar no máximo 5 imagens.");
-            return;
-        }
+      if (totalImages > 5) {
+        setImageError("Você pode adicionar no máximo 5 imagens.");
+        return;
+      }
 
-        const updatedImages = [...productImages, ...selectedFiles];
-        setProductImages(updatedImages);
-        setValue("images", updatedImages as File[]);
-        setImageError(null);
+      setFileImages((prev) => [...prev, ...selectedFiles]);
+      setImageError(null);
     }
-};
-
-  const removeImage = (index: number) => {
-    const updatedImages = productImages.filter((_, i) => i !== index);
-    setProductImages(updatedImages);
-    setValue("images", updatedImages);
   };
 
-//   console.log(productImages)
+  const removeFileImage = (index: number) => {
+    setFileImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeUrlImage = (index: number) => {
+    setUrlImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const onSubmit: SubmitHandler<IUpdateMenuItemPatch> = async (data) => {
-    const updatedData = {
-        ...data,
-        price: parseFloat(data.price!.toString()),
-        images: productImages as File[],
+    const updatedData: IUpdateMenuItemPatch = {
+      ...data,
+      price: parseFloat(data.price!.toString()),
+      images: [...fileImages, ...urlImages], // Combine imagens novas e existentes
     };
-    updateMenuItem(item.id, updatedData);
+
+    await updateMenuItem(item.id, updatedData);
   };
+
   return (
     <Flex
       as="form"
@@ -147,10 +175,7 @@ export const EditMenuItemForm = () => {
       <VStack spacing={6} w="100%">
         <FormControl isInvalid={!!errors.name}>
           <FormLabel>Nome</FormLabel>
-          <Input
-            {...register("name")}
-            placeholder="Digite o nome do produto"
-          />
+          <Input {...register("name")} placeholder="Digite o nome do produto" />
           {!!errors.name && (
             <FormErrorMessage>{errors.name.message}</FormErrorMessage>
           )}
@@ -203,28 +228,47 @@ export const EditMenuItemForm = () => {
         </FormControl>
 
         <Box display="flex" flexWrap="wrap" gap={4}>
-                {productImages.map((image, index) => (
-                    <Box key={index} position="relative">
-                        <Image
-                            src={image instanceof File ? URL.createObjectURL(image) : `${baseURL}/${image}`}
-                            alt={`Imagem ${index + 1}`}
-                            boxSize="100px"
-                            objectFit="cover"
-                            borderRadius="md"
-                        />
-                        <IconButton
-                            aria-label="Remover imagem"
-                            icon={<IoMdClose />}
-                            size="xs"
-                            position="absolute"
-                            top="0"
-                            right="0"
-                            onClick={() => removeImage(index)}
-                        />
-                    </Box>
-                ))}
+          {fileImages.map((file, index) => (
+            <Box key={index} position="relative">
+              <Image
+                src={URL.createObjectURL(file)}
+                alt={`Imagem ${index + 1}`}
+                boxSize="100px"
+                objectFit="cover"
+                borderRadius="md"
+              />
+              <IconButton
+                aria-label="Remover imagem"
+                icon={<IoMdClose />}
+                size="xs"
+                position="absolute"
+                top="0"
+                right="0"
+                onClick={() => removeFileImage(index)}
+              />
             </Box>
-
+          ))}
+          {urlImages.map((image, index) => (
+            <Box key={index} position="relative">
+              <Image
+                src={`${baseURL}${image.filePath.replace("\\", "/")}`}
+                alt={`Imagem ${index + 1}`}
+                boxSize="100px"
+                objectFit="cover"
+                borderRadius="md"
+              />
+              <IconButton
+                aria-label="Remover imagem"
+                icon={<IoMdClose />}
+                size="xs"
+                position="absolute"
+                top="0"
+                right="0"
+                onClick={() => removeUrlImage(index)}
+              />
+            </Box>
+          ))}
+        </Box>
 
         <FormControl>
           <FormLabel>Categoria</FormLabel>
@@ -242,7 +286,7 @@ export const EditMenuItemForm = () => {
         </FormControl>
 
         <FormControl>
-          <Checkbox 
+          <Checkbox
             {...register("sale")}
             onChange={(e) => setValue("sale", e.target.checked)}
           >
@@ -251,7 +295,7 @@ export const EditMenuItemForm = () => {
         </FormControl>
 
         <FormControl>
-          <Checkbox 
+          <Checkbox
             {...register("featuredProduct")}
             onChange={(e) => setValue("featuredProduct", e.target.checked)}
           >
