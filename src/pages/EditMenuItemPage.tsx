@@ -22,6 +22,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { Header } from "../components/Header";
@@ -40,8 +41,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { updateMenuItemSchema } from "../schemas/menuItem.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IoMdClose } from "react-icons/io";
-import { effect } from "zod";
-
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 interface IUpdateMenuItemFormProps {
   item: IMenuItemInterfaceData;
 }
@@ -61,83 +61,42 @@ interface IUpdateMenuItem {
   categoryId?: string; // Agora opcional
   sale?: boolean; // Agora opcional
   featuredProduct?: boolean; // Agora opcional
-  images?: (File | IImageURL)[]; // Agora opcional
+  images?: File[]; // Agora opcional
+  oldImages?: IImageURL[]; // Agora opcional
 }
 
 // Alternativa usando Partial
-type IUpdateMenuItemPatch = Partial<IUpdateMenuItem>;
-export const EditMenuItemPage = () => {
-  const { data, isFetching } = useContext(MenuItemContext);
-  const { productId } = useParams<{ productId: string }>();
-  const navigate = useNavigate();
+export type IUpdateMenuItemPatch = Partial<IUpdateMenuItem>;
 
+export const EditMenuItemPage = () => {
+  const { updateMenuItem, listItemDetail } = useContext(MenuItemContext);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const { productId } = useParams<{ productId: string }>();
+
+  const [isloading, setIsloading] = useState(true);
   const [fileImages, setFileImages] = useState<File[]>([]);
   const [urlImages, setUrlImages] = useState<IImageURL[]>([]);
   const [imageError, setImageError] = useState<string | null>(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: categories } = useContext(CategoriesContext);
 
-  const item = data?.find(
-    (p) => p.id === productId
-  ) as unknown as IMenuItemCardInterfaceData;
+  // Carregamento do produto
+  const fetchData = async () => {
+    if (!productId) return null;
+    return await listItemDetail(productId);
+  };
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<IUpdateMenuItemPatch>({
     resolver: zodResolver(updateMenuItemSchema),
-    defaultValues: {
-      name: item?.name || "",
-      price: item?.price ? parseFloat(item.price.toString()) : undefined,
-      resume: item?.resume || "",
-      description: item?.description || "",
-      categoryId: item?.categoryId || "",
-      sale: item?.sale || false,
-      featuredProduct: item?.featuredProduct || false,
-    },
   });
 
-  // Sincroniza imagens do item com estado inicial
-  useEffect(() => {
-    if (item?.images) {
-      setUrlImages(item.images);
-    }
-  }, []);
-
-  const updateMenuItem = async (id: string, data: IUpdateMenuItemPatch) => {
-    try {
-      const { images, ...restData } = data;
-      const token = localStorage.getItem("@DownTown:Token");
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      const formData = new FormData();
-
-      if (images && images.length > 0) {
-        images.forEach((image) => {
-          formData.append(
-            "images",
-            image instanceof File ? image : JSON.stringify(image)
-          );
-        });
-      }
-
-      formData.append("data", JSON.stringify(restData));
-
-      await api.patch(`/menuItem/${id}/`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Item atualizado com sucesso!");
-      navigate("/admin");
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao atualizar o item.");
-    }
-  };
-
+  // Função para lidar com a alteração das imagens
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
@@ -145,10 +104,10 @@ export const EditMenuItemPage = () => {
     const newImages = selectedFiles.filter((file) =>
       file.type.startsWith("image/")
     );
-
     const oversizedImages = newImages.filter(
       (file) => file.size > 1 * 1024 * 1024
     );
+
     if (oversizedImages.length > 0) {
       setImageError("Cada imagem deve ter no máximo 1 MB.");
       return;
@@ -159,11 +118,11 @@ export const EditMenuItemPage = () => {
       setImageError("Você pode adicionar no máximo 5 imagens.");
       return;
     }
-
     setFileImages((prev) => [...prev, ...newImages]);
     setImageError(null);
   };
 
+  // Funções para remover imagens
   const removeFileImage = (index: number) => {
     setFileImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -172,17 +131,45 @@ export const EditMenuItemPage = () => {
     setUrlImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Função de envio do formulário
   const onSubmit: SubmitHandler<IUpdateMenuItemPatch> = async (data) => {
     const updatedData: IUpdateMenuItemPatch = {
       ...data,
       price: parseFloat(data.price!.toString()),
-      images: [...fileImages, ...urlImages],
+      oldImages: urlImages,
+      images: fileImages,
     };
-
-    if (item?.id) {
-      await updateMenuItem(item.id, updatedData);
+    if (productId) {
+      updateMenuItem({ id: productId, data: updatedData });
     }
   };
+  useEffect(() => {
+    fetchData().then((item) => {
+      if (item) {
+        setUrlImages(item.images);
+        reset({
+          name: item.name || "",
+          price: item.price ? parseFloat(item.price.toString()) : undefined,
+          resume: item.resume || "",
+          description: item.description || "",
+          categoryId: item.categoryId || "",
+          sale: item.sale || false,
+          featuredProduct: item.featuredProduct || false,
+        });
+        setIsloading(false);
+      } else {
+        navigate("/amin");
+      }
+    });
+  }, []);
+
+  if (isloading) {
+    return (
+      <Flex justifyContent="center" alignItems="center" height="100vh">
+        <Spinner size="xl" />
+      </Flex>
+    );
+  }
   return (
     <Flex flexDir="column" w="100%">
       <Flex w={"100%"} flexDirection={"column"} padding={"5% 10%"} gap={"3rem"}>

@@ -251,7 +251,7 @@ export const EditMenuItemForm = () => {
           {urlImages.map((image, index) => (
             <Box key={index} position="relative">
               <Image
-                src={`${baseURL}${image.filePath.replace("\\", "/")}`}
+                src={`${baseURL}${image?.filePath?.replace("\\", "/")}`}
                 alt={`Imagem ${index + 1}`}
                 boxSize="100px"
                 objectFit="cover"

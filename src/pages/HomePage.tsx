@@ -23,7 +23,7 @@ export const HomePage = () => {
   const { data, isFetching } = useContext(MenuItemContext);
 
   if (isFetching) {
-    return;
+    return <></>;
   }
   return (
     <Box>
@@ -63,7 +63,7 @@ export const HomePage = () => {
                 },
               }}
             >
-              {data.length > 0 ? (
+              {data && data.length > 0 ? (
                 <List display={"flex"} gap={"0.5rem"} w={"100%"}>
                   {data.map((item) => (
                     <ListItem key={item.id}>

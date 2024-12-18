@@ -177,8 +177,7 @@ export const AdminPage = () => {
               <Flex flexDir="column" align="flex-start" width="100%">
                 {selected ? (
                   <SimpleGrid minChildWidth="250px" spacing="2rem" width="100%">
-                    {cardapio
-                      .filter((item) => item.categoryId === selected)
+                    {cardapio?.filter((item) => item.categoryId === selected)
                       .map((item) => (
                         <AdminMenuItensCard key={item.id} item={item} />
                       ))}
@@ -200,8 +199,7 @@ export const AdminPage = () => {
                           },
                         }}
                       >
-                        {cardapio
-                          .filter((item) => item.categoryId === category.id)
+                        {cardapio?.filter((item) => item.categoryId === category.id)
                           .map((item) => (
                             <Box key={item.id} w="100%">
                               <AdminMenuItensCard item={item} />

@@ -110,7 +110,7 @@ export const MenuItemProvider = ({ children }: IProvider) => {
       id,
       data,
     }: {
-      id: string;
+      id: string ;
       data: IUpdateMenuItemPatch;
     }): Promise<boolean> => {
       try {
