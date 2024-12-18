@@ -64,7 +64,7 @@ export const ProductList: React.FC<ProductListProps> = ({
                   .filter((item) => item.categoryId === category.id)
                   .map((item) => (
                     <Fragment key={item.id}>
-                      <Box w="100%">
+                      <Box>
                         <MenuItensCard item={item} />
                       </Box>
                     </Fragment>

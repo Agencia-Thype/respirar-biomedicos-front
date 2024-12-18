@@ -27,7 +27,6 @@ export const MenuItensCard = ({ item }: IMenuItemCardProps) => {
     setShow(!show);
   };
   
-  console.log(item.images[0].filePath)
   return (
     <>
       <Flex
