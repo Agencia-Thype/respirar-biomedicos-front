@@ -1,4 +1,4 @@
-import { Box, LinkOverlay, LinkBox, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, LinkOverlay, LinkBox, Button, Flex, Heading, Spinner } from "@chakra-ui/react"; // Adicione Spinner aqui
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Thumbnail from "./thumbnail";
@@ -26,6 +26,7 @@ const images = [
 
 export const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // Estado de loading
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const delay = 7000;
@@ -37,6 +38,15 @@ export const Slider = () => {
   };
 
   useEffect(() => {
+    // Simulação de carregamento de dados
+    const loadData = async () => {
+      // Simular um carregamento de dados
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setIsLoading(false); // Defina como false quando os dados estiverem carregados
+    };
+    
+    loadData(); // Carregue os dados
+
     resetTimeout();
     timeoutRef.current = setTimeout(
       () =>
@@ -63,8 +73,21 @@ export const Slider = () => {
     );
   };
 
-  // Rotaciona o array de thumbnails para colocar o ativo na frente
   const reorderedImages = [...images.slice(currentIndex), ...images.slice(0, currentIndex)];
+
+  // Renderiza o Spinner se os dados estiverem carregando
+  if (isLoading) {
+    return (
+      <Flex
+        height="100vh"
+        width="100%"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Spinner size="xl" /> {/* Exibe o Spinner centralizado */}
+      </Flex>
+    );
+  }
 
   return (
     <Box height={"100vh"} overflow={"hidden"}>
@@ -86,7 +109,6 @@ export const Slider = () => {
             padding={"5% 10%"}
             justifyContent="flex-start"
             position="relative"
-            // paddingLeft={"150px"}
           >
             <Flex
               backgroundColor={"transparent"}
@@ -99,7 +121,7 @@ export const Slider = () => {
               className="content"
               color="#fff"
               textShadow="0 5px 10px #64a7b344"
-              width={{base: "70%",md:"50%",lg:"45%"}}
+              width={{ base: "70%", md: "50%", lg: "45%" }}
               height={"35%"}
               borderRadius={"40px"}
               padding={"4%"}

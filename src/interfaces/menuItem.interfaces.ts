@@ -1,5 +1,10 @@
 import { AxiosError } from "axios";
-import { UseMutateFunction } from "@tanstack/react-query";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  UseMutateFunction,
+} from "@tanstack/react-query";
 import {
   baseMenuItemSchema,
   createMenuItemRequestSchema,
@@ -10,39 +15,39 @@ import {
 } from "../schemas/menuItem.schemas";
 import { z } from "zod";
 import { ICategoryData } from "./categories.intefaces";
+import { IUpdateMenuItemPatch } from "../pages/EditMenuItemPage";
 
 export interface IMenuItemContext {
-  data: IMenuItemCardInterfaceData[];
+  data: IMenuItemCardInterfaceData[] | undefined;
   isFetching: boolean;
-  listItemDetail: UseMutateFunction<
-    {
-      id: string;
-      name: string;
-      price: number;
-      resume: string;
-      description: string;
-      categoryId: string;
-      sale: boolean;
-      featuredProduct: boolean;
-      images: {
-        filePath: string;
-    }[];
-    },
-    any,
-    string,
-    unknown
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<any, unknown>>;
+  produtos: Produto[];
+  filteredCardapio: IMenuItemCardInterfaceData[];
+  setFilteredCardapio: React.Dispatch<
+    React.SetStateAction<IMenuItemCardInterfaceData[]>
   >;
+  isSearching: boolean;
+  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>;
+  handleSearch: () => void;
+  listItemDetail: (
+    itemId: string | undefined
+  ) => Promise<IMenuItemCardInterfaceData>;
+
   createMenuItem: UseMutateFunction<
     IMenuItemInterfaceData,
     any,
     IMenuItemMutation,
     unknown
   >;
-  menuItemDeatilData: IMenuItemData | undefined;
   updateMenuItem: UseMutateFunction<
-    IMenuItemInterfaceData,
+    Boolean,
     AxiosError<unknown, any>,
-    IMenuItemUpdateMutation,
+    {
+      id: string;
+      data: IUpdateMenuItemPatch;
+    },
     unknown
   >;
 
@@ -77,33 +82,31 @@ export interface Produto {
   category: ICategoryData;
   featuredProduct: boolean;
   sale: boolean;
-  resume: string
+  resume: string;
 }
 
 export interface ProductDetailPageProps {
-  produtos: Produto[];
   setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
-  handleSearch: ()=> void
+  handleSearch: () => void;
 }
-
 
 export interface ProductListProps {
   cardapio: IMenuItemCardInterfaceData[];
-  filteredCardapio: IMenuItemCardInterfaceData[];
   selected: string | null;
   categories?: ICategoryData[];
-  isSearching: boolean;
-  handleSearch: ()=> void
 }
 
 export interface ProductSearchProps {
   setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
-  handleSearch: ()=> void
+  handleSearch: () => void;
 }
 
 export interface ProductListSearchProps {
-  filteredCardapio: IMenuItemCardInterfaceData[]
+  filteredCardapio: IMenuItemCardInterfaceData[];
   setFilteredCardapio: (data: IMenuItemCardInterfaceData[]) => void;
-  handleSearch: ()=> void;
-  isSearching: boolean
+  handleSearch: () => void;
+  isSearching: boolean;
+}
+export interface ProductEditProps {
+  item: IMenuItemCardInterfaceData;
 }

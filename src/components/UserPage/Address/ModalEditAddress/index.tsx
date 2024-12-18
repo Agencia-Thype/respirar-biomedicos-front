@@ -128,7 +128,7 @@ export const ModalEditAddress = ({
                   <Input
                     bg="input-background"
                     borderRadius={"20px"}
-                    type="text"
+                    type="number"
                     maxLength={8}
                     onChange={(e) => handleCEP(e.target.value)}
                     defaultValue={format("zip", addressData.zip)}

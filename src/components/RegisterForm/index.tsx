@@ -50,7 +50,7 @@ export const RegisterForm = () => {
         },
       ],
     };
-    console.log(data)
+    console.log(data);
     createUser({ data });
   };
 
@@ -137,7 +137,7 @@ export const RegisterForm = () => {
             <Input
               bg="input-background"
               borderRadius={"20px"}
-              type="text"
+              type="number"
               maxLength={8}
               onChange={(e) => handleCEP(e.target.value)}
             />
@@ -148,7 +148,9 @@ export const RegisterForm = () => {
               bg="input-background"
               borderRadius={"20px"}
               type="text"
-              onChange={(e) => setAddressComplemnt(e.target.value)}
+              maxLength={8}
+              onChange={(e) => handleCEP(e.target.value)}
+              pattern="\d*"
             />
           </FormControl>
           <FormControl>

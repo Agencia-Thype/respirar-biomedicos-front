@@ -10,14 +10,14 @@ import { Providers } from "./providers";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
           <Providers>
             <App />
           </Providers>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </ChakraProvider>
+        </ChakraProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

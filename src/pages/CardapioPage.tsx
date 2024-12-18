@@ -1,5 +1,5 @@
-import React, { useContext, useState, } from "react";
-import {  useNavigate } from "react-router-dom";
+import React, { useContext,  useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MenuItemContext } from "../contexts/MenuItemContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -26,34 +26,32 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { ProductList } from "../components/ProductList";
-import { ProductListSearchProps, } from "../interfaces/menuItem.interfaces";
-export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
-  const { data: cardapio = [], isFetching: isFetchingCardapio } = useContext(MenuItemContext);
-  const { data: categories = [], isFetching: isFetchingCategories } = useContext(CategoriesContext);
+import { ProductListSearchProps } from "../interfaces/menuItem.interfaces";
+
+export const CardapioPage = () => {
+  const { data: cardapio = [], isFetching: isFetchingCardapio } =
+    useContext(MenuItemContext);
+  const { data: categories = [], isFetching: isFetchingCategories } =
+    useContext(CategoriesContext);
   const [selected, setSelected] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
-  
+
   const handleButtonClick = (button: string) => {
-    if (button === selected) { setSelected(null);
-    } else { setSelected(button); }
+    if (button === selected) {
+      setSelected(null);
+    } else {
+      setSelected(button);
+    }
   };
 
-  // if (isFetchingCardapio || isFetchingCategories) {
-  //   return (
-  //     <Flex justify="center" align="center" height="100vh">
-  //       <Spinner size="xl" label="Carregando..." />
-  //     </Flex>
-  //   );
-  // }
   return (
     <Flex flexDir="column" w="100%">
-      <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />
       <Flex
         width="100%"
         padding={{ base: "1% 5%", md: "1% 8%", lg: "1% 10%" }}
-        backgroundImage= {bg} //resolvido o problema de copilação de imagem
+        backgroundImage={bg} //resolvido o problema de copilação de imagem
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
@@ -87,13 +85,13 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
               quasi porro quam!
             </Text>
           </Container>
-          
         </Flex>
         <Flex width="50%" justifyContent="center">
-        <Image 
-         src={grupo} //resolvido o problema de copilação de imagem
-         h={{ base: "80%", md: "100%" }}
-         objectFit="contain" />
+          <Image
+            src={grupo} //resolvido o problema de copilação de imagem
+            h={{ base: "80%", md: "100%" }}
+            objectFit="contain"
+          />
         </Flex>
       </Flex>
       <Flex w="100%" flexDirection="column" padding="1% 10%">
@@ -146,42 +144,39 @@ export const CardapioPage: React.FC<ProductListSearchProps> = ({filteredCardapio
             </DrawerContent>
           </Drawer>
           <Flex width={"100%"} gap={"5rem"}>
-          <Flex
-            flexDir="column"
-            align="center"
-            position="sticky"
-            top="4rem"
-            ml={{ base: 0, md: "1rem" }}
-            display={{ base: "none", md: "flex" }}
-            mt={"80px"}
-            alignItems={"flex-start"}
-          >
-            {categories?.map((category) => (
-              <Button
-                key={category.id}
-                bg={selected === category.id ? "logo-color" : "#116CA0"}
-                color={selected === category.id ? "black-color" : "#FFFFFF"}
-                rounded="50px"
-                h="45px"
-                w="280px"
-                transition="0.3s"
-                _hover={{ bg: "logo-color", color: "black-color" }}
-                onClick={() => handleButtonClick(category.id)}
-                mb="1rem"
-              >
-                {category.name}
-              </Button>
-            ))}
+            <Flex
+              flexDir="column"
+              align="center"
+              position="sticky"
+              top="4rem"
+              ml={{ base: 0, md: "1rem" }}
+              display={{ base: "none", md: "flex" }}
+              mt={"80px"}
+              alignItems={"flex-start"}
+            >
+              {categories?.map((category) => (
+                <Button
+                  key={category.id}
+                  bg={selected === category.id ? "logo-color" : "#116CA0"}
+                  color={selected === category.id ? "black-color" : "#FFFFFF"}
+                  rounded="50px"
+                  h="45px"
+                  w="280px"
+                  transition="0.3s"
+                  _hover={{ bg: "logo-color", color: "black-color" }}
+                  onClick={() => handleButtonClick(category.id)}
+                  mb="1rem"
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </Flex>
+            <ProductList
+              cardapio={cardapio || []}
+              categories={categories || []}
+              selected={selected}
+            />
           </Flex>
-          <ProductList
-            handleSearch={handleSearch}
-            cardapio={cardapio || []}
-            categories={categories || []}
-            selected={selected}
-            isSearching={isSearching}
-            filteredCardapio={filteredCardapio}
-          />
-        </Flex>
         </Flex>
       </Flex>
       <Footer />
