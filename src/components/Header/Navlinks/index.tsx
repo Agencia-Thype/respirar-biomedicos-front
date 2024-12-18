@@ -113,7 +113,7 @@ export const NavLinks = ({ isOpen, onToggle, setFilteredCardapio, handleSearch }
         <MenuItem
           onToggle={onToggle}
           isOpen={isOpen}
-          to="/cardapio"
+          to="/produtos"
           activeLink={activeLink}
           handleClick={handleClick}
         >

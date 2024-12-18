@@ -7,10 +7,9 @@ import { LastOrderCard } from "../components/UserPage/LastOrders/LastOrderCard";
 import { CurrentOrdersCard } from "../components/UserPage/CurrentOrdersCard";
 import { OrderContext } from "../contexts/OrdersContext";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../components/Header";
 import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const UserPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, handleSearch}) => {
+export const UserPage = () => {
   const { listUserProfile, userProfile } = useContext(UsersContext);
   const { handleAddress } = useContext(AddressesContext);
   const { statusChange } = useContext(OrderContext);
@@ -28,13 +27,15 @@ export const UserPage: React.FC<ProductSearchProps> = ({setFilteredCardapio, han
 
   return (
     <Flex flexDir="column" w="100%">
-      <Flex w="100%">
-        <Header handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio}/>
-      </Flex>
       <Container maxW={"8xl"}>
         <Heading mt="2rem">
           Bem vindo(a),{" "}
-          <Text letterSpacing={"3px"} fontSize={"35px"} as="b" color="logo-color">
+          <Text
+            letterSpacing={"3px"}
+            fontSize={"35px"}
+            as="b"
+            color="logo-color"
+          >
             {userProfile?.name}
           </Text>
         </Heading>

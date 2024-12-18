@@ -11,9 +11,12 @@ import { UserPage } from "../pages/UserPage";
 import { ContactPage } from "../pages/ContactPage";
 import { RentPage } from "../pages/RentPage";
 import { api } from "../services/api";
-import { useEffect, useState } from "react";
-import  ProductDetailPage  from "../pages/ProductDetailPage";
-import {IMenuItemCardInterfaceData, IMenuItemInterfaceData, Produto} from "../interfaces/menuItem.interfaces"
+import ProductDetailPage from "../pages/ProductDetailPage";
+import {
+  IMenuItemCardInterfaceData,
+  IMenuItemInterfaceData,
+  Produto,
+} from "../interfaces/menuItem.interfaces";
 import { SalePage } from "../pages/SalePage";
 import ProductSearch from "../components/Header/Research";
 import { AddMenuItemPage } from "../pages/AddMenuItemPage";
@@ -21,59 +24,26 @@ import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
 import { RecoverPasswordPage } from "../pages/RecoverPasswordPage";
 import { EditMenuItemPage } from "../pages/EditMenuItemPage";
 
-
 export const Routers: React.FC = () => {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-
-  const [filteredCardapio, setFilteredCardapio] = useState<IMenuItemCardInterfaceData[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const navigate = useNavigate();
-  // console.log(filteredCardapio)
-  useEffect(() => {
-    const fetchProdutos = async () => {
-      try {
-        const response = await api.get<Produto[]>('/menuItem');
-        
-        setProdutos(response.data);
-      } catch (error) {
-        console.error('Error fetching produtos:', error);
-      }
-    };
-
-    fetchProdutos();
-    
-  }, []);
-  
-  const handleSearch = () => {
-    navigate("/cardapio")
-    setIsSearching(true);
-  };
   return (
     <Routes>
-      <Route path="/" element={<HomePage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/cardapio" element={<CardapioPage handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/carrinho" element={<CartPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/login" element={<LoginPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/login/forgotPassword" element={<ForgotPasswordPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/login/recoverPassword" element={<RecoverPasswordPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/register" element={<RegisterPager handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/admin" element={<AdminPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/admin/createItem" element={<AddMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/admin/editItem" element={<EditMenuItemPage  handleSearch={handleSearch} isSearching={isSearching} filteredCardapio={filteredCardapio} setFilteredCardapio={setFilteredCardapio} />} />
-      <Route path="/orders" element={<OrdersPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/delivery" element={<DeliveryPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/user" element={<UserPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/contacts" element={<ContactPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/rent" element={<RentPage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>} />
-      <Route path="/sale" element={<SalePage handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio} />} />
-    
-      {produtos.map((produto) => (
-        <Route
-          key={produto.id}
-          path={`/produto/:productId`}
-          element={<ProductDetailPage handleSearch={handleSearch}  setFilteredCardapio={setFilteredCardapio} produtos={produtos} />}
-        />
-      ))}
+      <Route path="/" element={<HomePage />} />
+      <Route path="/produtos" element={<CardapioPage />} />
+      <Route path="/carrinho" element={<CartPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login/forgotPassword" element={<ForgotPasswordPage />} />
+      <Route path="/login/recoverPassword" element={<RecoverPasswordPage />} />
+      <Route path="/register" element={<RegisterPager />} />
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/createItem" element={<AddMenuItemPage />} />
+      <Route path="/admin/editItem/:productId" element={<EditMenuItemPage />} />
+      <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/delivery" element={<DeliveryPage />} />
+      <Route path="/user" element={<UserPage />} />
+      <Route path="/contacts" element={<ContactPage />} />
+      <Route path="/rent" element={<RentPage />} />
+      <Route path="/sale" element={<SalePage />} />
+      <Route path="/produto/:productId" element={<ProductDetailPage />} />
     </Routes>
   );
 };

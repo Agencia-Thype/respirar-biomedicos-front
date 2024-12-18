@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header"; // Certifique-se de que o Header está sendo importado corretamente
 import { ProductSearchProps } from "../interfaces/menuItem.interfaces";
 
-export const CartPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, handleSearch}) => {
+export const CartPage = () => {
   const token = localStorage.getItem("@DownTown:Token");
   const navigate = useNavigate();
 
@@ -19,7 +19,11 @@ export const CartPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, ha
         p="1rem"
       >
         <Heading>Você precisa estar logado =(</Heading>
-        <Link onClick={() => navigate("/login")} color="primary-color" fontSize="lg">
+        <Link
+          onClick={() => navigate("/login")}
+          color="primary-color"
+          fontSize="lg"
+        >
           Clique aqui para logar
         </Link>
       </Flex>
@@ -28,13 +32,10 @@ export const CartPage: React.FC<ProductSearchProps>  = ({setFilteredCardapio, ha
 
   return (
     <Flex flexDir="column" w="100%">
-      <Flex w="100%">
-        <Header handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
-      </Flex>
       <Container maxW={{ base: "8xl", md: "6xl", "2xl": "8xl" }} p="1rem">
-        <Flex flexDir="column"  gap="2rem" pb="1rem">
+        <Flex flexDir="column" gap="2rem" pb="1rem">
           <Flex justifyContent="center" w="100%" mt="1rem">
-            <Heading >Carrinho</Heading>
+            <Heading>Carrinho</Heading>
           </Flex>
           <Cart />
         </Flex>

@@ -12,53 +12,27 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import { IoFastFoodSharp } from "react-icons/io5";
-import { MdDeliveryDining } from "react-icons/md";
 import { Footer } from "../components/Footer";
-import burger from "../assets/burger.png";
-import { useNavigate } from "react-router-dom";
 import { Slider } from "../components/slider/sliderHome";
-import { Header } from "../components/Header";
 import lifestyleImg from "../assets/image/lifestyle-people.jpg";
-import { ProductCard } from "../components/ProductsCards";
-import CPAP from "../assets/image/CPAP.png";
-import { IMenuItemCardInterfaceData, IMenuItemInterfaceData, ProductListSearchProps, Produto } from "../interfaces/menuItem.interfaces";
-import { api } from "../services/api";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { MenuItensCard } from "../components/MenuItemCard";
+import { MenuItemContext } from "../contexts/MenuItemContext";
 
-export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,setFilteredCardapio, handleSearch, isSearching}) => {
-  // const navigate = useNavigate();
-  const [featuredProducts, setFeaturedProducts] = useState<IMenuItemCardInterfaceData[]>([]);
+export const HomePage = () => {
+  const { data, isFetching } = useContext(MenuItemContext);
 
-  useEffect(() => {
-    // Função assíncrona para buscar os produtos destacados
-    const fetchFeaturedProducts = async () => {
-      try {
-        const response = await api.get("/menuItem/");
-        const filteredProducts = response.data.filter((product: IMenuItemInterfaceData) => product.featuredProduct === true);
-
-        // Atualiza o estado com os produtos destacados
-        setFeaturedProducts(filteredProducts);
-      } catch (error) {
-        console.error("Erro ao buscar produtos destacados:", error);
-      }
-    };
-
-    // Chama a função
-    fetchFeaturedProducts();
-  }, []); // O array vazio [] faz com que o efeito execute apenas uma vez, quando o componente monta
-
-  // console.log(featuredProducts)
+  if (isFetching) {
+    return <></>;
+  }
   return (
     <Box>
-      <Header  handleSearch={handleSearch} setFilteredCardapio={setFilteredCardapio}/>
       <Slider />
 
       <Flex padding={"8%"}>
         <Container maxW={"100%"} m={"0"}>
           <Flex
-            flexDir={"column"}            
+            flexDir={"column"}
             justify={"space-between"}
             alignItems={"center"}
             gap="5rem"
@@ -89,18 +63,17 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
                 },
               }}
             >
-              {featuredProducts.length > 0 ? (
+              {data && data.length > 0 ? (
                 <List display={"flex"} gap={"0.5rem"} w={"100%"}>
-                  {featuredProducts.map((item) => (
+                  {data.map((item) => (
                     <ListItem key={item.id}>
-                      <MenuItensCard item={item}/>
+                      <MenuItensCard item={item} />
                     </ListItem>
                   ))}
                 </List>
               ) : (
                 <p>Nenhum produto destacado encontrado.</p>
               )}
-              
             </SimpleGrid>
           </Flex>
         </Container>
@@ -125,22 +98,21 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
                 ambiente natural, em casa.
               </Text>
               <LinkBox
-                  as="article"
-                  bg="#116CA0"
-                  color="#FFFFFF"
-                  // w={"240px"}
-                  borderRadius="md"
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  fontSize={"16.8px"}
-                  fontWeight="bold"
-                  padding="8px 16px"
-                  _hover={{ bg: "gray.200" }}
-                >
-                  <LinkOverlay href="/contacts">SAIBA MAIS</LinkOverlay>
-                </LinkBox>
-             
+                as="article"
+                bg="#116CA0"
+                color="#FFFFFF"
+                // w={"240px"}
+                borderRadius="md"
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                fontSize={"16.8px"}
+                fontWeight="bold"
+                padding="8px 16px"
+                _hover={{ bg: "gray.200" }}
+              >
+                <LinkOverlay href="/contacts">SAIBA MAIS</LinkOverlay>
+              </LinkBox>
             </Flex>
             <Flex
               flexDir={"column"}
@@ -157,7 +129,6 @@ export const HomePage: React.FC<ProductListSearchProps> = ({filteredCardapio,set
         </Container>
       </Flex>
 
-      
       <Footer />
     </Box>
   );
